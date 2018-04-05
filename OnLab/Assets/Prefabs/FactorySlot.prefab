@@ -41,6 +41,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78ee7e77bae08bb4f8e6877b15e0a4b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: 2
   cmdpanelcmd: {fileID: 1424442445044072, guid: 976d9f0c5f8e7104484013964540fdb1,
     type: 2}
 --- !u!114 &114545602905967744
