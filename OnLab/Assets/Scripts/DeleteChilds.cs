@@ -12,7 +12,6 @@ public class DeleteChilds : MonoBehaviour {
             int slotNumber = child.GetComponent<CommandData>().slot;
             GameObject commandPanel = GameObject.Find("CommandPanelManager");
             commandPanel.GetComponent<CommandPanel>().deleteCommandBySlot(slotNumber);
-            commandPanel.GetComponent<CommandPanel>().commands.Add(new Command());
 
             GameObject.Destroy(child.gameObject);
         }

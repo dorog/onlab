@@ -11,11 +11,13 @@ public class CommandData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     public int slot;
 
     private CommandPanel cmdpanelmanager;
+    private GameObject cmdpanel;
     //private Tooltip tooltip;
 
     void Start()
     {
         cmdpanelmanager = GameObject.Find("CommandPanelManager").GetComponent<CommandPanel>();
+        cmdpanel = GameObject.Find("CommandPanel");
         //tooltip = inv.GetComponent<Tooltip>();
     }
 
@@ -23,7 +25,26 @@ public class CommandData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     {
         if (command != null)
         {
-            this.transform.SetParent(this.transform.parent.parent);
+            //this.transform.SetParent(this.transform.parent.parent);
+
+
+            //commands from factroy havent got slot, i must give them one
+
+            /*if (command.newcmd)
+            {
+
+                //Solution 1. 
+                //Last item must be a deleteslot
+                this.transform.GetComponent<CommandData>().slot = cmdpanelmanager.slotAmount;
+                command.ID = cmdpanelmanager.slotAmount;
+                command.newcmd = false;
+                cmdpanelmanager.commands.Add(command);
+                //End 
+
+            }*/
+            
+            //cmd panel will be a parent
+            this.transform.SetParent(cmdpanel.transform);
             this.transform.position = eventData.position;
             GetComponent<CanvasGroup>().blocksRaycasts = false;
         }

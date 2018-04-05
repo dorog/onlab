@@ -450,6 +450,8 @@ MonoBehaviour:
   deleteSlot: {fileID: 1878841394956340, guid: 91c4919b30176a74581a8e6d7bb67ccf, type: 2}
   cmdpanelcmd: {fileID: 1424442445044072, guid: 976d9f0c5f8e7104484013964540fdb1,
     type: 2}
+  factoryElement: {fileID: 1499464774944166, guid: 6a3780d4f7aba2546a9af80cfecc60c1,
+    type: 2}
   slotAmount: 48
   slots: []
 --- !u!1 &1715806265
@@ -561,7 +563,7 @@ RectTransform:
   - {fileID: 911868040}
   - {fileID: 1143217942}
   m_Father: {fileID: 2133298857}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -579,6 +581,7 @@ GameObject:
   - component: {fileID: 1998337125}
   - component: {fileID: 1998337124}
   - component: {fileID: 1998337123}
+  - component: {fileID: 1998337126}
   m_Layer: 5
   m_Name: CommandFactory
   m_TagString: Untagged
@@ -597,7 +600,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2133298857}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -615,6 +618,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91b33e45198920a448ad257b33bcc6ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  factorySlot: {fileID: 1196436763969410, guid: b8ed014405f598343b53c4fcff458514,
+    type: 2}
+  cmdpanelcmd: {fileID: 1424442445044072, guid: 976d9f0c5f8e7104484013964540fdb1,
+    type: 2}
+  factorySlots: []
 --- !u!114 &1998337124
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -648,6 +656,29 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1998337121}
+--- !u!114 &1998337126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1998337121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -2095666955, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 0
+  m_StartCorner: 0
+  m_StartAxis: 0
+  m_CellSize: {x: 50, y: 50}
+  m_Spacing: {x: 0, y: 0}
+  m_Constraint: 0
+  m_ConstraintCount: 2
 --- !u!1 &2133298853
 GameObject:
   m_ObjectHideFlags: 0
@@ -733,8 +764,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 1976300112}
   - {fileID: 1998337122}
+  - {fileID: 1976300112}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

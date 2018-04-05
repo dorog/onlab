@@ -11,6 +11,7 @@ public class CommandPanel : MonoBehaviour {
     public GameObject cmdSlot;
     public GameObject deleteSlot;
     public GameObject cmdpanelcmd;
+    public GameObject factoryElement;
 
     public int slotAmount = 48;
     public List<Command> commands = new List<Command>();
@@ -26,12 +27,10 @@ public class CommandPanel : MonoBehaviour {
         AddCommand(new TurnRightCmd(1));
         AddCommand(new TurnLeftCmd(1));
         AddCommand(new GoForwardCmd(1));
-        //AddItem(new Item(1, "Mana poti", 500, true));*/
     }
 
-    public void AddCommand(Command it) //  int id
+    public void AddCommand(Command it) 
     {
-        //PlayerStat.addItem(it);
         Command commandToAdd = it;
 
         if (commandToAdd.PanelSlot != -1)
@@ -53,12 +52,12 @@ public class CommandPanel : MonoBehaviour {
                 {
                     commands[i] = commandToAdd;
                     commands[i].PanelSlot = i;
-                    GameObject itemObj = Instantiate(cmdpanelcmd);
-                    itemObj.transform.SetParent(slots[i].transform);
-                    itemObj.GetComponent<Image>().sprite = commandToAdd.sprite;
-                    itemObj.transform.position = itemObj.transform.parent.position;
-                    itemObj.GetComponent<CommandData>().command = commandToAdd;
-                    itemObj.GetComponent<CommandData>().slot = i;
+                    GameObject commandObj = Instantiate(cmdpanelcmd);
+                    commandObj.transform.SetParent(slots[i].transform);
+                    commandObj.GetComponent<Image>().sprite = commandToAdd.sprite;
+                    commandObj.transform.position = commandObj.transform.parent.position;
+                    commandObj.GetComponent<CommandData>().command = commandToAdd;
+                    commandObj.GetComponent<CommandData>().slot = i;
                     break;
                 }
             }
@@ -109,11 +108,10 @@ public class CommandPanel : MonoBehaviour {
 
     public void deleteCommandBySlot(int slotNumber)
     {
-        int i = 0;
-        while (commands[i].PanelSlot != slotNumber)
-        {
-            i++;
-        }
-        commands.RemoveAt(i);
+        //it's rly dangereous, be careful with it
+        //it works cuz last slot is a delete slot
+        commands.RemoveAt(slotAmount);
+
+        commands.Add(new Command());
     }
 }

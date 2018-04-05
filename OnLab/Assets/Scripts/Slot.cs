@@ -22,8 +22,22 @@ public class Slot : MonoBehaviour, IDropHandler
             cmdpanelmanager.commands[id] = droppedCommand.command;
             droppedCommand.slot = id;
         }
+       /* else if(droppedCommand.slot == cmdpanelmanager.slotAmount && droppedCommand.slot != id)
+        {
+            
+            Transform commandplace = this.transform.GetChild(0);
+            cmdpanelmanager.commands[cmdpanelmanager.slotAmount] = commandplace.GetComponent<CommandData>().command;
+            cmdpanelmanager.commands[id] = new Command(); //+
+            commandplace.GetComponent<CommandData>().slot = cmdpanelmanager.slotAmount;
+            commandplace.SetParent(cmdpanelmanager.slots[droppedCommand.slot].transform);
+
+            cmdpanelmanager.commands[id] = droppedCommand.command;
+            droppedCommand.slot = id;
+
+        }*/
         else if (droppedCommand.slot != id)
         {
+            
             Transform commandplace = this.transform.GetChild(0);
             commandplace.GetComponent<CommandData>().slot = droppedCommand.slot;
             commandplace.SetParent(cmdpanelmanager.slots[droppedCommand.slot].transform);
