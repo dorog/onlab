@@ -7,4 +7,9 @@ public class GoForwardCmd : Command
     public GoForwardCmd(int id) : base(id) {
         this.sprite = Resources.Load<Sprite>("Icons/uparrow");
     }
+
+    public override void Effect()
+    {
+        character.GetComponent<CharacterActions>().GoForward();
+    }
 }

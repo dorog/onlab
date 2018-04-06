@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Command {
 
+    public GameObject character;
     public int ID { get; set; }
     public int PanelSlot { get; set; }
     public Sprite sprite { get; set; }
@@ -14,6 +15,7 @@ public class Command {
         this.ID = id;
         PanelSlot = -1;
         newcmd = true;
+        character = GameObject.Find("box_character");
     }
     public Command()
     {
@@ -26,5 +28,7 @@ public class Command {
         PanelSlot = panelSlot;
     }
 
-    public void Effect() { }
+    public virtual void Effect() {
+        return;
+    }
 }

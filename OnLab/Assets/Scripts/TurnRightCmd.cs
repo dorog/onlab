@@ -8,4 +8,8 @@ public class TurnRightCmd : Command{
         this.sprite = Resources.Load<Sprite>("Icons/rightarrow");
     }
 
+    public override void Effect()
+    {
+        character.GetComponent<CharacterActions>().TurnRight();
+    }
 }

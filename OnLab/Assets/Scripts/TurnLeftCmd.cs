@@ -8,4 +8,8 @@ public class TurnLeftCmd : Command
         this.sprite = Resources.Load<Sprite>("Icons/leftarrow");
     }
 
+    public override void Effect()
+    {
+        character.GetComponent<CharacterActions>().TurnLeft();
+    }
 }

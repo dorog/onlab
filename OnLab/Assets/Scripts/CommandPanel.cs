@@ -24,9 +24,6 @@ public class CommandPanel : MonoBehaviour {
 
         //items load
         cmdLoad();
-        AddCommand(new TurnRightCmd(1));
-        AddCommand(new TurnLeftCmd(1));
-        AddCommand(new GoForwardCmd(1));
     }
 
     public void AddCommand(Command it) 
@@ -64,30 +61,6 @@ public class CommandPanel : MonoBehaviour {
         }
     }
 
-    /*bool CheckStackAblePlace(Command item)
-    {
-
-        for (int i = 0; i < commands.Count; i++)
-        {
-            if (commands[i].ID == item.ID)
-                return true;
-        }
-        return false;
-    }*/
-
-    /*void Update()
-    {
-
-        if (charInventory.newItems.Count > 0)
-        {
-            for (int i = 0; i < charInventory.newItems.Count; i++)
-            {
-                AddItem(charInventory.newItems[i]);
-            }
-            charInventory.newItems.Clear();
-        }
-    }*/
-
     void cmdLoad()
     {
 
@@ -106,6 +79,22 @@ public class CommandPanel : MonoBehaviour {
         slots[slotAmount].GetComponent<Slot>().id = slotAmount;
     }
 
+    public void Clear()
+    {
+        
+        commands.Clear();
+        slots.Clear();
+        for(int i=0; i< slotPanel.transform.childCount; i++)
+        {
+            if (slotPanel.transform.GetChild(i).childCount > 0)
+            {
+                GameObject.Destroy(slotPanel.transform.GetChild(i).GetChild(0).gameObject);
+            }
+            GameObject.Destroy(slotPanel.transform.GetChild(i).gameObject);
+        }
+        cmdLoad();
+    }
+
     public void deleteCommandBySlot(int slotNumber)
     {
         //it's rly dangereous, be careful with it
@@ -113,5 +102,18 @@ public class CommandPanel : MonoBehaviour {
         commands.RemoveAt(slotAmount);
 
         commands.Add(new Command());
+    }
+
+    public List<Command> getRealCommands()
+    {
+        List<Command> RealCmds = new List<Command>();
+        for(int i=0; i<commands.Count; i++)
+        {
+            if (commands[i].ID != -1)
+            {
+                RealCmds.Add(commands[i]);
+            }
+        }
+        return RealCmds;
     }
 }
