@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class FinishMap : MonoBehaviour {
 
-    public string filename="ScarabCmdMin.txt";
     public LayerMask Mask;
 
     // Use this for initialization
@@ -20,31 +19,7 @@ public class FinishMap : MonoBehaviour {
 	}
 
     private void OnTriggerEnter(Collider other)
-    {
-        //Collider[] colliders = Physics.OverlapBox(transform.position, transform.localScale / 2, Quaternion.identity, Mask);
-
-        /*Debug.Log(transform.localScale.x+" "+ transform.localScale.y + " "+ transform.localScale.z + " ");
-
-        for (int i = 0; i < colliders.Length; i++)
-        {
-            /*Rigidbody targetRigidbody = colliders[i].GetComponent<Rigidbody>();
-
-            if (!targetRigidbody)
-                continue;
-            //targetRigidbody.AddExplosionForce(ExplosionForce, transform.position, ExplosionRadius);
-
-            //MonsterProperty target = targetRigidbody.GetComponent<MonsterProperty>();
-
-            if (!target)
-                continue;
-
-            //calc dmg
-
-            //target.getDmg(dmg);
-            Debug.Log("Siker!");
-        }*/
-
-        //Debug.Log("Siker!");
+    { 
 
         //Calulate datas
         CommandPanel slotPanel = GameObject.Find("CommandPanelManager").GetComponent<CommandPanel>();
@@ -54,11 +29,11 @@ public class FinishMap : MonoBehaviour {
         int[] MinCmdNumber = new int[2];
 
 
-        using (StreamReader sr = new StreamReader(filename))
+        using (StreamReader sr = new StreamReader(CurrentGameDatas.buggSystemFile))
         {
             string line = sr.ReadToEnd();
             string[] datas = line.Split('\n');
-            string[] currentDatas = datas[CurrentGameDatas.lastMap - 1].Split('\t');
+            string[] currentDatas = datas[CurrentGameDatas.mapNumber - 1].Split('\t');
             for (int i = 0; i < currentDatas.Length; i++)
             {
                 MinCmdNumber[i] = Convert.ToInt32(currentDatas[i]);
@@ -78,6 +53,8 @@ public class FinishMap : MonoBehaviour {
         {
             scarabNumber = 1;
         }
+
+        int thisGameScore = CurrentGameDatas.mapNumber * scarabNumber * 10 - realCommandsNumber;
 
         if (CurrentGameDatas.lastMap==CurrentGameDatas.mapNumber)
         {
@@ -113,9 +90,12 @@ public class FinishMap : MonoBehaviour {
                 sw.WriteLine(CurrentGameDatas.mapDatas[i].mapScore + "\t" + CurrentGameDatas.mapDatas[i].scarab);
             }
         }
+        
 
-        // scLoader.LoadScene("FinishedMap");
-        scLoader.LoadScene("Map_guide");
+        CurrentGameDatas.solvedMap = new MapDatas(thisGameScore, scarabNumber);
+
+        //Todo: different scene for last map
+        scLoader.LoadScene("FinishedMap");
     }
 
 }

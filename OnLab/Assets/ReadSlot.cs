@@ -16,7 +16,6 @@ public class ReadSlot : MonoBehaviour {
     public GameDatas gmdata;
     public bool forload = true;
 
-
     void Start () {
         try
         {   
@@ -70,6 +69,7 @@ public class ReadSlot : MonoBehaviour {
 
 
                 Button thisBtn = this.GetComponent<Button>();
+
                 if (forload)
                 {
                     thisBtn.onClick.AddListener(ChangeSceneLoad);

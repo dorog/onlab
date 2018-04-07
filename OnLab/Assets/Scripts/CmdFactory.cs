@@ -28,13 +28,11 @@ public class CmdFactory : MonoBehaviour {
         factorySlots[i].transform.SetParent(factoryPanel.transform);
         factorySlots[i].GetComponent<Slot>().id = cmdPanel.slotAmount;
         factorySlots[i].GetComponent<CreateNewElement>().id = factoryElementsIds[i];
-        //AddCommand(new TurnRightCmd(1));
         }
     }
 
-    public void AddCommand(Command it) //  int id
+    public void AddCommand(Command it)
     {
-        //PlayerStat.addItem(it);
         Command commandToAdd = it;
 
         if (commandToAdd.PanelSlot != -1)
