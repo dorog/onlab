@@ -9,4 +9,10 @@ public class SceneLoader : MonoBehaviour {
     {
         SceneManager.LoadScene(sceneName);
     }
+
+    public void LoadMap(int mapNumber)
+    {
+        CurrentGameDatas.mapNumber = mapNumber;
+        SceneManager.LoadScene("Map_scene");
+    }
 }

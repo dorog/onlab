@@ -4,7 +4,8 @@ using UnityEngine;
 
 public static class CurrentGameDatas{
 
-    static public int lastMap { get; set; }
+    static public int mapNumber = 1;
+    static public int lastMap = 1;
     static public List<MapDatas> mapDatas = new List<MapDatas>();
 
     static public void CopyTheDatas(GameDatas data)
