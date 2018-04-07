@@ -15,4 +15,9 @@ public class SceneLoader : MonoBehaviour {
         CurrentGameDatas.mapNumber = mapNumber;
         SceneManager.LoadScene("Map_scene");
     }
+
+    public void Quit()
+    {
+        Application.Quit();
+    }
 }
