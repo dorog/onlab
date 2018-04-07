@@ -20,3 +20,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/LoadGameSelect.unity
     guid: e45a6623804893f4eafbf9f45ab67ef9
+  - enabled: 1
+    path: Assets/Scenes/Map_scene.unity
+    guid: d478bb6773ce82144bdc54b9ec8bfc43

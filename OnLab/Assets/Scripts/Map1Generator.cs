@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Map1Generator : MonoBehaviour {
 
+
+    public GameObject finishStoneModel;
     public GameObject brickModel;
     public int mapNumber = 1;
 
@@ -34,6 +36,8 @@ public class Map1Generator : MonoBehaviour {
                 GameObject brick = Instantiate(brickModel, new Vector3(25 + i * 50, 0, 25 + j * 50), Quaternion.AngleAxis(-90, Vector3.right), parent.transform) as GameObject;
             }
         }
+        GameObject finishStone = Instantiate(finishStoneModel, new Vector3(25 + x*50, 0, 325), Quaternion.AngleAxis(-90, Vector3.right), parent.transform) as GameObject;
     }
-	
+
 }
+	

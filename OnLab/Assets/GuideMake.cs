@@ -19,9 +19,10 @@ public class GuideMake : MonoBehaviour {
         }
 
         int mapsGOchildNumber = mapsGO.transform.childCount;
-        for(int i=0; i< gmdatas.lastMap; i++)
+        for(int i=0; i< gmdatas.lastMap && i < mapsGOchildNumber; i++) //&& i< mapsGOchildNumber
         {
             mapsGO.transform.GetChild(i).transform.GetChild(1).GetChild(0).GetComponent<Text>().text="Score: "+gmdatas.mapDatas[i].mapScore;
+            mapsGO.transform.GetChild(i).transform.GetChild(1).GetChild(1).GetComponent<Image>().sprite = Resources.Load<Sprite>("Map_guide/Golden_Scarab_Beetle_part"+ gmdatas.mapDatas[i].scarab);
         }
 
 

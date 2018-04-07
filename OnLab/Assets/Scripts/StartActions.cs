@@ -8,7 +8,7 @@ public class StartActions : MonoBehaviour
     public int TimeBeetweenCommands;
     CommandPanel cmdPanel;
     static int aimnumber = 0;
-    private bool start = false;
+    public bool start = false;
     private System.DateTime lastTime;
     List<Command> commandsForExecute=new List<Command>();
     GameObject character;
@@ -27,8 +27,8 @@ public class StartActions : MonoBehaviour
     public void ExecuteCommands()
     {
 
-        character.transform.position = characterPosition;
-        character.transform.forward = characterForward;
+        /*character.transform.position = characterPosition;
+        character.transform.forward = characterForward;*/
 
         start = true;
         commandsForExecute.Clear();
@@ -59,5 +59,10 @@ public class StartActions : MonoBehaviour
             }
             
         }
+    }
+
+    public void ObjectHit()
+    {
+        start = false;
     }
 }

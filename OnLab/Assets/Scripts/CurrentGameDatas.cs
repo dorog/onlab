@@ -4,12 +4,14 @@ using UnityEngine;
 
 public static class CurrentGameDatas{
 
+    static public string slotName = "Slot0.txt";
     static public int mapNumber = 1;
     static public int lastMap = 1;
     static public List<MapDatas> mapDatas = new List<MapDatas>();
 
-    static public void CopyTheDatas(GameDatas data)
+    static public void CopyTheDatas(GameDatas data, string filename)
     {
+        slotName = filename;
         mapDatas.Clear();
         lastMap = data.lastMap;
         for(int i=0; i<data.mapDatas.Count; i++)

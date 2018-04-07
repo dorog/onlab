@@ -91,7 +91,7 @@ public class ReadSlot : MonoBehaviour {
     void ChangeSceneLoad()
     {
 
-        CurrentGameDatas.CopyTheDatas(gmdata);
+        CurrentGameDatas.CopyTheDatas(gmdata, filename);
         SceneManager.LoadScene("Map_guide");
     }
 
@@ -107,7 +107,7 @@ public class ReadSlot : MonoBehaviour {
         gmdata = new GameDatas(1);
         gmdata.AddMapData(new MapDatas());
 
-        CurrentGameDatas.CopyTheDatas(gmdata);
+        CurrentGameDatas.CopyTheDatas(gmdata, filename);
         SceneManager.LoadScene("Map_guide");
     }
 }

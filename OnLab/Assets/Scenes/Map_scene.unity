@@ -113,22 +113,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &238484354 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1949538109658832, guid: 5564b18e76067c94d91b6774bde9a947,
-    type: 2}
-  m_PrefabInternal: {fileID: 330275978}
---- !u!114 &238484355
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 238484354}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4d6163a16f626241a75af1cc0299c57, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &327271629
 GameObject:
   m_ObjectHideFlags: 0
@@ -370,6 +354,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 935b14004c0fb62418082201e2ceaac0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  finishStoneModel: {fileID: 1401564710521434, guid: df8c9786727227e40a127213eb2cb82c,
+    type: 2}
   brickModel: {fileID: 1265522067686786, guid: 84e4fd2aaa118a24e8d7dec113e61f24, type: 2}
   mapNumber: 1
 --- !u!224 &372076463
@@ -1082,6 +1068,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   endwait: 2
   TimeBeetweenCommands: 1
+  start: 0
 --- !u!1 &1269760006
 GameObject:
   m_ObjectHideFlags: 0

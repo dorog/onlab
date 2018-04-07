@@ -116,4 +116,17 @@ public class CommandPanel : MonoBehaviour {
         }
         return RealCmds;
     }
+
+    public int getRealCommandsNumber()
+    {
+        int db = 0;
+        for (int i = 0; i < commands.Count; i++)
+        {
+            if (commands[i].ID != -1)
+            {
+                db++;
+            }
+        }
+        return db;
+    }
 }
