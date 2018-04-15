@@ -12,6 +12,7 @@ public class StartActions : MonoBehaviour
     private System.DateTime lastTime;
     List<Command> commandsForExecute=new List<Command>();
     GameObject character;
+    public string charName;
 
     private Vector3 characterPosition;
     private Vector3 characterForward;
@@ -19,7 +20,7 @@ public class StartActions : MonoBehaviour
     void Start()
     {
         cmdPanel = GameObject.Find("CommandPanelManager").GetComponent<CommandPanel>();
-        character = GameObject.Find("box_character");
+        character = GameObject.Find(charName);
         characterPosition = new Vector3(character.transform.position.x, character.transform.position.y, character.transform.position.z);
         characterForward = new Vector3(character.transform.forward.x, character.transform.forward.y, character.transform.forward.z);
     }

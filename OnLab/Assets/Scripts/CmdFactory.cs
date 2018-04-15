@@ -6,9 +6,10 @@ using UnityEngine.UI;
 public class CmdFactory : MonoBehaviour {
 
     public int[] factoryElementsIds;
-
+   
     public GameObject factorySlot;
     public GameObject cmdpanelcmd;
+    public string charName;
     GameObject factoryPanel;
 
     public List<Command> commands = new List<Command>();
@@ -28,6 +29,7 @@ public class CmdFactory : MonoBehaviour {
         factorySlots[i].transform.SetParent(factoryPanel.transform);
         factorySlots[i].GetComponent<Slot>().id = cmdPanel.slotAmount;
         factorySlots[i].GetComponent<CreateNewElement>().id = factoryElementsIds[i];
+        factorySlots[i].GetComponent<CreateNewElement>().charName = charName;
         }
     }
 

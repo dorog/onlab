@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class GoForwardCmd : Command
 {
-    public GoForwardCmd(int id) : base(id) {
+    public GoForwardCmd(int id, string charName) : base(id, charName) {
         this.sprite = Resources.Load<Sprite>("Icons/uparrow");
     }
 
     public override void Effect()
     {
-        character.GetComponent<CharacterActions>().GoForward();
+        character.GetComponent<JoeCommandControl>().GoForward();
     }
 }

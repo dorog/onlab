@@ -21,7 +21,7 @@ public static class CurrentGameDatas{
             string line = sr.ReadToEnd();
             string[] datas = line.Split('\n');
             maxLevel = datas.Length;
-            Debug.Log(maxLevel);
+            //Debug.Log(maxLevel);
         }
         slotName = filename;
         mapDatas.Clear();

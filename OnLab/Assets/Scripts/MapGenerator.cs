@@ -10,6 +10,7 @@ public class MapGenerator : MonoBehaviour {
     public GameObject buttonModel;
     public GameObject doorModel;
     public GameObject brickModel;
+    public GameObject trapModel;
     public int mapNumber = 1;
     GameObject parent;
 
@@ -23,6 +24,7 @@ public class MapGenerator : MonoBehaviour {
         switch (mapNumber)
         {
             case 1:
+                GameObject trap = Instantiate(trapModel, new Vector3(425, 10, 375), Quaternion.AngleAxis(-90, Vector3.right), parent.transform) as GameObject;
                 map1();
                 break;
             default:

@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class TurnRightCmd : Command{
 
-    public TurnRightCmd(int id) : base(id) {
+    public TurnRightCmd(int id, string charName) : base(id, charName) {
         this.sprite = Resources.Load<Sprite>("Icons/rightarrow");
     }
 
     public override void Effect()
     {
-        character.GetComponent<CharacterActions>().TurnRight();
+        character.GetComponent<JoeCommandControl>().TurnRight();
     }
 }

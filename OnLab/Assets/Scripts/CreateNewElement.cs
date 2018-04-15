@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class CreateNewElement : MonoBehaviour {
 
+    public string charName;
     public int id = 2;
     private Command element;
     //public Command element;
@@ -20,16 +21,16 @@ public class CreateNewElement : MonoBehaviour {
         switch (id)
         {
             case 0:
-                element = new GoForwardCmd(1);
+                element = new GoForwardCmd(1, charName);
                 break;
             case 1:
-                element = new TurnRightCmd(1);
+                element = new TurnRightCmd(1, charName);
                 break;
             case 2:
-                element = new TurnLeftCmd(1);
+                element = new TurnLeftCmd(1, charName);
                 break;
             default:
-                element = new GoForwardCmd(1);
+                element = new GoForwardCmd(1, charName);
                 break;
         }
     }
