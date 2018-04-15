@@ -36,9 +36,9 @@ public class CharacterControll : MonoBehaviour {
     void Update()
     {
         bool jump = Input.GetKey("space");
-        float run = Input.GetAxis("Vertical");
+        //float run = Input.GetAxis("Vertical");
         float rot = Input.GetAxis("Horizontal");
-        bool twerk = Input.GetKey("t");
+        //bool twerk = Input.GetKey("t");
         //bool hit = Input.GetKeyDown("x");
         //float runside = Input.GetAxis("JB");
 
@@ -84,10 +84,10 @@ public class CharacterControll : MonoBehaviour {
 
 
         //Gravity ujragondolasa, belso valtozo, ami szamol
-        if (!controller.isGrounded)
+        /*if (!controller.isGrounded)
         {
             moveDirection.y -= gravity * Time.deltaTime;
-        }
+        }*/
         controller.Move(moveDirection * Time.deltaTime);
 
 

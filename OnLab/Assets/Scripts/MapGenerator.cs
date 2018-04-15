@@ -13,6 +13,7 @@ public class MapGenerator : MonoBehaviour {
     public GameObject trapModel;
     public int mapNumber = 1;
     GameObject parent;
+    private List<GameObject> notStaticElements = new List<GameObject>();
 
     // Use this for initialization
     void Start()
@@ -24,7 +25,6 @@ public class MapGenerator : MonoBehaviour {
         switch (mapNumber)
         {
             case 1:
-                GameObject trap = Instantiate(trapModel, new Vector3(425, 10, 375), Quaternion.AngleAxis(-90, Vector3.right), parent.transform) as GameObject;
                 map1();
                 break;
             default:
@@ -48,7 +48,7 @@ public class MapGenerator : MonoBehaviour {
 
     public void map1()
     {
-        count = 1;
+        
         for (int i = 0; i < 3; i++)
         {
             for (int j = 0; j < 3; j++)
@@ -58,9 +58,20 @@ public class MapGenerator : MonoBehaviour {
             GameObject brick2 = Instantiate(brickModel, new Vector3(425 + i * 50, 0, 325), Quaternion.AngleAxis(-90, Vector3.right), parent.transform) as GameObject;
         }
 
-        GameObject doorButton = Instantiate(buttonModel, new Vector3(475, 0, 375), Quaternion.AngleAxis(-90, Vector3.right), parent.transform) as GameObject;
-        door = Instantiate(doorModel, new Vector3(575, 0, 325), Quaternion.AngleAxis(-90, Vector3.right), parent.transform) as GameObject;
+        map1NotStaticElements();
 
+    }
+
+    public void map1NotStaticElements()
+    {
+        count = 1;
+        door = Instantiate(doorModel, new Vector3(575, 0, 325), Quaternion.AngleAxis(-90, Vector3.right), parent.transform) as GameObject;
+        GameObject trap = Instantiate(trapModel, new Vector3(425, 10, 375), Quaternion.AngleAxis(-90, Vector3.right), parent.transform) as GameObject;
+        GameObject doorButton = Instantiate(buttonModel, new Vector3(475, 0, 375), Quaternion.AngleAxis(-90, Vector3.right), parent.transform) as GameObject;
+        
+        notStaticElements.Add(trap);
+        notStaticElements.Add(doorButton);
+        notStaticElements.Add(door);
     }
 
     private void Update()
@@ -75,6 +86,26 @@ public class MapGenerator : MonoBehaviour {
 
     public void lessCount()
     {
-        count--;      
+        count--;
+        //Debug.Log(count);
+    }
+
+    public void restartMap(int number)
+    {
+        for(int i=0; i<notStaticElements.Count; i++)
+        {
+            GameObject.Destroy(notStaticElements[i]);
+        }
+        used = false;
+
+        switch (number)
+        {
+            case 1:
+                map1NotStaticElements();
+                break;
+            default:
+                baseMap(10, 10);
+                break;
+        }
     }
 }

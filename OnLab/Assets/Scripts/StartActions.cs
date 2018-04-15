@@ -5,7 +5,7 @@ using UnityEngine;
 public class StartActions : MonoBehaviour
 {
     public int endwait = 1;
-    public int TimeBeetweenCommands;
+    public float TimeBeetweenCommands;
     CommandPanel cmdPanel;
     static int aimnumber = 0;
     public bool start = false;
@@ -16,6 +16,7 @@ public class StartActions : MonoBehaviour
 
     private Vector3 characterPosition;
     private Vector3 characterForward;
+    MapGenerator mapGen;
 
     void Start()
     {
@@ -23,6 +24,7 @@ public class StartActions : MonoBehaviour
         character = GameObject.Find(charName);
         characterPosition = new Vector3(character.transform.position.x, character.transform.position.y, character.transform.position.z);
         characterForward = new Vector3(character.transform.forward.x, character.transform.forward.y, character.transform.forward.z);
+        mapGen = GameObject.Find("MapGeneratorGO").GetComponent<MapGenerator>();
     }
 
     public void ExecuteCommands()
@@ -56,7 +58,7 @@ public class StartActions : MonoBehaviour
 
                 character.transform.position = characterPosition;
                 character.transform.forward=characterForward;
-
+                mapGen.restartMap(CurrentGameDatas.mapNumber);
             }
             
         }

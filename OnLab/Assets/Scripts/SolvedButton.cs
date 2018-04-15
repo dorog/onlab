@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SolvedButton : MonoBehaviour {
 
-    private bool used;
+    public bool used;
     MapGenerator mapGenerator;
 
     // Use this for initialization
@@ -22,10 +22,21 @@ public class SolvedButton : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!used)
+        Collider[] colliders = Physics.OverlapBox(this.transform.position, new Vector3(40, 40, 20));
+        //Debug.Log(colliders.Length);
+        for(int i=0; i<colliders.Length; i++)
         {
-            mapGenerator.lessCount();
-            used = true;
+            Rigidbody body = colliders[i].GetComponent<Rigidbody>();
+            if (!body)
+            {
+                continue;
+            }
+            if (!used)
+            {
+                mapGenerator.lessCount();
+                used = true;
+                //Debug.Log("mukszik " + used);
+            }
         }
     }
 }
