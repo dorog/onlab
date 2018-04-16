@@ -633,6 +633,48 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &823566805
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4507069512165978, guid: e77e7da3edc39fe40b822eb8c6970b65, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -0.2743593
+      objectReference: {fileID: 0}
+    - target: {fileID: 4507069512165978, guid: e77e7da3edc39fe40b822eb8c6970b65, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4507069512165978, guid: e77e7da3edc39fe40b822eb8c6970b65, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -1.9794979
+      objectReference: {fileID: 0}
+    - target: {fileID: 4507069512165978, guid: e77e7da3edc39fe40b822eb8c6970b65, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4507069512165978, guid: e77e7da3edc39fe40b822eb8c6970b65, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4507069512165978, guid: e77e7da3edc39fe40b822eb8c6970b65, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4507069512165978, guid: e77e7da3edc39fe40b822eb8c6970b65, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4507069512165978, guid: e77e7da3edc39fe40b822eb8c6970b65, type: 2}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: e77e7da3edc39fe40b822eb8c6970b65, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &825376660
 GameObject:
   m_ObjectHideFlags: 0
@@ -727,7 +769,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 825376660}
   m_LocalRotation: {x: 0.3757357, y: 0.17524543, z: -0.072589, w: 0.9071067}
-  m_LocalPosition: {x: 236, y: 590, z: -2}
+  m_LocalPosition: {x: 284, y: 359, z: 119}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1094,6 +1136,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotate: 90
   time: 1
+  fall: 0
+  gravityForce: 240
+  fallAnimationTime: 4.7
 --- !u!1 &1269760006
 GameObject:
   m_ObjectHideFlags: 0

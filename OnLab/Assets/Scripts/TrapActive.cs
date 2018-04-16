@@ -17,7 +17,8 @@ public class TrapActive : MonoBehaviour {
     // Update is called once per frame
     private void OnTriggerEnter(Collider other)
     {
-        Collider[] colliders = Physics.OverlapBox(this.transform.position, new Vector3(25, 25, 20));
+        Collider[] colliders = Physics.OverlapBox(this.transform.position, new Vector3(25, 150, 25));
+        Debug.Log(colliders.Length);
         for(int i=0; i<colliders.Length; i++)
         {
             Animator anim = colliders[i].GetComponent<Animator>();
@@ -32,6 +33,7 @@ public class TrapActive : MonoBehaviour {
                 continue;
             }
             joeController.fall = true;
+            //Debug.Log("joeeeee");
         }
         //Debug.Log(colliders.Length);
         trapAnim.Play();

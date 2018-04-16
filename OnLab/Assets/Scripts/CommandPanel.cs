@@ -112,8 +112,10 @@ public class CommandPanel : MonoBehaviour {
             if (commands[i].ID != -1)
             {
                 RealCmds.Add(commands[i]);
+                
             }
         }
+        
         return RealCmds;
     }
 
@@ -129,4 +131,6 @@ public class CommandPanel : MonoBehaviour {
         }
         return db;
     }
+
+
 }

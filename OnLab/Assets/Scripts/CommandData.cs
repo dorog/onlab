@@ -7,7 +7,6 @@ public class CommandData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 {
 
     public Command command;
-    public int amount = 1;
     public int slot;
 
     private CommandPanel cmdpanelmanager;

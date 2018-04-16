@@ -11,6 +11,7 @@ public class MapGenerator : MonoBehaviour {
     public GameObject doorModel;
     public GameObject brickModel;
     public GameObject trapModel;
+    public GameObject blackStoneModel;
     public int mapNumber = 1;
     GameObject parent;
     private List<GameObject> notStaticElements = new List<GameObject>();
@@ -49,13 +50,21 @@ public class MapGenerator : MonoBehaviour {
     public void map1()
     {
         
+        for(int i=0; i<7; i++)
+        {
+            for(int j=0; j<11; j++)
+            {
+                GameObject blackstone = Instantiate(blackStoneModel, new Vector3(175 + j * 50, -140, 175 + i * 50), Quaternion.AngleAxis(-90, Vector3.right), parent.transform) as GameObject;
+            }
+        }
+
         for (int i = 0; i < 3; i++)
         {
             for (int j = 0; j < 3; j++)
             {
-                GameObject brick = Instantiate(brickModel, new Vector3(275 + i * 50, 0, 275 + j * 50), Quaternion.AngleAxis(-90, Vector3.right), parent.transform) as GameObject;
+                GameObject brick = Instantiate(brickModel, new Vector3(275 + i * 50, -90, 275 + j * 50), Quaternion.AngleAxis(-90, Vector3.right), parent.transform) as GameObject;
             }
-            GameObject brick2 = Instantiate(brickModel, new Vector3(425 + i * 50, 0, 325), Quaternion.AngleAxis(-90, Vector3.right), parent.transform) as GameObject;
+            GameObject brick2 = Instantiate(brickModel, new Vector3(425 + i * 50, -90, 325), Quaternion.AngleAxis(-90, Vector3.right), parent.transform) as GameObject;
         }
 
         map1NotStaticElements();
@@ -66,7 +75,7 @@ public class MapGenerator : MonoBehaviour {
     {
         count = 1;
         door = Instantiate(doorModel, new Vector3(575, 0, 325), Quaternion.AngleAxis(-90, Vector3.right), parent.transform) as GameObject;
-        GameObject trap = Instantiate(trapModel, new Vector3(425, 10, 375), Quaternion.AngleAxis(-90, Vector3.right), parent.transform) as GameObject;
+        GameObject trap = Instantiate(trapModel, new Vector3(425, -90, 375), Quaternion.AngleAxis(-90, Vector3.right), parent.transform) as GameObject;
         GameObject doorButton = Instantiate(buttonModel, new Vector3(475, 0, 375), Quaternion.AngleAxis(-90, Vector3.right), parent.transform) as GameObject;
         
         notStaticElements.Add(trap);

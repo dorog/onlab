@@ -39,15 +39,23 @@ public class Slot : MonoBehaviour, IDropHandler
         {
             
             Transform commandplace = this.transform.GetChild(0);
+            //Debug.Log("A radobott: " + droppedCommand.slot);
             commandplace.GetComponent<CommandData>().slot = droppedCommand.slot;
+ 
             commandplace.SetParent(cmdpanelmanager.slots[droppedCommand.slot].transform);
             commandplace.transform.position = cmdpanelmanager.slots[droppedCommand.slot].transform.position;
+
+            //Debug.Log(commandplace.GetComponent<CommandData>().command);
+            cmdpanelmanager.commands[droppedCommand.slot] = commandplace.GetComponent<CommandData>().command;
+
+            //new row: bugg is solved: exchange is good now
+            commandplace.GetComponent<CommandData>().command.PanelSlot = droppedCommand.slot;
+            //
 
             droppedCommand.slot = id;
             droppedCommand.transform.SetParent(this.transform);
             droppedCommand.transform.position = this.transform.position;
-
-            cmdpanelmanager.commands[droppedCommand.slot] = commandplace.GetComponent<CommandData>().command;
+            
             cmdpanelmanager.commands[id] = droppedCommand.command;
         }
     }
