@@ -5,6 +5,7 @@ using UnityEngine;
 public class FallInLava : MonoBehaviour {
 
     StartActions sa;
+    public float resetTime = 2;
 
     // Use this for initialization
     void Start()
@@ -18,7 +19,8 @@ public class FallInLava : MonoBehaviour {
     private void OnTriggerEnter(Collider other)
     {
         Collider[] colliders = Physics.OverlapBox(this.transform.position, new Vector3(25, 150, 25));
-        Debug.Log(colliders.Length);
+        //Debug.Log(colliders.Length);
+        float joeTime = 0;
         for (int i = 0; i < colliders.Length; i++)
         {
             Animator anim = colliders[i].GetComponent<Animator>();
@@ -26,16 +28,18 @@ public class FallInLava : MonoBehaviour {
             {
                 continue;
             }
-            anim.SetBool("fall", true);
+            anim.SetBool("lava", true);
+            anim.SetBool("start", false);
             JoeCommandControl joeController = colliders[i].GetComponent<JoeCommandControl>();
             if (!joeController)
             {
                 continue;
             }
-            joeController.fall = true;
-
+            joeController.fall_lava = true;
+            joeController.left_time = joeController.LavaFallAnimationTime;
+            joeTime = joeController.LavaFallAnimationTime;
         }
 
-        sa.ObjectHit();
+        sa.ObjectHit(resetTime+joeTime);
     }
 }

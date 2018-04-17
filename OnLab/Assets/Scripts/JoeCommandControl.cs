@@ -15,8 +15,12 @@ public class JoeCommandControl : MonoBehaviour {
     private bool rightturn = false;
 
     public bool fall = false;
+    public bool fall_lava = false;
     public float gravityForce = 20;
     public float fallAnimationTime = 1.2f;
+    public float LavaFallAnimationTime = 0.5f;
+
+    public float left_time = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -27,15 +31,22 @@ public class JoeCommandControl : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (fall && (fallAnimationTime-Time.deltaTime<=0))
+        if (fall && (left_time-Time.deltaTime<=0))
         {
             joeControll.Move(Vector3.down*Time.deltaTime*gravityForce);
+
         }
-        else if(fall)
+      
+        if(fall_lava && (left_time - Time.deltaTime <= 0))
         {
-            fallAnimationTime -= Time.deltaTime;
-            //Debug.Log("else");
+            joeControll.Move(Vector3.down * Time.deltaTime * gravityForce/2);
         }
+
+        if (fall || fall_lava)
+        {
+            left_time -= Time.deltaTime;
+        }
+
         if (forward)
         {
             if (time - Time.deltaTime <= 0)
@@ -96,5 +107,14 @@ public class JoeCommandControl : MonoBehaviour {
     {
         forward = true;
         joeAnim.SetBool("forward", forward);
+    }
+
+    public void ResetActions()
+    {
+        joeAnim.SetBool("start", true);
+        joeAnim.SetBool("fall", false);
+        joeAnim.SetBool("lava", false);
+        fall = false;
+        fall_lava = false;
     }
 }

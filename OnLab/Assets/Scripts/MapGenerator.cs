@@ -52,7 +52,7 @@ public class MapGenerator : MonoBehaviour {
     {
         for(int i=0; i<5; i++)
         {
-            GameObject edge = Instantiate(EdgeModel, new Vector3(225, -15, 225+i*50), Quaternion.AngleAxis(-90, Vector3.right), parent.transform.GetChild(0)) as GameObject;
+            GameObject edgeLeft = Instantiate(EdgeModel, new Vector3(225, 0, 225+i*50), Quaternion.AngleAxis(0, Vector3.right), parent.transform.GetChild(3)) as GameObject;
         }
         for (int i = 0; i < 3; i++)
         {
@@ -62,8 +62,16 @@ public class MapGenerator : MonoBehaviour {
             }
             GameObject brick2 = Instantiate(brickModel, new Vector3(425 + i * 50, -90, 325), Quaternion.AngleAxis(-90, Vector3.right), parent.transform.GetChild(0)) as GameObject;
 
-
+            GameObject edgeBottom = Instantiate(EdgeModel, new Vector3(275 + i * 50, 0, 225), Quaternion.AngleAxis(0, Vector3.right), parent.transform.GetChild(3)) as GameObject;
+            GameObject edgeBottom2 = Instantiate(EdgeModel, new Vector3(425 + i * 50, 0, 275), Quaternion.AngleAxis(0, Vector3.right), parent.transform.GetChild(3)) as GameObject;
         }
+
+        for(int i=0; i<5; i++)
+        {
+            GameObject edgeTop = Instantiate(EdgeModel, new Vector3(275 + i * 50, 0, 425), Quaternion.AngleAxis(0, Vector3.right), parent.transform.GetChild(3)) as GameObject;
+        }
+
+        GameObject edgTop = Instantiate(EdgeModel, new Vector3(525, 0, 375), Quaternion.AngleAxis(0, Vector3.right), parent.transform.GetChild(3)) as GameObject;
         map1NotStaticElements();
 
     }

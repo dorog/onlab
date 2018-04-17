@@ -6,6 +6,7 @@ public class TrapActive : MonoBehaviour {
 
     Animation trapAnim;
     StartActions sa;
+    public float resetTime = 2;
 
 	// Use this for initialization
 	void Start () {
@@ -18,7 +19,8 @@ public class TrapActive : MonoBehaviour {
     private void OnTriggerEnter(Collider other)
     {
         Collider[] colliders = Physics.OverlapBox(this.transform.position, new Vector3(25, 150, 25));
-        Debug.Log(colliders.Length);
+        //Debug.Log(colliders.Length);
+        float joeTime = 0;
         for(int i=0; i<colliders.Length; i++)
         {
             Animator anim = colliders[i].GetComponent<Animator>();
@@ -27,16 +29,18 @@ public class TrapActive : MonoBehaviour {
                 continue;
             }
             anim.SetBool("fall", true);
+            anim.SetBool("start", false);
             JoeCommandControl joeController = colliders[i].GetComponent<JoeCommandControl>();
             if (!joeController)
             {
                 continue;
             }
             joeController.fall = true;
-            //Debug.Log("joeeeee");
+            joeController.left_time = joeController.fallAnimationTime;
+            joeTime = joeController.fallAnimationTime;
         }
         //Debug.Log(colliders.Length);
         trapAnim.Play();
-        sa.ObjectHit();
+        sa.ObjectHit(resetTime+joeTime);
     }
 }
