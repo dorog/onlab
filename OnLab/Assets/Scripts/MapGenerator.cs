@@ -26,6 +26,7 @@ public class MapGenerator : MonoBehaviour {
         switch (mapNumber)
         {
             case 1:
+                //GameObject brick = Instantiate(brickModel, new Vector3(325, -90, 325), Quaternion.AngleAxis(-90, Vector3.right), parent.transform) as GameObject;
                 map1();
                 break;
             default:
