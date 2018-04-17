@@ -27,7 +27,7 @@ public class CmdFactory : MonoBehaviour {
         commands.Add(new Command());
         factorySlots.Add(Instantiate(factorySlot));
         factorySlots[i].transform.SetParent(factoryPanel.transform);
-        factorySlots[i].GetComponent<Slot>().id = cmdPanel.slotAmount;
+        factorySlots[i].GetComponent<Slot>().id = cmdPanel.summSlots; // change: .slotamount
         factorySlots[i].GetComponent<CreateNewElement>().id = factoryElementsIds[i];
         factorySlots[i].GetComponent<CreateNewElement>().charName = charName;
         }

@@ -48,7 +48,7 @@ public class CreateNewElement : MonoBehaviour {
             commandObj.GetComponent<CommandData>().command = element;
 
             //last item must be a delete slot (slots + 1 (delete slot))
-            commandObj.GetComponent<CommandData>().slot = cmdpanelmanager.slotAmount;
+            commandObj.GetComponent<CommandData>().slot = cmdpanelmanager.summSlots; // .slotAmount
             
         }
      }

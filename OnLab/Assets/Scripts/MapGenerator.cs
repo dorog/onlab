@@ -79,7 +79,7 @@ public class MapGenerator : MonoBehaviour {
     public void map1NotStaticElements()
     {
         count = 1;
-        door = Instantiate(doorModel, new Vector3(640, 0, 325), Quaternion.AngleAxis(-90, Vector3.right), parent.transform) as GameObject;
+        door = Instantiate(doorModel, new Vector3(575, 0, 325), Quaternion.AngleAxis(-90, Vector3.right), parent.transform) as GameObject;
         GameObject trap = Instantiate(trapModel, new Vector3(425, -90, 375), Quaternion.AngleAxis(-90, Vector3.right), parent.transform.GetChild(2)) as GameObject;
         GameObject doorButton = Instantiate(buttonModel, new Vector3(475, 0, 375), Quaternion.AngleAxis(-90, Vector3.right), parent.transform.GetChild(1)) as GameObject;
         

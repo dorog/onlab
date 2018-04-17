@@ -13,15 +13,20 @@ public class CommandPanel : MonoBehaviour {
     public GameObject cmdpanelcmd;
     public GameObject factoryElement;
 
-    public int slotAmount = 48;
+    public int slotAmount = 48; //49 now
     public List<Command> commands = new List<Command>();
     public List<GameObject> slots = new List<GameObject>();
+    public int fv1_Counts = 10;
+    public int fv2_Counts = 10;
+
+    public int summSlots = 0;
 
     void Start()
     {
         commandPanel = GameObject.Find("CommandPanelBorder");
         slotPanel = commandPanel.transform.Find("CommandPanel").gameObject;
 
+        summSlots = fv1_Counts + fv2_Counts + slotAmount;
         //items load
         cmdLoad();
     }
@@ -72,11 +77,38 @@ public class CommandPanel : MonoBehaviour {
             slots[i].GetComponent<Slot>().id = i;
         }
 
+        //New, check it
+
+
+        for (int i=slotAmount; i<slotAmount+fv1_Counts; i++)
+        {
+            commands.Add(new Command());
+            slots.Add(Instantiate(cmdSlot));
+            slots[i].transform.SetParent(commandPanel.transform.GetChild(3));
+            slots[i].GetComponent<Slot>().id = i;
+        }
+
+        for(int i=slotAmount+fv1_Counts; i<slotAmount+fv1_Counts+fv2_Counts; i++)
+        {
+            commands.Add(new Command());
+            slots.Add(Instantiate(cmdSlot));
+            slots[i].transform.SetParent(commandPanel.transform.GetChild(4));
+            slots[i].GetComponent<Slot>().id = i;
+        }
+        //
+
         //delete slot
         commands.Add(new Command());
         slots.Add(Instantiate(deleteSlot));
-        slots[slotAmount].transform.SetParent(slotPanel.transform);
-        slots[slotAmount].GetComponent<Slot>().id = slotAmount;
+        slots[slotAmount+fv1_Counts+fv2_Counts].transform.SetParent(slotPanel.transform);
+        slots[slotAmount+fv1_Counts+fv2_Counts].GetComponent<Slot>().id = slotAmount + fv1_Counts + fv2_Counts;
+        // change: +fv1 + fv2
+        /*for(int i=0; i<commands.Count; i++)
+        {
+            Debug.Log(commands[i].ID + " " + commands[i].PanelSlot);
+        }
+        Debug.Log(slots.Count);
+        Debug.Log(commands.Count);*/
     }
 
     public void Clear()
@@ -92,6 +124,25 @@ public class CommandPanel : MonoBehaviour {
             }
             GameObject.Destroy(slotPanel.transform.GetChild(i).gameObject);
         }
+
+        for(int i=0; i<commandPanel.transform.GetChild(3).childCount; i++)
+        {
+            if (commandPanel.transform.GetChild(3).transform.GetChild(i).childCount>0)
+            {
+                GameObject.Destroy(commandPanel.transform.GetChild(3).transform.GetChild(i).GetChild(0).gameObject);
+            }
+            GameObject.Destroy(commandPanel.transform.GetChild(3).transform.GetChild(i).gameObject);
+        }
+
+        for (int i = 0; i < commandPanel.transform.GetChild(4).childCount; i++)
+        {
+            if (commandPanel.transform.GetChild(4).transform.GetChild(i).childCount > 0)
+            {
+                GameObject.Destroy(commandPanel.transform.GetChild(4).transform.GetChild(i).GetChild(0).gameObject);
+            }
+            GameObject.Destroy(commandPanel.transform.GetChild(4).transform.GetChild(i).gameObject);
+        }
+
         cmdLoad();
     }
 
@@ -99,7 +150,7 @@ public class CommandPanel : MonoBehaviour {
     {
         //it's rly dangereous, be careful with it
         //it works cuz last slot is a delete slot
-        commands.RemoveAt(slotAmount);
+        commands.RemoveAt(slotAmount+fv1_Counts+fv2_Counts);
 
         commands.Add(new Command());
     }
@@ -107,7 +158,7 @@ public class CommandPanel : MonoBehaviour {
     public List<Command> getRealCommands()
     {
         List<Command> RealCmds = new List<Command>();
-        for(int i=0; i<commands.Count; i++)
+        for(int i=0; i<slotAmount; i++)
         {
             if (commands[i].ID != -1)
             {

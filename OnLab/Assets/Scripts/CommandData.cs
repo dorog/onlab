@@ -43,7 +43,7 @@ public class CommandData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
             }*/
             
             //cmd panel will be a parent
-            this.transform.SetParent(cmdpanel.transform);
+            this.transform.SetParent(cmdpanel.transform.parent.transform); // + .parent.transform
             this.transform.position = eventData.position;
             GetComponent<CanvasGroup>().blocksRaycasts = false;
         }
