@@ -29,7 +29,12 @@ public class Command {
     }
 
     public virtual void Effect() {
-        Debug.Log("realOne");
+        //Debug.Log("realOne");
         return;
+    }
+
+    public virtual void Identity(int i, int aimnumber)
+    {
+        Debug.Log("cmd "+ i + " " +aimnumber);
     }
 }

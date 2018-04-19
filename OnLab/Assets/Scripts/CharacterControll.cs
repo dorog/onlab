@@ -36,22 +36,9 @@ public class CharacterControll : MonoBehaviour {
     void Update()
     {
         bool jump = Input.GetKey("space");
-        //float run = Input.GetAxis("Vertical");
         float rot = Input.GetAxis("Horizontal");
-        //bool twerk = Input.GetKey("t");
-        //bool hit = Input.GetKeyDown("x");
-        //float runside = Input.GetAxis("JB");
-
-        //anim.SetBool("walk", isWalkingPressed);
-        /*anim.SetFloat("Vertical", run);
-        anim.SetBool("Twerk", twerk);
-        //anim.SetBool("hit", hit);
-        anim.SetBool("Jump", jump);
-        anim.SetFloat("Horizontal", runside);*/
-        //anim.SetFloat("Rotation", rot);
-
+        
         rot *= rotationSpeed;
-
 
         transform.Rotate(0, rot, 0);
 

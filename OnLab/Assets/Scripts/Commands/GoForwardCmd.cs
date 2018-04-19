@@ -12,4 +12,9 @@ public class GoForwardCmd : Command
     {
         character.GetComponent<JoeCommandControl>().GoForward();
     }
+
+    public override void Identity(int i, int aimnumber)
+    {
+        Debug.Log("forward " +i + " "+aimnumber);
+    }
 }

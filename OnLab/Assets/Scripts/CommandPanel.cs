@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class CommandPanel : MonoBehaviour {
 
     //public CharacterPorperties charInventory;
-    GameObject commandPanel;
+    GameObject commandPanelBorder;
     GameObject slotPanel;
     public GameObject cmdSlot;
     public GameObject deleteSlot;
@@ -21,10 +21,15 @@ public class CommandPanel : MonoBehaviour {
 
     public int summSlots = 0;
 
+    private int delete_number = 0;
+    private int base_number = 2;
+    private int fv1_number = 5;
+    private int fv2_number = 6;
+
     void Start()
     {
-        commandPanel = GameObject.Find("CommandPanelBorder");
-        slotPanel = commandPanel.transform.Find("CommandPanel").gameObject;
+        commandPanelBorder = GameObject.Find("CommandPanelBorder");
+        slotPanel = commandPanelBorder.transform.Find("CommandPanel").gameObject;
 
         summSlots = fv1_Counts + fv2_Counts + slotAmount;
         //items load
@@ -69,6 +74,11 @@ public class CommandPanel : MonoBehaviour {
     void cmdLoad()
     {
 
+        /*commands.Add(new Command());
+        slots.Add(Instantiate(deleteSlot));
+        slots[0].transform.SetParent(commandPanelBorder.transform.GetChild(delete_number));
+        slots[0].GetComponent<Slot>().id = 0; // summ -> 0*/
+
         for (int i = 0; i < slotAmount; i++)
         {
             commands.Add(new Command());
@@ -84,7 +94,7 @@ public class CommandPanel : MonoBehaviour {
         {
             commands.Add(new Command());
             slots.Add(Instantiate(cmdSlot));
-            slots[i].transform.SetParent(commandPanel.transform.GetChild(3));
+            slots[i].transform.SetParent(commandPanelBorder.transform.GetChild(fv1_number));
             slots[i].GetComponent<Slot>().id = i;
         }
 
@@ -92,7 +102,7 @@ public class CommandPanel : MonoBehaviour {
         {
             commands.Add(new Command());
             slots.Add(Instantiate(cmdSlot));
-            slots[i].transform.SetParent(commandPanel.transform.GetChild(4));
+            slots[i].transform.SetParent(commandPanelBorder.transform.GetChild(fv2_number));
             slots[i].GetComponent<Slot>().id = i;
         }
         //
@@ -100,8 +110,9 @@ public class CommandPanel : MonoBehaviour {
         //delete slot
         commands.Add(new Command());
         slots.Add(Instantiate(deleteSlot));
-        slots[slotAmount+fv1_Counts+fv2_Counts].transform.SetParent(slotPanel.transform);
-        slots[slotAmount+fv1_Counts+fv2_Counts].GetComponent<Slot>().id = slotAmount + fv1_Counts + fv2_Counts;
+        
+        slots[summSlots].transform.SetParent(commandPanelBorder.transform.GetChild(delete_number));
+        slots[summSlots].GetComponent<Slot>().id = summSlots;
         // change: +fv1 + fv2
         /*for(int i=0; i<commands.Count; i++)
         {
@@ -125,22 +136,22 @@ public class CommandPanel : MonoBehaviour {
             GameObject.Destroy(slotPanel.transform.GetChild(i).gameObject);
         }
 
-        for(int i=0; i<commandPanel.transform.GetChild(3).childCount; i++)
+        for(int i=0; i<commandPanelBorder.transform.GetChild(fv1_number).childCount; i++)
         {
-            if (commandPanel.transform.GetChild(3).transform.GetChild(i).childCount>0)
+            if (commandPanelBorder.transform.GetChild(fv1_number).transform.GetChild(i).childCount>0)
             {
-                GameObject.Destroy(commandPanel.transform.GetChild(3).transform.GetChild(i).GetChild(0).gameObject);
+                GameObject.Destroy(commandPanelBorder.transform.GetChild(fv1_number).transform.GetChild(i).GetChild(0).gameObject);
             }
-            GameObject.Destroy(commandPanel.transform.GetChild(3).transform.GetChild(i).gameObject);
+            GameObject.Destroy(commandPanelBorder.transform.GetChild(fv1_number).transform.GetChild(i).gameObject);
         }
 
-        for (int i = 0; i < commandPanel.transform.GetChild(4).childCount; i++)
+        for (int i = 0; i < commandPanelBorder.transform.GetChild(fv2_number).childCount; i++)
         {
-            if (commandPanel.transform.GetChild(4).transform.GetChild(i).childCount > 0)
+            if (commandPanelBorder.transform.GetChild(fv2_number).transform.GetChild(i).childCount > 0)
             {
-                GameObject.Destroy(commandPanel.transform.GetChild(4).transform.GetChild(i).GetChild(0).gameObject);
+                GameObject.Destroy(commandPanelBorder.transform.GetChild(fv2_number).transform.GetChild(i).GetChild(0).gameObject);
             }
-            GameObject.Destroy(commandPanel.transform.GetChild(4).transform.GetChild(i).gameObject);
+            GameObject.Destroy(commandPanelBorder.transform.GetChild(fv2_number).transform.GetChild(i).gameObject);
         }
 
         cmdLoad();
@@ -150,8 +161,9 @@ public class CommandPanel : MonoBehaviour {
     {
         //it's rly dangereous, be careful with it
         //it works cuz last slot is a delete slot
-        commands.RemoveAt(slotAmount+fv1_Counts+fv2_Counts);
-
+        //update: first element
+        commands.RemoveAt(slotNumber);
+        //commands[0].Effect();
         commands.Add(new Command());
     }
 

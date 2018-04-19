@@ -23,7 +23,12 @@ public class FV : Command {
 
     public override void Effect()
     {
-        Debug.Log("effect");
-        sa.fvStart(fvNumber);     
+        //Debug.Log("effect");
+        sa.fvStart(fvNumber);
     }
+
+    /*public override void Identity(int i, int aimnumber)
+    {
+        Debug.Log("FV "+i+" "+aimnumber);
+    }*/
 }

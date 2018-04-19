@@ -21,6 +21,7 @@ public class JoeCommandControl : MonoBehaviour {
     public float LavaFallAnimationTime = 0.5f;
 
     public float left_time = 0;
+    public bool stopped = false;
 
 	// Use this for initialization
 	void Start () {
@@ -31,66 +32,71 @@ public class JoeCommandControl : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (fall && (left_time-Time.deltaTime<=0))
+        
+        if (!stopped)
         {
-            joeControll.Move(Vector3.down*Time.deltaTime*gravityForce);
-
-        }
-      
-        if(fall_lava && (left_time - Time.deltaTime <= 0))
-        {
-            joeControll.Move(Vector3.down * Time.deltaTime * gravityForce/2);
-        }
-
-        if (fall || fall_lava)
-        {
-            left_time -= Time.deltaTime;
-        }
-
-        if (forward)
-        {
-            if (time - Time.deltaTime <= 0)
+            if (fall && (left_time - Time.deltaTime <= 0))
             {
-                forward = false;
-                this.transform.GetComponent<CharacterController>().Move(this.transform.forward*50*time);
-                time = originTime;
-                joeAnim.SetBool("forward", forward);
+                joeControll.Move(Vector3.down * Time.deltaTime * gravityForce);
 
             }
-            else
+
+            if (fall_lava && (left_time - Time.deltaTime <= 0))
             {
-                this.transform.GetComponent<CharacterController>().Move(this.transform.forward * 50 * Time.deltaTime);
-                time -= Time.deltaTime;
+                joeControll.Move(Vector3.down * Time.deltaTime * gravityForce / 2);
+            }
+
+            if (fall || fall_lava)
+            {
+                left_time -= Time.deltaTime;
+            }
+
+            if (forward)
+            {
+                if (time - Time.deltaTime <= 0)
+                {
+                    forward = false;
+                    this.transform.GetComponent<CharacterController>().Move(this.transform.forward * 50 * time);
+                    time = originTime;
+                    joeAnim.SetBool("forward", forward);
+
+                }
+                else
+                {
+                    this.transform.GetComponent<CharacterController>().Move(this.transform.forward * 50 * Time.deltaTime);
+                    time -= Time.deltaTime;
+                }
+            }
+            else if (leftturn)
+            {
+                if (time - Time.deltaTime <= 0)
+                {
+                    leftturn = false;
+                    this.transform.Rotate(0, rotate * time * -1, 0);
+                    time = originTime;
+                }
+                else
+                {
+                    this.transform.Rotate(0, rotate * Time.deltaTime * -1, 0);
+                    time -= Time.deltaTime;
+                }
+            }
+            else if (rightturn)
+            {
+                if (time - Time.deltaTime <= 0)
+                {
+                    rightturn = false;
+                    this.transform.Rotate(0, rotate * time, 0);
+                    time = originTime;
+                }
+                else
+                {
+                    this.transform.Rotate(0, rotate * Time.deltaTime, 0);
+                    time -= Time.deltaTime;
+                }
             }
         }
-        else if(leftturn)
-        {
-            if (time - Time.deltaTime <= 0)
-            {
-                leftturn = false;
-                this.transform.Rotate(0, rotate*time*-1, 0);
-                time = originTime;
-             }
-             else
-             {
-                this.transform.Rotate(0, rotate * Time.deltaTime*-1, 0);
-                 time -= Time.deltaTime;
-              }
-        }
-        else if (rightturn)
-        {
-            if (time - Time.deltaTime <= 0)
-            {
-                rightturn = false;
-                this.transform.Rotate(0, rotate * time, 0);
-                time = originTime;
-            }
-            else
-            {
-                this.transform.Rotate(0, rotate * Time.deltaTime, 0);
-                time -= Time.deltaTime;
-            }
-        }
+       
 	}
 
     public void TurnRight()
