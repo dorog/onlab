@@ -29,6 +29,7 @@ public class Command {
     }
 
     public virtual void Effect() {
+        Debug.Log("realOne");
         return;
     }
 }

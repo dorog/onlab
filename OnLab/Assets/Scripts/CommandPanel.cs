@@ -155,7 +155,7 @@ public class CommandPanel : MonoBehaviour {
         commands.Add(new Command());
     }
 
-    public List<Command> getRealCommands()
+    public List<Command> getRealCommands(List<Command> fv1, List<Command> fv2)
     {
         List<Command> RealCmds = new List<Command>();
         for(int i=0; i<slotAmount; i++)
@@ -166,10 +166,27 @@ public class CommandPanel : MonoBehaviour {
                 
             }
         }
-        
+
+        for(int i=slotAmount; i<slotAmount+fv1_Counts; i++)
+        {
+            if (commands[i].ID != -1)
+            {
+                fv1.Add(commands[i]);
+            }
+        }
+
+        for (int i = slotAmount+fv1_Counts; i < slotAmount + fv1_Counts+fv2_Counts; i++)
+        {
+            if (commands[i].ID != -1)
+            {
+                fv2.Add(commands[i]);
+            }
+        }
+
         return RealCmds;
     }
 
+    // delete it
     public int getRealCommandsNumber()
     {
         int db = 0;

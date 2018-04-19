@@ -10,6 +10,8 @@ public class TurnLeftCmd : Command
 
     public override void Effect()
     {
+        Debug.Log("left" + System.DateTime.Now);
         character.GetComponent<JoeCommandControl>().TurnLeft();
+        
     }
 }
