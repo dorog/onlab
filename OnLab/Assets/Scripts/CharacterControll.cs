@@ -35,7 +35,7 @@ public class CharacterControll : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        bool jump = Input.GetKey("space");
+        
         float rot = Input.GetAxis("Horizontal");
         
         rot *= rotationSpeed;
