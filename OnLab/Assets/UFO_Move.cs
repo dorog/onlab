@@ -77,13 +77,13 @@ public class UFO_Move : MonoBehaviour {
         {
             if(rising_time - Time.deltaTime >= 0)
             {
-                this.transform.position += new Vector3(0, 0, 1) * Time.deltaTime * rising_speed;
+                this.transform.position += new Vector3(0, 1, 0) * Time.deltaTime * rising_speed;
                 rising_time -= Time.deltaTime;
             }
             //it must do no mistake
             else if(rising_time > 0)
             {
-                this.transform.position += new Vector3(0, 0, 1) * rising_time * rising_speed;
+                this.transform.position += new Vector3(0, 1, 0) * rising_time * rising_speed;
                 rising_time = 0;
             }
             //no problem if it wait a little less
@@ -93,12 +93,12 @@ public class UFO_Move : MonoBehaviour {
             }
             else if(flying_time - Time.deltaTime >= 0)
             {
-                this.transform.position += new Vector3(Time.deltaTime*jumpXpower, 0, Time.deltaTime * jumpUpPower);
+                this.transform.position += new Vector3(Time.deltaTime*jumpXpower, Time.deltaTime * jumpUpPower, 0);
                 flying_time -= Time.deltaTime;
             }
             else if(flying_time > 0)
             {
-                this.transform.position += new Vector3(Time.deltaTime * jumpXpower, 0, Time.deltaTime * jumpUpPower);
+                this.transform.position += new Vector3(Time.deltaTime * jumpXpower, Time.deltaTime * jumpUpPower, 0);
                 flying_time = 0;
             }
             else
@@ -136,12 +136,12 @@ public class UFO_Move : MonoBehaviour {
                     door.GetComponent<Animation>().Play();
                     firstHere = false;
                 }
-                this.transform.position -= new Vector3(Time.deltaTime * jumpBackPower, 0, Time.deltaTime * jumpDownPower);
+                this.transform.position -= new Vector3(Time.deltaTime * jumpBackPower, Time.deltaTime * jumpDownPower, 0);
                 return_time -= Time.deltaTime;
             }
             else if (return_time > 0)
             {
-                this.transform.position -= new Vector3(Time.deltaTime * jumpBackPower, 0, Time.deltaTime * jumpDownPower);
+                this.transform.position -= new Vector3(Time.deltaTime * jumpBackPower, Time.deltaTime * jumpDownPower, 0);
                 return_time = 0;
             }
             // it can wait a little more
@@ -151,13 +151,13 @@ public class UFO_Move : MonoBehaviour {
             }
             else if(landing_time - Time.deltaTime >= 0)
             {
-                this.transform.position -= new Vector3(0, 0, 1) * Time.deltaTime * landing_speed;
+                this.transform.position -= new Vector3(0, 1, 0) * Time.deltaTime * landing_speed;
                 landing_time -= Time.deltaTime;
             }
             //it must be 100% correct
             else if(landing_time > 0)
             {
-                this.transform.position -= new Vector3(0, 0, 1) * Time.deltaTime * landing_speed;
+                this.transform.position -= new Vector3(0, 1, 0) * Time.deltaTime * landing_speed;
                 landing_time = 0;
             }
             else

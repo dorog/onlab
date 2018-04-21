@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/MainMenu.unity
+- path: Assets/living birds/demo/Demo.unity
   isLoaded: 1
   isActive: 1
