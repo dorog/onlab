@@ -91,10 +91,16 @@ public class FinishMap : MonoBehaviour {
         //save this
         using (StreamWriter sw = new StreamWriter(CurrentGameDatas.slotName))
         {
+            sw.WriteLine(1);
             sw.WriteLine(CurrentGameDatas.maxMap);
             for (int i = 0; i < CurrentGameDatas.mapDatas.Count; i++)
             {
-                sw.WriteLine(CurrentGameDatas.mapDatas[i].mapScore + "\t" + CurrentGameDatas.mapDatas[i].scarab);
+                int key = 1;
+                if (!CurrentGameDatas.mapDatas[i].key)
+                {
+                    key = 0;
+                }
+                sw.WriteLine(CurrentGameDatas.mapDatas[i].mapScore + "\t" + CurrentGameDatas.mapDatas[i].scarab +"\t" +key);
             }
         }
         
