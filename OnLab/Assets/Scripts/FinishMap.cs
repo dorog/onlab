@@ -43,7 +43,14 @@ public class FinishMap : MonoBehaviour {
         int scarabNumber = 0;
         if (realCommandsNumber < MinCmdNumber[0])
         {
-            scarabNumber = 3;
+            if (CurrentGameDatas.HaveKey)
+            {
+                scarabNumber = 3;
+            }
+            else
+            {
+                scarabNumber = 2;
+            }
         }
         else if (realCommandsNumber < MinCmdNumber[1])
         {
@@ -56,7 +63,7 @@ public class FinishMap : MonoBehaviour {
 
         int thisGameScore = CurrentGameDatas.mapNumber * scarabNumber * 10 - realCommandsNumber;
 
-        if (CurrentGameDatas.lastMap==CurrentGameDatas.mapNumber)
+        /*if (CurrentGameDatas.lastMap==CurrentGameDatas.mapNumber)
         {
 
              CurrentGameDatas.mapDatas[CurrentGameDatas.mapNumber - 1].scarab = scarabNumber;
@@ -69,7 +76,7 @@ public class FinishMap : MonoBehaviour {
             CurrentGameDatas.mapDatas.Add(new MapDatas()); //do i rly need it?    
         }
         else
-        {
+        {*/
             if(CurrentGameDatas.mapDatas[CurrentGameDatas.mapNumber - 1].scarab< scarabNumber)
             {
                 CurrentGameDatas.mapDatas[CurrentGameDatas.mapNumber - 1].scarab = scarabNumber;
@@ -79,20 +86,21 @@ public class FinishMap : MonoBehaviour {
                 CurrentGameDatas.mapDatas[CurrentGameDatas.mapNumber - 1].mapScore = CurrentGameDatas.mapNumber * CurrentGameDatas.mapDatas[CurrentGameDatas.mapNumber - 1].scarab * 10 - realCommandsNumber; //calculate
             }
 
-        }
+        //}
 
         //save this
         using (StreamWriter sw = new StreamWriter(CurrentGameDatas.slotName))
         {
-            sw.WriteLine(CurrentGameDatas.lastMap);
+            sw.WriteLine(CurrentGameDatas.maxMap);
             for (int i = 0; i < CurrentGameDatas.mapDatas.Count; i++)
             {
                 sw.WriteLine(CurrentGameDatas.mapDatas[i].mapScore + "\t" + CurrentGameDatas.mapDatas[i].scarab);
             }
         }
         
-
-        CurrentGameDatas.solvedMap = new MapDatas(thisGameScore, scarabNumber);
+        
+        CurrentGameDatas.solvedMap = new MapDatas(thisGameScore, scarabNumber, CurrentGameDatas.HaveKey);
+        CurrentGameDatas.HaveKey = false;
 
         //Todo: different scene for last map
         scLoader.LoadScene("FinishedMap");

@@ -13,6 +13,8 @@ public class ReadSlot : MonoBehaviour {
     private int summScore = 0;
     private int summBuggPart = 0;
     private int perfectMap = 0;
+    private int solvedMap = 0;
+    private int summKeys=0;
     public GameDatas gmdata;
     public bool forload = true;
 
@@ -24,8 +26,12 @@ public class ReadSlot : MonoBehaviour {
                 String line = sr.ReadToEnd();
                 string[] datas = line.Split('\n');
 
-                int latestMap = Convert.ToInt32(datas[0]);
-                if (latestMap == 0)
+                int slotState = Convert.ToInt32(datas[0]);
+                int maxMap = Convert.ToInt32(datas[1]);
+                CurrentGameDatas.maxMap = maxMap;
+                gmdata = new GameDatas(maxMap);
+
+                if (slotState == 0)
                 {
                     Image panelImg = GameObject.Find(this.name).transform.GetChild(0).GetComponent<Image>();
                     Color tempColor = panelImg.color;
@@ -38,22 +44,31 @@ public class ReadSlot : MonoBehaviour {
                 }
                 else
                 {
-                    gmdata = new GameDatas(latestMap);
-                    for (int i=0; i<latestMap-1; i++)
+                    gmdata = new GameDatas(maxMap);
+                    for (int i=0; i<maxMap; i++)
                     {
-                        string[] row = datas[i + 1].Split('\t');
-                        gmdata.AddMapData(new MapDatas(Convert.ToInt32(row[0]), Convert.ToInt32(row[1])));
+                        string[] row = datas[i + 2].Split('\t');
+                        bool key = true;
+                        if (Convert.ToInt32(row[2]) == 0)
+                        {
+                            key = false;
+                        }
+                        gmdata.AddMapData(new MapDatas(Convert.ToInt32(row[0]), Convert.ToInt32(row[1]), key));
 
                         summScore += Convert.ToInt32(row[0]);
                         summBuggPart += Convert.ToInt32(row[1]);
+                        summKeys += Convert.ToInt32(row[2]);
                         if (Convert.ToInt32(row[1]) == 3)
                         {
                             perfectMap++;
                         }
+                        if (Convert.ToInt32(row[1]) > 0){
+                            solvedMap++;
+                        }
                     }
 
                     //last map, if all map has been solved i wont use this.
-                    gmdata.AddMapData(new MapDatas());
+                    
 
                     Image background = this.transform.GetComponent<Image>();
                     background.sprite = img;
@@ -62,9 +77,7 @@ public class ReadSlot : MonoBehaviour {
                     textTransform.position += Vector3.up*-150;
                     textDatas.fontSize = 20;
                     textDatas.color = Color.yellow;
-                    textDatas.text = "Cleared maps: "+(latestMap-1)+"\nScore: "+summScore+"\nScarab parts: "+summBuggPart+"\nPerfect Maps: "+perfectMap;
-
-                    
+                    textDatas.text = "Cleared maps: "+(solvedMap)+"\nScore: "+summScore+"\nScarab parts: "+summBuggPart+"\nPerfect Maps: "+perfectMap+"\nKeys: "+summKeys;
                 }
 
 
@@ -101,12 +114,19 @@ public class ReadSlot : MonoBehaviour {
         using (StreamWriter sw = new StreamWriter(filename))
         {
             sw.WriteLine(1);
-            sw.WriteLine(0+"\t"+0);
+            sw.WriteLine(CurrentGameDatas.maxMap);
+            for(int i=0; i<CurrentGameDatas.maxMap; i++)
+            {
+                sw.WriteLine(0 + "\t" + 0 +"\t" + 0);
+            }
         }
 
-        gmdata = new GameDatas(1);
-        gmdata.AddMapData(new MapDatas());
-
+        gmdata = new GameDatas(CurrentGameDatas.maxMap);
+        for(int i=0; i<CurrentGameDatas.maxMap; i++)
+        {
+            gmdata.AddMapData(new MapDatas());
+        }
+        
         CurrentGameDatas.CopyTheDatas(gmdata, filename);
         SceneManager.LoadScene("Map_guide");
     }

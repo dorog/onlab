@@ -12,11 +12,11 @@ public class ResultMake : MonoBehaviour {
         GameObject finishPanel = GameObject.Find("FinishedPanel");
         scLoader = GameObject.Find("LoadSceneGO").GetComponent<SceneLoader>();
 
-        finishPanel.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Map_guide/Golden_Scarab_Beetle_part" + CurrentGameDatas.solvedMap.scarab);
+        finishPanel.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Map_guide/GSB" + CurrentGameDatas.solvedMap.scarab);
         finishPanel.transform.GetChild(1).GetComponent<Text>().text = "Score: "+ CurrentGameDatas.solvedMap.mapScore;
         finishPanel.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(LoadNextScene);
         finishPanel.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(LoadSameScene);
-        if (CurrentGameDatas.maxLevel == CurrentGameDatas.mapNumber)
+        if (CurrentGameDatas.maxMap == CurrentGameDatas.mapNumber)
         {
             //TODO: give different scene for the last map
             finishPanel.transform.GetChild(2).GetComponent<Button>().interactable = false;

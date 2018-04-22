@@ -723,7 +723,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonModel: {fileID: 1662418838933890, guid: e77e7da3edc39fe40b822eb8c6970b65,
     type: 2}
-  doorModel: {fileID: 1999151888702494, guid: 621fc74d57f6a454eaeb3d0489660900, type: 2}
+  doorModel: {fileID: 1581325914476790, guid: a65a7e5a0284721459ad6f3ec7d98c84, type: 2}
   brickModel: {fileID: 1406325461132120, guid: 8669ad782b616014eb4664f8528c2590, type: 2}
   trapModel: {fileID: 1181428921923188, guid: 73f7844f3919d6f448ded1b2a0b799b6, type: 2}
   EdgeModel: {fileID: 1940690599555412, guid: 6fdf2964b8a57834781ce37319b20075, type: 2}

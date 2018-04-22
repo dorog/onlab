@@ -6,32 +6,71 @@ using UnityEngine.UI;
 public class GuideMake : MonoBehaviour {
 
     GameDatas gmdatas;
-    GameObject mapsGO;
+    GameObject Doors;
+    GameObject Gate;
+    GameObject Keys;
+    private int scoreBoardPlace = 3;
 
 	// Use this for initialization
 	void Start () {
-        mapsGO = GameObject.Find("MapsGO");
+        Doors = GameObject.Find("Doors");
+        Gate = GameObject.Find("Gates");
+        Keys = GameObject.Find("Keys");
         //read the datas from CurrentGameDatas
-        gmdatas = new GameDatas(CurrentGameDatas.lastMap);
-        for(int i=0; i<gmdatas.lastMap; i++)
+        gmdatas = new GameDatas(CurrentGameDatas.maxMap);
+        for(int i=0; i<gmdatas.maxMap; i++)
         {
-            gmdatas.AddMapData(new MapDatas(CurrentGameDatas.mapDatas[i].mapScore, CurrentGameDatas.mapDatas[i].scarab));
-        }
-
-        int mapsGOchildNumber = mapsGO.transform.childCount;
-        for(int i=0; i< gmdatas.lastMap && i < mapsGOchildNumber; i++) //&& i< mapsGOchildNumber
-        {
-            mapsGO.transform.GetChild(i).transform.GetChild(1).GetChild(0).GetComponent<Text>().text="Score: "+gmdatas.mapDatas[i].mapScore;
-            mapsGO.transform.GetChild(i).transform.GetChild(1).GetChild(1).GetComponent<Image>().sprite = Resources.Load<Sprite>("Map_guide/Golden_Scarab_Beetle_part"+ gmdatas.mapDatas[i].scarab);
+            gmdatas.AddMapData(new MapDatas(CurrentGameDatas.mapDatas[i].mapScore, CurrentGameDatas.mapDatas[i].scarab, CurrentGameDatas.mapDatas[i].key));
         }
 
 
-
-        for(int i=gmdatas.lastMap; i<mapsGOchildNumber; i++)
+        //Do something with last maps "key" (gem)
+        for(int i=0; i<gmdatas.maxMap-1; i++)
         {
-            mapsGO.transform.GetChild(i).transform.GetComponent<Button>().interactable = false;
-            mapsGO.transform.GetChild(i).transform.GetChild(1).GetComponent<Image>().gameObject.SetActive(false);
+            if (CurrentGameDatas.mapDatas[i].key)
+            {
+                Material[] mats = Keys.transform.GetChild(i).GetComponent<MeshRenderer>().materials;
+                mats[1] = Resources.Load<Material>("Map_guide/Key1");
+                Keys.transform.GetChild(i).GetComponent<MeshRenderer>().materials = mats;
+
+                Gate.GetComponent<OpenGates>().OpenGate(i);
+            }
+            else
+            {
+                Material[] mats = Keys.transform.GetChild(i).GetComponent<MeshRenderer>().materials;
+                mats[1] = Resources.Load<Material>("Map_guide/Key0");
+                Keys.transform.GetChild(i).GetComponent<MeshRenderer>().materials = mats;
+            }
         }
+
+        int DoorsChild = Doors.transform.childCount;
+        for(int i=0; i< gmdatas.maxMap && i < DoorsChild; i++) //&& i< mapsGOchildNumber
+        {
+            //Doors.transform.GetChild(i).transform.GetChild(4).GetChild(0).GetComponent<Text>().text="Score: "+gmdatas.mapDatas[i].mapScore;
+            //Debug.Log(gmdatas.mapDatas[i].scarab);
+            Material[] mats = Doors.transform.GetChild(i).transform.GetChild(scoreBoardPlace).GetChild(0).GetComponent<MeshRenderer>().materials; //Resources.Load<Material>("Map_guide/GSB_part" + gmdatas.mapDatas[i].scarab);
+            mats[1] = Resources.Load<Material>("Map_guide/GSB_part"+gmdatas.mapDatas[i].scarab);
+            Doors.transform.GetChild(i).transform.GetChild(scoreBoardPlace).GetChild(0).GetComponent<MeshRenderer>().materials = mats;
+            int[] numbs = { 100, 10, 1 };
+            int score = gmdatas.mapDatas[i].mapScore;
+            for (int j=1; j < Doors.transform.GetChild(i).transform.GetChild(scoreBoardPlace).childCount; j++)
+            {
+                mats = Doors.transform.GetChild(i).transform.GetChild(scoreBoardPlace).GetChild(j).GetComponent<MeshRenderer>().materials;
+                mats[1] = Resources.Load<Material>("Map_guide/number" + score/numbs[j-1]);
+                score -= (score/numbs[j - 1])*numbs[j-1];
+                Doors.transform.GetChild(i).transform.GetChild(scoreBoardPlace).GetChild(j).GetComponent<MeshRenderer>().materials = mats;
+            }
+
+
+        }
+
+
+
+        /*for(int i=gmdatas.maxMap; i<DoorsChild; i++)
+        {
+            Doors.transform.GetChild(i).transform.GetComponent<Button>().interactable = false;
+            Doors.transform.GetChild(i).transform.GetChild(1).GetComponent<Image>().gameObject.SetActive(false);
+        }*/
     }
 	
 	// Update is called once per frame
