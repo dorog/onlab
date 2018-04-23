@@ -9,6 +9,7 @@ public class GuideMake : MonoBehaviour {
     GameObject Doors;
     GameObject Gate;
     GameObject Keys;
+    public GameObject KeyModel;
     private int scoreBoardPlace = 3;
 
 	// Use this for initialization
@@ -29,17 +30,15 @@ public class GuideMake : MonoBehaviour {
         {
             if (CurrentGameDatas.mapDatas[i].key)
             {
-                Material[] mats = Keys.transform.GetChild(i).GetComponent<MeshRenderer>().materials;
-                mats[1] = Resources.Load<Material>("Map_guide/Key1");
-                Keys.transform.GetChild(i).GetComponent<MeshRenderer>().materials = mats;
-
+                Quaternion root = Keys.transform.GetChild(i).rotation;
+                //root.y += 180;
+                int size = 1;
+                if (i >= gmdatas.maxMap / 2)
+                {
+                    size = -1;
+                }
+                GameObject key = Instantiate(KeyModel, Keys.transform.GetChild(i).position+new Vector3(25*size, 50, 0), root, Keys.transform.GetChild(i)) as GameObject;
                 Gate.GetComponent<OpenGates>().OpenGate(i);
-            }
-            else
-            {
-                Material[] mats = Keys.transform.GetChild(i).GetComponent<MeshRenderer>().materials;
-                mats[1] = Resources.Load<Material>("Map_guide/Key0");
-                Keys.transform.GetChild(i).GetComponent<MeshRenderer>().materials = mats;
             }
         }
 
