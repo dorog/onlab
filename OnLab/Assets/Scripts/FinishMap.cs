@@ -62,30 +62,20 @@ public class FinishMap : MonoBehaviour {
 
         int thisGameScore = CurrentGameDatas.mapNumber * scarabNumber * 10 - realCommandsNumber;
 
-        /*if (CurrentGameDatas.lastMap==CurrentGameDatas.mapNumber)
+        if(CurrentGameDatas.mapDatas[CurrentGameDatas.mapNumber - 1].scarab< scarabNumber)
         {
-
-             CurrentGameDatas.mapDatas[CurrentGameDatas.mapNumber - 1].scarab = scarabNumber;
-
-             //calculate from file
-
-            CurrentGameDatas.mapDatas[CurrentGameDatas.mapNumber-1].mapScore = CurrentGameDatas.mapNumber * CurrentGameDatas.mapDatas[CurrentGameDatas.mapNumber-1].scarab *10 - realCommandsNumber; //calculate
-
-            CurrentGameDatas.lastMap++; //just if it's the last
-            CurrentGameDatas.mapDatas.Add(new MapDatas()); //do i rly need it?    
+            CurrentGameDatas.mapDatas[CurrentGameDatas.mapNumber - 1].scarab = scarabNumber;
         }
-        else
-        {*/
-            if(CurrentGameDatas.mapDatas[CurrentGameDatas.mapNumber - 1].scarab< scarabNumber)
+        if((CurrentGameDatas.mapDatas[CurrentGameDatas.mapNumber - 1].mapScore) < (CurrentGameDatas.mapNumber * CurrentGameDatas.mapDatas[CurrentGameDatas.mapNumber - 1].scarab * 10 - realCommandsNumber))
+        {
+            int score = CurrentGameDatas.mapNumber * CurrentGameDatas.mapDatas[CurrentGameDatas.mapNumber - 1].scarab * 10 + MinCmdNumber[0] - realCommandsNumber;
+            if (score < 0)
             {
-                CurrentGameDatas.mapDatas[CurrentGameDatas.mapNumber - 1].scarab = scarabNumber;
+                score = 0;
             }
-            if((CurrentGameDatas.mapDatas[CurrentGameDatas.mapNumber - 1].mapScore) < (CurrentGameDatas.mapNumber * CurrentGameDatas.mapDatas[CurrentGameDatas.mapNumber - 1].scarab * 10 - realCommandsNumber))
-            {
-                CurrentGameDatas.mapDatas[CurrentGameDatas.mapNumber - 1].mapScore = CurrentGameDatas.mapNumber * CurrentGameDatas.mapDatas[CurrentGameDatas.mapNumber - 1].scarab * 10 - realCommandsNumber; //calculate
-            }
+            CurrentGameDatas.mapDatas[CurrentGameDatas.mapNumber - 1].mapScore =  score; //calculate
+        }
 
-        //}
 
         //save this
         using (StreamWriter sw = new StreamWriter(CurrentGameDatas.slotName))
