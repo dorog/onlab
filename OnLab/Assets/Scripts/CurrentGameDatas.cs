@@ -12,6 +12,8 @@ public static class CurrentGameDatas{
     static public bool HaveKey = false;
     static public List<MapDatas> mapDatas = new List<MapDatas>();
     static private int maxLevel = 13;
+    static public bool HaveNewKey = false;
+    static public int KeyNumber = 0;
 
     static public MapDatas solvedMap = new MapDatas();
 

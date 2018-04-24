@@ -36,7 +36,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4497770357648116}
-  - component: {fileID: 114969279072094510}
   m_Layer: 0
   m_Name: Torch(sizex50)
   m_TagString: Untagged
@@ -120,7 +119,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4509969654911880}
-  - component: {fileID: 108912585977411526}
   m_Layer: 0
   m_Name: Torch_light
   m_TagString: Untagged
@@ -161,7 +159,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1287369496984260}
   m_LocalRotation: {x: -0.014048297, y: 0.98579514, z: -0.10916322, w: -0.12686217}
-  m_LocalPosition: {x: 362.82, y: 20.01, z: 317.42}
+  m_LocalPosition: {x: 170, y: 20, z: 368}
   m_LocalScale: {x: 50, y: 50, z: 50}
   m_Children:
   - {fileID: 4801755988909704}
@@ -266,60 +264,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1674495527803858}
   m_Mesh: {fileID: 4300000, guid: 622107dd3c4416a4d9fcc501f396d549, type: 3}
---- !u!108 &108912585977411526
-Light:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1741221190583356}
-  m_Enabled: 1
-  serializedVersion: 8
-  m_Type: 2
-  m_Color: {r: 1, g: 0.75, b: 0, a: 1}
-  m_Intensity: 2.337902
-  m_Range: 350
-  m_SpotAngle: 30
-  m_CookieSize: 10
-  m_Shadows:
-    m_Type: 0
-    m_Resolution: 3
-    m_CustomResolution: -1
-    m_Strength: 1
-    m_Bias: 0.015
-    m_NormalBias: 0.4
-    m_NearPlane: 0.2
-  m_Cookie: {fileID: 0}
-  m_DrawHalo: 0
-  m_Flare: {fileID: 0}
-  m_RenderMode: 0
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_Lightmapping: 1
-  m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 1
-  m_ColorTemperature: 6570
-  m_UseColorTemperature: 0
-  m_ShadowRadius: 0
-  m_ShadowAngle: 0
---- !u!114 &114969279072094510
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1287369496984260}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14e1ccb9bc5e66e46b9ebc20caf6db2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TorchLight: {fileID: 1741221190583356}
-  MainFlame: {fileID: 1141055003766826}
-  BaseFlame: {fileID: 1358352466502174}
-  Etincelles: {fileID: 1684272660741446}
-  Fumee: {fileID: 1541276653161366}
-  MaxLightIntensity: 3
-  IntensityLight: 1.5
 --- !u!198 &198350363286807190
 ParticleSystem:
   m_ObjectHideFlags: 1

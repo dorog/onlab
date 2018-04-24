@@ -19,8 +19,14 @@ public class GoToTheMap : MonoBehaviour {
 
     public void GoMyMap()
     {
-        //Debug.Log(mapNumber);
-        scLoad.LoadMap(mapNumber);
+        if (mapNumber != CurrentGameDatas.maxMap)
+        {
+            scLoad.LoadMap(mapNumber);
+        }
+        else if (CurrentGameDatas.KeyNumber >= CurrentGameDatas.maxMap - 1)
+        {
+            scLoad.LoadMap(mapNumber);
+        }  
     }
 
 }

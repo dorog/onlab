@@ -97,7 +97,7 @@ public class StartActions : MonoBehaviour
 
                 character.transform.position = characterPosition;
                 character.transform.forward = characterForward;
-                mapGen.restartMap(CurrentGameDatas.mapNumber);
+                Invoke("NotStaticBack", 0.1f); //Black Magic: joe is still here, so we need time
                 actionBtn.enabled = true;
             }
 
@@ -194,5 +194,10 @@ public class StartActions : MonoBehaviour
         {
             EndCommands();
         }
+    }
+
+    private void NotStaticBack()
+    {
+        mapGen.restartMap(CurrentGameDatas.mapNumber);
     }
 }

@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class FinishMap : MonoBehaviour {
 
-    public LayerMask Mask;
 
     // Use this for initialization
     void Start () {
@@ -100,8 +99,21 @@ public class FinishMap : MonoBehaviour {
                 {
                     key = 0;
                 }
+                if(CurrentGameDatas.mapNumber-1 == i && CurrentGameDatas.HaveKey)
+                {
+                    key = 1;
+                }
+                CurrentGameDatas.HaveNewKey = !CurrentGameDatas.mapDatas[i].key && CurrentGameDatas.HaveKey;
+
                 sw.WriteLine(CurrentGameDatas.mapDatas[i].mapScore + "\t" + CurrentGameDatas.mapDatas[i].scarab +"\t" +key);
             }
+            
+            CurrentGameDatas.HaveNewKey = !CurrentGameDatas.mapDatas[CurrentGameDatas.mapNumber-1].key && CurrentGameDatas.HaveKey;
+            if (CurrentGameDatas.HaveNewKey)
+            {
+                CurrentGameDatas.KeyNumber++;
+            }
+            //Debug.Log(CurrentGameDatas.HaveNewKey);
         }
         
         

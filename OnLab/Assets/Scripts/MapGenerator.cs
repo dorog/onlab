@@ -12,6 +12,7 @@ public class MapGenerator : MonoBehaviour {
     public GameObject brickModel;
     public GameObject trapModel;
     public GameObject EdgeModel;
+    public GameObject KeyModel;
     public int mapNumber = 1;
     GameObject parent;
     private List<GameObject> notStaticElements = new List<GameObject>();
@@ -29,8 +30,11 @@ public class MapGenerator : MonoBehaviour {
                 //GameObject brick = Instantiate(brickModel, new Vector3(325, -90, 325), Quaternion.AngleAxis(-90, Vector3.right), parent.transform) as GameObject;
                 map1();
                 break;
+            case 2:
+                map2();
+                break;
             default:
-                baseMap(10, 10);
+                map2();
                 break;
         }
     }
@@ -42,7 +46,7 @@ public class MapGenerator : MonoBehaviour {
         {
             for (int j = 0; j < z; j++)
             {
-                GameObject brick = Instantiate(brickModel, new Vector3(25 + i * 50, 0, 25 + j * 50), Quaternion.AngleAxis(-90, Vector3.right), parent.transform) as GameObject;
+                GameObject brick = Instantiate(brickModel, new Vector3(25 + i * 50, -90, 25 + j * 50), Quaternion.AngleAxis(-90, Vector3.right), parent.transform) as GameObject;
             }
         }
         door = Instantiate(doorModel, new Vector3(25 + x * 50, 0, 325), Quaternion.AngleAxis(-90, Vector3.right), parent.transform) as GameObject;
@@ -66,11 +70,12 @@ public class MapGenerator : MonoBehaviour {
             GameObject edgeBottom2 = Instantiate(EdgeModel, new Vector3(425 + i * 50, 0, 275), Quaternion.AngleAxis(0, Vector3.right), parent.transform.GetChild(3)) as GameObject;
         }
 
-        for(int i=0; i<5; i++)
+        for(int i=0; i<4; i++)
         {
-            GameObject edgeTop = Instantiate(EdgeModel, new Vector3(275 + i * 50, 0, 425), Quaternion.AngleAxis(0, Vector3.right), parent.transform.GetChild(3)) as GameObject;
+            GameObject edgeTop = Instantiate(EdgeModel, new Vector3(325 + i * 50, 0, 425), Quaternion.AngleAxis(0, Vector3.right), parent.transform.GetChild(3)) as GameObject;
         }
 
+        GameObject edgAboveKey = Instantiate(EdgeModel, new Vector3(275, 0, 475), Quaternion.AngleAxis(0, Vector3.right), parent.transform.GetChild(3)) as GameObject;
         GameObject edgTop = Instantiate(EdgeModel, new Vector3(525, 0, 375), Quaternion.AngleAxis(0, Vector3.right), parent.transform.GetChild(3)) as GameObject;
         map1NotStaticElements();
 
@@ -78,16 +83,40 @@ public class MapGenerator : MonoBehaviour {
 
     public void map1NotStaticElements()
     {
+        CurrentGameDatas.HaveKey = false;
         count = 1;
         door = Instantiate(doorModel, new Vector3(575, 0, 325), Quaternion.AngleAxis(-90, Vector3.right), parent.transform) as GameObject;
         GameObject trap = Instantiate(trapModel, new Vector3(425, -90, 375), Quaternion.AngleAxis(-90, Vector3.right), parent.transform.GetChild(2)) as GameObject;
         GameObject doorButton = Instantiate(buttonModel, new Vector3(475, 0, 375), Quaternion.AngleAxis(-90, Vector3.right), parent.transform.GetChild(1)) as GameObject;
-        
+        GameObject Key = Instantiate(KeyModel, new Vector3(275, -90, 425), Quaternion.AngleAxis(-90, Vector3.right), parent.transform) as GameObject;
+
         notStaticElements.Add(trap);
         notStaticElements.Add(doorButton);
         notStaticElements.Add(door);
+        notStaticElements.Add(Key);
     }
 
+    public void map2()
+    {
+       
+        for (int i = 0; i < 2; i++)
+        {
+                GameObject brick2 = Instantiate(brickModel, new Vector3(325 + i * 50, -90, 325), Quaternion.AngleAxis(-90, Vector3.right), parent.transform.GetChild(0)) as GameObject;
+        }
+        map2NotStaticElements();
+    }
+
+    public void map2NotStaticElements()
+    {
+        CurrentGameDatas.HaveKey = false;
+        count = 0;
+        door = Instantiate(doorModel, new Vector3(475, 0, 325), Quaternion.AngleAxis(-90, Vector3.right), parent.transform) as GameObject;
+        GameObject Key = Instantiate(KeyModel, new Vector3(425, -90, 325), Quaternion.AngleAxis(-90, Vector3.right), parent.transform) as GameObject;
+
+        notStaticElements.Add(door);
+        notStaticElements.Add(Key);
+
+    }
     private void Update()
     {
         if (count == 0 && !used)
@@ -117,8 +146,11 @@ public class MapGenerator : MonoBehaviour {
             case 1:
                 map1NotStaticElements();
                 break;
+            case 2:
+                map2NotStaticElements();
+                break;
             default:
-                baseMap(10, 10);
+                map2();
                 break;
         }
     }

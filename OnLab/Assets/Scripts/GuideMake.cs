@@ -33,13 +33,28 @@ public class GuideMake : MonoBehaviour {
                 Quaternion root = Keys.transform.GetChild(i).rotation;
                 //root.y += 180;
                 int size = 1;
-                if (i >= gmdatas.maxMap / 2)
+                if (i%2==1 )
                 {
                     size = -1;
                 }
                 GameObject key = Instantiate(KeyModel, Keys.transform.GetChild(i).position+new Vector3(25*size, 50, 0), root, Keys.transform.GetChild(i)) as GameObject;
-                Gate.GetComponent<OpenGates>().OpenGate(i);
+                //Debug.Log(CurrentGameDatas.mapNumber);
+                
+                 Gate.GetComponent<OpenGates>().OpenGate(i);
             }
+        }
+
+        if (CurrentGameDatas.HaveNewKey)
+        {
+            int size = 1;
+            if ((CurrentGameDatas.mapNumber - 1) % 2 == 1)
+            {
+                size = -1;
+            }
+            Quaternion root = Keys.transform.GetChild(CurrentGameDatas.mapNumber - 1).rotation;
+            GameObject key = Instantiate(KeyModel, Keys.transform.GetChild(CurrentGameDatas.mapNumber - 1).position + new Vector3(25 * size, 50, 0), root, Keys.transform.GetChild(CurrentGameDatas.mapNumber - 1)) as GameObject;
+            CurrentGameDatas.mapDatas[CurrentGameDatas.mapNumber - 1].key = true;
+            Gate.GetComponent<OpenGates>().OpenGateNew(CurrentGameDatas.mapNumber-1);
         }
 
         int DoorsChild = Doors.transform.childCount;
