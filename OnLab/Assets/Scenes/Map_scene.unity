@@ -2282,7 +2282,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: f83de5cd4bb4ca04d943ba55ca26a8da, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f83de5cd4bb4ca04d943ba55ca26a8da, type: 3}
@@ -3938,7 +3938,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.95, y: 1, z: 0.95}
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2070039618
 MonoBehaviour:
@@ -4276,7 +4276,7 @@ Prefab:
     - target: {fileID: 54626962770880066, guid: f95a7ee3a679ebc4c95eeba108e753d7,
         type: 2}
       propertyPath: m_Mass
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f95a7ee3a679ebc4c95eeba108e753d7, type: 2}
