@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 33732367750847996}
   - component: {fileID: 23094463114539562}
   - component: {fileID: 95641405604345922}
+  - component: {fileID: 65027571745406294}
   m_Layer: 0
   m_Name: column_in_lava
   m_TagString: Untagged
@@ -85,6 +86,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1406325461132120}
   m_Mesh: {fileID: 4300000, guid: c8614abf87434804e97728759b3bade4, type: 3}
+--- !u!65 &65027571745406294
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1406325461132120}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 50, y: 50, z: 100}
+  m_Center: {x: 0, y: 0, z: 50}
 --- !u!95 &95641405604345922
 Animator:
   serializedVersion: 3

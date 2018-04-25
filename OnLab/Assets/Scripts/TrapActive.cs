@@ -23,6 +23,14 @@ public class TrapActive : MonoBehaviour {
         float joeTime = 0;
         for(int i=0; i<colliders.Length; i++)
         {
+            JoeCommandControl joeController = colliders[i].GetComponent<JoeCommandControl>();
+            if (!joeController)
+            {
+                continue;
+            }
+            joeController.fall_trap = true;
+            joeController.left_time = joeController.fallAnimationTime;
+            joeTime = joeController.fallAnimationTime;
             Animator anim = colliders[i].GetComponent<Animator>();
             if (!anim)
             {
@@ -30,17 +38,10 @@ public class TrapActive : MonoBehaviour {
             }
             anim.SetBool("fall", true);
             anim.SetBool("start", false);
-            JoeCommandControl joeController = colliders[i].GetComponent<JoeCommandControl>();
-            if (!joeController)
-            {
-                continue;
-            }
-            joeController.fall = true;
-            joeController.left_time = joeController.fallAnimationTime;
-            joeTime = joeController.fallAnimationTime;
+            trapAnim.Play();
+            sa.ObjectHit(resetTime + joeTime);
         }
         //Debug.Log(colliders.Length);
-        trapAnim.Play();
-        sa.ObjectHit(resetTime+joeTime);
+        
     }
 }

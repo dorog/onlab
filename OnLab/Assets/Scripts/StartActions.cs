@@ -121,6 +121,7 @@ public class StartActions : MonoBehaviour
 
     public void EndCommands()
     {
+        //character.GetComponent<Animator>().SetBool("start", true);
         character.GetComponent<JoeCommandControl>().stopped = true;
         aimnumber = commandsForExecute.Count;
         character.GetComponent<JoeCommandControl>().ResetActions();

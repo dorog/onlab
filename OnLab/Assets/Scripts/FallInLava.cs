@@ -23,23 +23,40 @@ public class FallInLava : MonoBehaviour {
         float joeTime = 0;
         for (int i = 0; i < colliders.Length; i++)
         {
-            Animator anim = colliders[i].GetComponent<Animator>();
-            if (!anim)
-            {
-                continue;
-            }
-            anim.SetBool("lava", true);
-            anim.SetBool("start", false);
             JoeCommandControl joeController = colliders[i].GetComponent<JoeCommandControl>();
+            //OnePushPerRound oppr = colliders[i].GetComponent<OnePushPerRound>();
             if (!joeController)
             {
                 continue;
             }
-            joeController.fall_lava = true;
-            joeController.left_time = joeController.LavaFallAnimationTime;
-            joeTime = joeController.LavaFallAnimationTime;
+            if (joeController)
+            {
+                joeController.fall = true;
+                joeController.left_time = 0.7f;
+                joeTime = joeController.LavaFallAnimationTime;
+
+                /*Animator anim = colliders[i].GetComponent<Animator>();
+                if (anim == null)
+                {
+                    continue;
+                }*/
+                //anim.SetBool("lava", true);
+                //anim.SetBool("start", false);
+                //sa.ObjectHit(resetTime + joeTime);
+            }
+            /*else if (oppr)
+            {
+                Debug.Log("else if");
+                oppr.left_time = 0.7f; //rethink it
+                oppr.fall = true;
+                oppr.isFalled = true;
+                
+                //oppr.gameObject.AddComponent<BoxCollider>(); //NOPE
+                //TODO: trigger off?
+            }*/
+            
         }
 
-        sa.ObjectHit(resetTime+joeTime);
+        
     }
 }
