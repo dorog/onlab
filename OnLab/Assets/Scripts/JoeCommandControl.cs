@@ -128,23 +128,35 @@ public class JoeCommandControl : MonoBehaviour {
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        /*Rigidbody body = hit.collider.attachedRigidbody;
+        //A
+        Rigidbody body = hit.collider.attachedRigidbody;
         if(body == null || body.isKinematic) { return; }
-        //if (hit.moveDirection.y < -0.3) { return; } // ???
+        //if (hit.moveDirection.y < -0.3) { return; } // 
         var pushDir = new Vector3(hit.moveDirection.x, 0, hit.moveDirection.z);
-        //body.MovePosition(body.position + new Vector3(1, 0, 0)*50);
-        body.velocity = pushDir *50;*/
-        
-        //body.transform.Translate(body.transform.position + new Vector3(0, 0, 1) * 50); bad idea
-        
-        
-        OnePushPerRound body = hit.collider.GetComponent<OnePushPerRound>();
+
+
+        //A.1
+        //body.MovePosition(body.position + new Vector3(1, 0, 0)*50*Time.deltaTime);
+
+        //A.2
+        //body.velocity = pushDir *50;
+
+        //A.3
+        //body.transform.Translate(body.transform.position + new Vector3(0, 0, 1) * 50*Time.deltaTime); //bad idea
+
+        //A.4
+        //body.MovePosition(body.transform.position + this.transform.forward*50);
+
+        //C.
+        /*OnePushPerRound body = hit.collider.GetComponent<OnePushPerRound>();
         if(body == null)
         {
             return;
         }
-        body.MoveToThere(this.transform.forward);
-        //push_box = true;
+        body.MoveToThere(this.transform.forward);*/
+
+        
+
     }
 
     public void GoForward()
