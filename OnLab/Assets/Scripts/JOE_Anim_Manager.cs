@@ -33,16 +33,16 @@ public class JOE_Anim_Manager : MonoBehaviour {
         switch (animNumber)
         {
             case (0):
-                joeAnim.SetBool("foot", true);
+                joeAnim.SetBool(Configuration.footAnimation, true);
                 break;
             case (1):
-                joeAnim.SetBool("around", true);
+                joeAnim.SetBool(Configuration.lookAroundAnimation, true);
                 break;
             case (2):
-                joeAnim.SetBool("hi", true);
+                joeAnim.SetBool(Configuration.welcomeAnimation, true);
                 break;
             default:
-                joeAnim.SetBool("hi", true);
+                joeAnim.SetBool(Configuration.welcomeAnimation, true);
                 break;
         }
 
@@ -52,9 +52,9 @@ public class JOE_Anim_Manager : MonoBehaviour {
 
     public void AnimEnd()
     {
-        joeAnim.SetBool("foot", false);
-        joeAnim.SetBool("around", false);
-        joeAnim.SetBool("hi", false);
-        joeAnim.SetBool("idle", false);
+        joeAnim.SetBool(Configuration.footAnimation, false);
+        joeAnim.SetBool(Configuration.lookAroundAnimation, false);
+        joeAnim.SetBool(Configuration.welcomeAnimation, false);
+        //joeAnim.SetBool("idle", false);
     }
 }

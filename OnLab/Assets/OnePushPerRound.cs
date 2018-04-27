@@ -16,7 +16,9 @@ public class OnePushPerRound : MonoBehaviour {
     public bool isFalled = false;
 
     private Vector3 aimPosition;
-    private bool called = false;
+
+    public int x = 0;
+    public int z = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -59,7 +61,6 @@ public class OnePushPerRound : MonoBehaviour {
 
                 //this.transform.Translate();
                 //body.MovePosition(this.transform.position + direction * time * 50);
-                called = false;
 
                 //this.transform.Translate(this.transform.position + direction * time * 50); //dont working
                 //this.transform.GetComponent<CharacterController>().Move(direction * 50 * time); //working except the walking on the roof

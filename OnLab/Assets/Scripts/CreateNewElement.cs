@@ -5,10 +5,8 @@ using UnityEngine.UI;
 
 public class CreateNewElement : MonoBehaviour {
 
-    public string charName;
     public int id = 2;
     private Command element;
-    //public Command element;
     public GameObject cmdpanelcmd;
 
     CommandPanel cmdpanelmanager;
@@ -16,27 +14,27 @@ public class CreateNewElement : MonoBehaviour {
     void Start()
     {
 
-        cmdpanelmanager = GameObject.Find("CommandPanelManager").GetComponent<CommandPanel>();
+        cmdpanelmanager = GameObject.Find(Configuration.cmdPanelManagerName).GetComponent<CommandPanel>();
 
         switch (id)
         {
             case 0:
-                element = new GoForwardCmd(1, charName);
+                element = new GoForwardCmd(1);
                 break;
             case 1:
-                element = new TurnRightCmd(1, charName);
+                element = new TurnRightCmd(1);
                 break;
             case 2:
-                element = new TurnLeftCmd(1, charName);
+                element = new TurnLeftCmd(1);
                 break;
             case 3:
-                element = new FV(1, charName, 1);
+                element = new FV(1, 1);
                 break;
             case 4:
-                element = new FV(1, charName, 2);
+                element = new FV(1, 2);
                 break;
             default:
-                element = new GoForwardCmd(1, charName);
+                element = new GoForwardCmd(1);
                 break;
         }
     }

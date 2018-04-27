@@ -10,7 +10,7 @@ public class DeleteChilds : MonoBehaviour {
         {
             Transform child = this.transform.GetChild(0);
             int slotNumber = child.GetComponent<CommandData>().slot;
-            GameObject commandPanel = GameObject.Find("CommandPanelManager");
+            GameObject commandPanel = GameObject.Find(Configuration.cmdPanelManagerName);
             commandPanel.GetComponent<CommandPanel>().deleteCommandBySlot(slotNumber);
 
             GameObject.Destroy(child.gameObject);

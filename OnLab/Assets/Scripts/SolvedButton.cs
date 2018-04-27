@@ -10,7 +10,7 @@ public class SolvedButton : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        mapGenerator = GameObject.Find("MapGeneratorGO").GetComponent<MapGenerator>();
+        mapGenerator = GameObject.Find(Configuration.mapGeneratorName).GetComponent<MapGenerator>();
         used = false;
     }
 

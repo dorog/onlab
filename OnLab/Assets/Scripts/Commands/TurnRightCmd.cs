@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class TurnRightCmd : Command{
 
-    public TurnRightCmd(int id, string charName) : base(id, charName) {
-        this.sprite = Resources.Load<Sprite>("Icons/rightarrow");
+    public TurnRightCmd(int id) : base(id) {
+        this.sprite = Resources.Load<Sprite>(Configuration.rightIcon);
     }
 
     public override void Effect()

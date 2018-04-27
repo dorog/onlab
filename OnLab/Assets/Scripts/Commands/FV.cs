@@ -7,28 +7,22 @@ public class FV : Command {
     private int fvNumber = 0;
     private StartActions sa;
 
-    public FV(int id, string charName, int fvNumber) : base(id, charName)
+    public FV(int id, int fvNumber) : base(id)
     {
         
         this.fvNumber = fvNumber;
         if(fvNumber == 1)
         {
-            this.sprite = Resources.Load<Sprite>("Icons/FV1");
+            this.sprite = Resources.Load<Sprite>(Configuration.fv1IconLocation);
         }
         else {
-            this.sprite = Resources.Load<Sprite>("Icons/FV2");
+            this.sprite = Resources.Load<Sprite>(Configuration.fv2IconLocation);
         }
-        sa = GameObject.Find("ActionMenuGO").GetComponent<StartActions>();
+        sa = GameObject.Find(Configuration.actionMenuName).GetComponent<StartActions>();
     }
 
     public override void Effect()
     {
-        //Debug.Log("effect");
         sa.fvStart(fvNumber);
     }
-
-    /*public override void Identity(int i, int aimnumber)
-    {
-        Debug.Log("FV "+i+" "+aimnumber);
-    }*/
 }

@@ -15,33 +15,15 @@ public class CommandData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
     void Start()
     {
-        cmdpanelmanager = GameObject.Find("CommandPanelManager").GetComponent<CommandPanel>();
-        cmdpanel = GameObject.Find("CommandPanel");
+        cmdpanelmanager = GameObject.Find(Configuration.cmdPanelManagerName).GetComponent<CommandPanel>();
+        cmdpanel = GameObject.Find(Configuration.cmdPanelName);
         //tooltip = inv.GetComponent<Tooltip>();
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
         if (command != null)
-        {
-            //this.transform.SetParent(this.transform.parent.parent);
-
-
-            //commands from factroy havent got slot, i must give them one
-
-            /*if (command.newcmd)
-            {
-
-                //Solution 1. 
-                //Last item must be a deleteslot
-                this.transform.GetComponent<CommandData>().slot = cmdpanelmanager.slotAmount;
-                command.ID = cmdpanelmanager.slotAmount;
-                command.newcmd = false;
-                cmdpanelmanager.commands.Add(command);
-                //End 
-
-            }*/
-            
+        {   
             //cmd panel will be a parent
             this.transform.SetParent(cmdpanel.transform.parent.transform); // + .parent.transform
             this.transform.position = eventData.position;

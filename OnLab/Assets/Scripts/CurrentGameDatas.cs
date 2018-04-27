@@ -5,27 +5,19 @@ using UnityEngine;
 
 public static class CurrentGameDatas{
 
-    static public string slotName = "Slot0.txt";
-    static public string buggSystemFile = "ScarabCmdMin.txt";
+    
     static public int mapNumber = 1;
     static public int maxMap = 1;
     static public bool HaveKey = false;
     static public List<MapDatas> mapDatas = new List<MapDatas>();
-    static private int maxLevel = 13;
     static public bool HaveNewKey = false;
     static public int KeyNumber = 0;
+    static public string slotName;
 
     static public MapDatas solvedMap = new MapDatas();
 
     static public void CopyTheDatas(GameDatas data, string filename)
     {
-        using (StreamReader sr = new StreamReader(CurrentGameDatas.buggSystemFile))
-        {
-            string line = sr.ReadToEnd();
-            string[] datas = line.Split('\n');
-            maxLevel = datas.Length;
-            //Debug.Log(maxLevel);
-        }
         slotName = filename;
         mapDatas.Clear();
         maxMap = data.maxMap;

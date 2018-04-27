@@ -353,7 +353,6 @@ GameObject:
   - component: {fileID: 95599749036230112}
   - component: {fileID: 54626962770880066}
   - component: {fileID: 143327015678877710}
-  - component: {fileID: 114957024449318924}
   - component: {fileID: 114334126849173726}
   m_Layer: 0
   m_Name: joe_v4
@@ -719,7 +718,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1370165793586158}
-  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -1128,7 +1127,7 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
@@ -1163,28 +1162,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotate: 90
   time: 1
+  fall_trap: 0
   fall: 0
-  fall_lava: 0
   gravityForce: 240
   fallAnimationTime: 4.7
   LavaFallAnimationTime: 0.5
   left_time: 0
   stopped: 1
---- !u!114 &114957024449318924
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1673773375098044}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8fc57ce79b14e1449d5b5c707597f52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  jumpPower: 2
-  gravity: 40
-  Speed: 15
-  rotationSpeed: 0.5
+  gravity: 10
 --- !u!137 &137321301912061846
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
@@ -1199,16 +1184,16 @@ SkinnedMeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 553f5702b4558054289cae456751ecab, type: 3}
-  - {fileID: 2100002, guid: 553f5702b4558054289cae456751ecab, type: 3}
-  - {fileID: 2100004, guid: 553f5702b4558054289cae456751ecab, type: 3}
-  - {fileID: 2100006, guid: 553f5702b4558054289cae456751ecab, type: 3}
-  - {fileID: 2100008, guid: 553f5702b4558054289cae456751ecab, type: 3}
-  - {fileID: 2100010, guid: 553f5702b4558054289cae456751ecab, type: 3}
-  - {fileID: 2100012, guid: 553f5702b4558054289cae456751ecab, type: 3}
-  - {fileID: 2100014, guid: 553f5702b4558054289cae456751ecab, type: 3}
-  - {fileID: 2100016, guid: 553f5702b4558054289cae456751ecab, type: 3}
-  - {fileID: 2100018, guid: 553f5702b4558054289cae456751ecab, type: 3}
+  - {fileID: 2100000, guid: 22e3635899b5aa6489b7916bb639ec59, type: 2}
+  - {fileID: 2100002, guid: 2ee00f36581795e4fac92c763a8d4f72, type: 3}
+  - {fileID: 2100000, guid: e81563d28f94be2459328241cb24be88, type: 2}
+  - {fileID: 2100000, guid: be4ea955ceac79c448bc9d6ffdb6cd02, type: 2}
+  - {fileID: 2100000, guid: 426d5817ad93f1f409746563112e28c2, type: 2}
+  - {fileID: 2100000, guid: ab70cd5405e869c40aa561f92b906022, type: 3}
+  - {fileID: 2100002, guid: 2ee00f36581795e4fac92c763a8d4f72, type: 3}
+  - {fileID: 2100014, guid: c67e6d4655068264997f25a0eb896357, type: 3}
+  - {fileID: 2100000, guid: be4ea955ceac79c448bc9d6ffdb6cd02, type: 2}
+  - {fileID: 2100002, guid: 5434d57d855db1445aaaecc1f5251dd3, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

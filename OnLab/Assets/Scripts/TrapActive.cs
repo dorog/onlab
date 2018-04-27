@@ -11,7 +11,7 @@ public class TrapActive : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         trapAnim = this.transform.GetComponent<Animation>();
-        sa = GameObject.Find("ActionMenuGO").GetComponent<StartActions>();
+        sa = GameObject.Find(Configuration.actionMenuName).GetComponent<StartActions>();
 
     }
 

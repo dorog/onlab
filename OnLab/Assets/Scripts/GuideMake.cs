@@ -12,11 +12,11 @@ public class GuideMake : MonoBehaviour {
     public GameObject KeyModel;
     private int scoreBoardPlace = 3;
 
-	// Use this for initialization
-	void Start () {
-        Doors = GameObject.Find("Doors");
-        Gate = GameObject.Find("Gates");
-        Keys = GameObject.Find("Keys");
+    // Use this for initialization
+    void Start () {
+        Doors = GameObject.Find(Configuration.doorStr);
+        Gate = GameObject.Find(Configuration.gatesStr);
+        Keys = GameObject.Find(Configuration.keyStr);
         //read the datas from CurrentGameDatas
         gmdatas = new GameDatas(CurrentGameDatas.maxMap);
         for(int i=0; i<gmdatas.maxMap; i++)
@@ -37,7 +37,7 @@ public class GuideMake : MonoBehaviour {
                 {
                     size = -1;
                 }
-                GameObject key = Instantiate(KeyModel, Keys.transform.GetChild(i).position+new Vector3(25*size, 50, 0), root, Keys.transform.GetChild(i)) as GameObject;
+                Instantiate(KeyModel, Keys.transform.GetChild(i).position+new Vector3(25*size, 50, 0), root, Keys.transform.GetChild(i));
                 //Debug.Log(CurrentGameDatas.mapNumber);
                 
                  Gate.GetComponent<OpenGates>().OpenGate(i);
@@ -52,7 +52,7 @@ public class GuideMake : MonoBehaviour {
                 size = -1;
             }
             Quaternion root = Keys.transform.GetChild(CurrentGameDatas.mapNumber - 1).rotation;
-            GameObject key = Instantiate(KeyModel, Keys.transform.GetChild(CurrentGameDatas.mapNumber - 1).position + new Vector3(25 * size, 50, 0), root, Keys.transform.GetChild(CurrentGameDatas.mapNumber - 1)) as GameObject;
+            Instantiate(KeyModel, Keys.transform.GetChild(CurrentGameDatas.mapNumber - 1).position + new Vector3(25 * size, 50, 0), root, Keys.transform.GetChild(CurrentGameDatas.mapNumber - 1));
             CurrentGameDatas.mapDatas[CurrentGameDatas.mapNumber - 1].key = true;
             Gate.GetComponent<OpenGates>().OpenGateNew(CurrentGameDatas.mapNumber-1);
         }
@@ -63,28 +63,20 @@ public class GuideMake : MonoBehaviour {
             //Doors.transform.GetChild(i).transform.GetChild(4).GetChild(0).GetComponent<Text>().text="Score: "+gmdatas.mapDatas[i].mapScore;
             //Debug.Log(gmdatas.mapDatas[i].scarab);
             Material[] mats = Doors.transform.GetChild(i).transform.GetChild(scoreBoardPlace).GetChild(0).GetComponent<MeshRenderer>().materials; //Resources.Load<Material>("Map_guide/GSB_part" + gmdatas.mapDatas[i].scarab);
-            mats[1] = Resources.Load<Material>("Map_guide/GSB_part"+gmdatas.mapDatas[i].scarab);
+            mats[1] = Resources.Load<Material>(Configuration.GSB_part+gmdatas.mapDatas[i].scarab);
             Doors.transform.GetChild(i).transform.GetChild(scoreBoardPlace).GetChild(0).GetComponent<MeshRenderer>().materials = mats;
             int[] numbs = { 100, 10, 1 };
             int score = gmdatas.mapDatas[i].mapScore;
             for (int j=1; j < Doors.transform.GetChild(i).transform.GetChild(scoreBoardPlace).childCount; j++)
             {
                 mats = Doors.transform.GetChild(i).transform.GetChild(scoreBoardPlace).GetChild(j).GetComponent<MeshRenderer>().materials;
-                mats[1] = Resources.Load<Material>("Map_guide/number" + score/numbs[j-1]);
+                mats[1] = Resources.Load<Material>(Configuration.numberIcon + score/numbs[j-1]);
                 score -= (score/numbs[j - 1])*numbs[j-1];
                 Doors.transform.GetChild(i).transform.GetChild(scoreBoardPlace).GetChild(j).GetComponent<MeshRenderer>().materials = mats;
             }
 
 
         }
-
-
-
-        /*for(int i=gmdatas.maxMap; i<DoorsChild; i++)
-        {
-            Doors.transform.GetChild(i).transform.GetComponent<Button>().interactable = false;
-            Doors.transform.GetChild(i).transform.GetChild(1).GetComponent<Image>().gameObject.SetActive(false);
-        }*/
     }
 	
 	// Update is called once per frame

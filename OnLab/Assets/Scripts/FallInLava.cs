@@ -11,7 +11,7 @@ public class FallInLava : MonoBehaviour {
     void Start()
     {
 
-        sa = GameObject.Find("ActionMenuGO").GetComponent<StartActions>();
+        sa = GameObject.Find(Configuration.actionMenuName).GetComponent<StartActions>();
 
     }
 
@@ -29,31 +29,20 @@ public class FallInLava : MonoBehaviour {
             {
                 continue;
             }
-            if (joeController)
-            {
-                joeController.fall = true;
-                joeController.left_time = 0.7f;
-                joeTime = joeController.LavaFallAnimationTime;
+            //Debug.Log("here");
+            joeController.fallALevel(1);
+                /*joeController.fall = true;
+                joeController.left_time = 0.5f;*/
+                //joeTime = joeController.LavaFallAnimationTime;
 
-                /*Animator anim = colliders[i].GetComponent<Animator>();
-                if (anim == null)
-                {
-                    continue;
-                }*/
-                //anim.SetBool("lava", true);
-                //anim.SetBool("start", false);
-                //sa.ObjectHit(resetTime + joeTime);
-            }
-            /*else if (oppr)
+            /*Animator anim = colliders[i].GetComponent<Animator>();
+            if (anim == null)
             {
-                Debug.Log("else if");
-                oppr.left_time = 0.7f; //rethink it
-                oppr.fall = true;
-                oppr.isFalled = true;
-                
-                //oppr.gameObject.AddComponent<BoxCollider>(); //NOPE
-                //TODO: trigger off?
-            }*/
+                continue;
+            }
+            anim.SetBool("lava", true);                
+            anim.SetBool("start", false);
+            sa.ObjectHit(resetTime + joeTime);*/     
             
         }
 

@@ -105,7 +105,7 @@ public class ReadSlot : MonoBehaviour {
     {
         CurrentGameDatas.KeyNumber = summKeys;
         CurrentGameDatas.CopyTheDatas(gmdata, filename);
-        SceneManager.LoadScene("Map_guide");
+        SceneManager.LoadScene(Configuration.mapGuideScene);
     }
 
     void ChangeSceneForNew()
@@ -128,6 +128,6 @@ public class ReadSlot : MonoBehaviour {
         }
         
         CurrentGameDatas.CopyTheDatas(gmdata, filename);
-        SceneManager.LoadScene("Map_guide");
+        SceneManager.LoadScene(Configuration.mapGuideScene);
     }
 }

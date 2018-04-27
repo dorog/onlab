@@ -21,14 +21,14 @@ public class FinishMap : MonoBehaviour {
     { 
 
         //Calulate datas
-        CommandPanel slotPanel = GameObject.Find("CommandPanelManager").GetComponent<CommandPanel>();
-        SceneLoader scLoader = GameObject.Find("LoadSceneGO").GetComponent<SceneLoader>();
+        CommandPanel slotPanel = GameObject.Find(Configuration.cmdPanelManagerName).GetComponent<CommandPanel>();
+        SceneLoader scLoader = GameObject.Find(Configuration.loadSceneGOName).GetComponent<SceneLoader>();
 
         int realCommandsNumber = slotPanel.getRealCommandsNumber();
         int[] MinCmdNumber = new int[2];
 
 
-        using (StreamReader sr = new StreamReader(CurrentGameDatas.buggSystemFile))
+        using (StreamReader sr = new StreamReader(Configuration.buggSystemFile))
         {
             string line = sr.ReadToEnd();
             string[] datas = line.Split('\n');
@@ -111,7 +111,7 @@ public class FinishMap : MonoBehaviour {
         CurrentGameDatas.HaveKey = false;
 
         //Todo: different scene for last map
-        scLoader.LoadScene("FinishedMap");
+        scLoader.LoadScene(Configuration.resultScene);
     }
 
 }

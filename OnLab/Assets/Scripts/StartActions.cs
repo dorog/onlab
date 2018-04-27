@@ -35,12 +35,12 @@ public class StartActions : MonoBehaviour
 
     void Start()
     {
-        cmdPanel = GameObject.Find("CommandPanelManager").GetComponent<CommandPanel>();
+        cmdPanel = GameObject.Find(Configuration.cmdPanelManagerName).GetComponent<CommandPanel>();
         character = GameObject.Find(charName);
         characterPosition = new Vector3(character.transform.position.x, character.transform.position.y, character.transform.position.z);
         characterForward = new Vector3(character.transform.forward.x, character.transform.forward.y, character.transform.forward.z);
-        mapGen = GameObject.Find("MapGeneratorGO").GetComponent<MapGenerator>();
-        actionBtn = GameObject.Find("StartButton").GetComponent<Button>();
+        mapGen = GameObject.Find(Configuration.mapGeneratorName).GetComponent<MapGenerator>();
+        actionBtn = GameObject.Find(Configuration.startButton).GetComponent<Button>();
     }
 
     public void ExecuteCommands()

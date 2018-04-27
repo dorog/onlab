@@ -10,12 +10,12 @@ public class Command {
     public Sprite sprite { get; set; }
     public bool newcmd { get; set; }
 
-    public Command(int id, string charName)
+    public Command(int id)
     {
         this.ID = id;
         PanelSlot = -1;
         newcmd = true;
-        character = GameObject.Find(charName);
+        character = GameObject.Find(Configuration.characterName);
     }
     public Command()
     {

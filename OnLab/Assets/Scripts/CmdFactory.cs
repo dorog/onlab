@@ -17,8 +17,8 @@ public class CmdFactory : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        factoryPanel = GameObject.Find("CommandFactory");
-        CommandPanel cmdPanel = GameObject.Find("CommandPanelManager").GetComponent<CommandPanel>();
+        factoryPanel = GameObject.Find(Configuration.cmdFactoryName);
+        CommandPanel cmdPanel = GameObject.Find(Configuration.cmdPanelManagerName).GetComponent<CommandPanel>();
 
         for (int i = 0; i < factoryElementsIds.Length; i++)
         {
@@ -29,7 +29,7 @@ public class CmdFactory : MonoBehaviour {
             factorySlots[i].transform.SetParent(factoryPanel.transform);
             factorySlots[i].GetComponent<Slot>().id = cmdPanel.summSlots; // change: .slotamount update: cmdPanel.summSlots
             factorySlots[i].GetComponent<CreateNewElement>().id = factoryElementsIds[i];
-            factorySlots[i].GetComponent<CreateNewElement>().charName = charName;
+            //factorySlots[i].GetComponent<CreateNewElement>().charName = charName;
         }
     }
 

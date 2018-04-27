@@ -26,10 +26,10 @@ public class JoeCommandControl : MonoBehaviour {
 
     private Vector3 aimPosition;
 
-    private bool push_box = false;
+    //private bool push_box = false;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         originTime = time;
         joeAnim = this.transform.GetComponent<Animator>();
         joeControll = this.transform.GetComponent<CharacterController>();
@@ -48,7 +48,7 @@ public class JoeCommandControl : MonoBehaviour {
 
             if (fall && (left_time - Time.deltaTime <= 0))
             {
-                joeControll.Move(Vector3.down * Time.deltaTime * gravityForce / 2);
+                joeControll.Move(Vector3.down * Time.deltaTime * Configuration.unit*2);
             }
 
             if (fall_trap || fall)
@@ -74,14 +74,13 @@ public class JoeCommandControl : MonoBehaviour {
                     }
                     //this.transform.position = aimPosition; // it will be certain
                     time = originTime;
-                    joeAnim.SetBool("forward", false);
-                    joeAnim.SetBool("start", true);
+                    joeAnim.SetBool(Configuration.forwardAnimation, false);
+                    joeAnim.SetBool(Configuration.idleAnimation, true);
                 }
                 else
                 {
                     this.transform.GetComponent<CharacterController>().Move(this.transform.forward * 50 * Time.deltaTime);
                     time -= Time.deltaTime;
-
                 }
             }
             else if (leftturn)
@@ -126,54 +125,28 @@ public class JoeCommandControl : MonoBehaviour {
         leftturn = true;
     }
 
-    private void OnControllerColliderHit(ControllerColliderHit hit)
-    {
-        //A
-        Rigidbody body = hit.collider.attachedRigidbody;
-        if(body == null || body.isKinematic) { return; }
-        //if (hit.moveDirection.y < -0.3) { return; } // 
-        var pushDir = new Vector3(hit.moveDirection.x, 0, hit.moveDirection.z);
-
-
-        //A.1
-        //body.MovePosition(body.position + new Vector3(1, 0, 0)*50*Time.deltaTime);
-
-        //A.2
-        //body.velocity = pushDir *50;
-
-        //A.3
-        //body.transform.Translate(body.transform.position + new Vector3(0, 0, 1) * 50*Time.deltaTime); //bad idea
-
-        //A.4
-        //body.MovePosition(body.transform.position + this.transform.forward*50);
-
-        //C.
-        /*OnePushPerRound body = hit.collider.GetComponent<OnePushPerRound>();
-        if(body == null)
-        {
-            return;
-        }
-        body.MoveToThere(this.transform.forward);*/
-
-        
-
-    }
-
     public void GoForward()
     {
         aimPosition = this.transform.position + this.transform.forward * 50;
         forward = true;
-        joeAnim.SetBool("start", false);
-        joeAnim.SetBool("forward", forward);
+        joeAnim.SetBool(Configuration.idleAnimation, false);
+        joeAnim.SetBool(Configuration.forwardAnimation, forward);
 
     }
 
     public void ResetActions()
     {
-        joeAnim.SetBool("start", true);
-        joeAnim.SetBool("fall", false);
-        joeAnim.SetBool("lava", false);
+        joeAnim.SetBool(Configuration.idleAnimation, true);
+        joeAnim.SetBool(Configuration.trapAnimation, false);
+        joeAnim.SetBool(Configuration.fallAnimation, false);
+        joeAnim.SetBool(Configuration.forwardAnimation, false);
         fall_trap = false;
         fall = false;
+    }
+
+    public void fallALevel(int amount)
+    {
+        fall = true;
+        left_time = 0.5f;
     }
 }

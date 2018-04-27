@@ -22,14 +22,13 @@ public class CommandPanel : MonoBehaviour {
     public int summSlots = 0;
 
     private int delete_number = 0;
-    private int base_number = 2;
     private int fv1_number = 5;
     private int fv2_number = 6;
 
     void Start()
     {
-        commandPanelBorder = GameObject.Find("CommandPanelBorder");
-        slotPanel = commandPanelBorder.transform.Find("CommandPanel").gameObject;
+        commandPanelBorder = GameObject.Find(Configuration.cmdPanelBorderName);
+        slotPanel = commandPanelBorder.transform.Find(Configuration.cmdPanelName).gameObject;
 
         summSlots = fv1_Counts + fv2_Counts + slotAmount;
         //items load

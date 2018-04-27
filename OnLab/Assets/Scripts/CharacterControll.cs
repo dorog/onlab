@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CharacterControll : MonoBehaviour {
 
-    Animator anim;
+
     //Rigidbody character
 
     //Ideiglenes
@@ -26,7 +26,6 @@ public class CharacterControll : MonoBehaviour {
     void Start()
     {
         targetRotation = transform.rotation;
-        anim = GetComponent<Animator>();
         //character = GetComponent<Rigidbody>();
         controller = GetComponent<CharacterController>();
 
