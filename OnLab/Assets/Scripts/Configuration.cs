@@ -12,7 +12,7 @@ public class Configuration {
     public static float trapGround = -90;
     public static float buttonGround = 0;
     public static float edgeGround = 0;
-    public static float boxGround = 30;
+    public static float boxGround = 40;
 
     //GameObjects
     public static string mapGeneratorName = "MapGeneratorGO";

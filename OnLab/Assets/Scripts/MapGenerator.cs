@@ -11,13 +11,25 @@ public class MapGenerator : MonoBehaviour {
     private GameObject Joe;
     private int count = 1;
     // public GameObject Joe;          //ID:
-    public GameObject EdgeModel;    //-1
+    public GameObject EdgeModel;    // 1    
     public GameObject brickModel;   // 0
-    public GameObject doorModel;    // 1
+    public GameObject doorModel;    // -1
     public GameObject KeyModel;     // 2
     public GameObject trapModel;    // 3
     public GameObject buttonModel;  // 4
     public GameObject boxModel;     // 5: box + brick under it
+    public GameObject holeModel;    // 6
+
+    private int EdgeID = 1;
+    private int BrickID = 0;
+    private int DoorID = -1;
+    private int KeyID = -2;
+    private int TrapID = 3;
+    private int ButtonID = 4;
+    private int BoxID = 5;
+    private int HoleID = 2;
+
+
     private Vector3 joePosition;
     
     public int mapNumber = 1;
@@ -29,7 +41,7 @@ public class MapGenerator : MonoBehaviour {
     private int[,] originalMap;
 
     private int EdgeChild = 3;
-    private int BrickChild = 0;
+    private const int BrickChild = 0;
     private int TrapChild = 2;
     private int ButtonChild = 1;
     private int BoxChild = 4;
@@ -58,13 +70,6 @@ public class MapGenerator : MonoBehaviour {
 
         switch (mapNumber)
         {
-            /*case 1:
-                //GameObject brick = Instantiate(brickModel, new Vector3(325, -90, 325), Quaternion.AngleAxis(-90, Vector3.right), parent.transform) as GameObject;
-                map1();
-                break;
-            case 2:
-                map2();
-                break;*/
             case 3:
                 map3();
                 break;
@@ -72,85 +77,6 @@ public class MapGenerator : MonoBehaviour {
                 map3();
                 break;
         }
-    }
-
-    public void baseMap(int x, int z)
-    {
-
-        for (int i = 0; i < x; i++)
-        {
-            for (int j = 0; j < z; j++)
-            {
-                Instantiate(brickModel, new Vector3(25 + i * 50, -90, 25 + j * 50), Quaternion.AngleAxis(-90, Vector3.right), parent.transform);
-            }
-        }
-        door = Instantiate(doorModel, new Vector3(25 + x * 50, 0, 325), Quaternion.AngleAxis(-90, Vector3.right), parent.transform) as GameObject;
-    }
-
-    public void map1()
-    {
-        for(int i=0; i<5; i++)
-        {
-            Instantiate(EdgeModel, new Vector3(225, 0, 225+i*50), Quaternion.AngleAxis(0, Vector3.right), parent.transform.GetChild(3));
-        }
-        for (int i = 0; i < 3; i++)
-        {
-            for (int j = 0; j < 3; j++)
-            {
-                Instantiate(brickModel, new Vector3(275 + i * 50, -90, 275 + j * 50), Quaternion.AngleAxis(-90, Vector3.right), parent.transform.GetChild(0));
-            }
-            Instantiate(brickModel, new Vector3(425 + i * 50, -90, 325), Quaternion.AngleAxis(-90, Vector3.right), parent.transform.GetChild(0));
-
-            Instantiate(EdgeModel, new Vector3(275 + i * 50, 0, 225), Quaternion.AngleAxis(0, Vector3.right), parent.transform.GetChild(3));
-            Instantiate(EdgeModel, new Vector3(425 + i * 50, 0, 275), Quaternion.AngleAxis(0, Vector3.right), parent.transform.GetChild(3));
-        }
-
-        for(int i=0; i<4; i++)
-        {
-            Instantiate(EdgeModel, new Vector3(325 + i * 50, 0, 425), Quaternion.AngleAxis(0, Vector3.right), parent.transform.GetChild(3));
-        }
-
-        Instantiate(EdgeModel, new Vector3(275, 0, 475), Quaternion.AngleAxis(0, Vector3.right), parent.transform.GetChild(3));
-        Instantiate(EdgeModel, new Vector3(525, 0, 375), Quaternion.AngleAxis(0, Vector3.right), parent.transform.GetChild(3));
-        map1NotStaticElements();
-
-    }
-
-    public void map1NotStaticElements()
-    {
-        CurrentGameDatas.HaveKey = false;
-        count = 1;
-        door = Instantiate(doorModel, new Vector3(575, 0, 325), Quaternion.AngleAxis(-90, Vector3.right), parent.transform) as GameObject;
-        GameObject trap = Instantiate(trapModel, new Vector3(425, -90, 375), Quaternion.AngleAxis(-90, Vector3.right), parent.transform.GetChild(2)) as GameObject;
-        GameObject doorButton = Instantiate(buttonModel, new Vector3(475, 0, 375), Quaternion.AngleAxis(-90, Vector3.right), parent.transform.GetChild(1)) as GameObject;
-        GameObject Key = Instantiate(KeyModel, new Vector3(275, -90, 425), Quaternion.AngleAxis(-90, Vector3.right), parent.transform) as GameObject;
-
-        notStaticElements.Add(trap);
-        notStaticElements.Add(doorButton);
-        notStaticElements.Add(door);
-        notStaticElements.Add(Key);
-    }
-
-    public void map2()
-    {
-       
-        for (int i = 0; i < 2; i++)
-        {
-                Instantiate(brickModel, new Vector3(325 + i * 50, -90, 325), Quaternion.AngleAxis(-90, Vector3.right), parent.transform.GetChild(0));
-        }
-        map2NotStaticElements();
-    }
-
-    public void map2NotStaticElements()
-    {
-        CurrentGameDatas.HaveKey = false;
-        count = 0;
-        door = Instantiate(doorModel, new Vector3(475, 0, 325), Quaternion.AngleAxis(-90, Vector3.right), parent.transform) as GameObject;
-        GameObject Key = Instantiate(KeyModel, new Vector3(425, -90, 325), Quaternion.AngleAxis(-90, Vector3.right), parent.transform) as GameObject;
-
-        notStaticElements.Add(door);
-        notStaticElements.Add(Key);
-
     }
 
     public void map3()
@@ -202,12 +128,6 @@ public class MapGenerator : MonoBehaviour {
                             case 1:
                                 Instantiate(EdgeModel, placePosition+new Vector3(0, Configuration.edgeGround, 0), Quaternion.AngleAxis(0, Vector3.right), parent.transform.GetChild(EdgeChild));
                                 break;
-                            case 2:
-                                GameObject Key = Instantiate(KeyModel, placePosition+new Vector3(0, Configuration.keyGround, 0), Quaternion.AngleAxis(-90, Vector3.right), parent.transform) as GameObject;
-                                notStaticElementsID.Add(2);
-                                notStaticElementsPosition.Add(new Vector3(placePosition.x, placePosition.y+Configuration.keyGround, placePosition.z));
-                                notStaticElements.Add(Key);
-                                break;
                             case 3:
                                 GameObject trap = Instantiate(trapModel, placePosition + new Vector3(0, Configuration.trapGround, 0), Quaternion.AngleAxis(-90, Vector3.right), parent.transform.GetChild(TrapChild)) as GameObject;
                                 notStaticElementsID.Add(3);
@@ -223,9 +143,9 @@ public class MapGenerator : MonoBehaviour {
                                 break;
                             case 5:
                                 Instantiate(brickModel, placePosition + new Vector3(0, Configuration.brickGround, 0), Quaternion.AngleAxis(-90, Vector3.right), parent.transform.GetChild(BrickChild));
-                                GameObject box = Instantiate(boxModel, placePosition + new Vector3(0, Configuration.boxGround, 0), Quaternion.AngleAxis(-90, Vector3.right), parent.transform.GetChild(BoxChild)) as GameObject;
-                                box.GetComponent<OnePushPerRound>().x = j;
-                                box.GetComponent<OnePushPerRound>().z = i;
+                                GameObject box = Instantiate(boxModel, placePosition + new Vector3(0, Configuration.boxGround, 0), Quaternion.AngleAxis(0, Vector3.right), parent.transform.GetChild(BoxChild)) as GameObject;
+                                box.GetComponent<BoxController>().x = j;
+                                box.GetComponent<BoxController>().z = i;
                                 //Visszaallitasnak tudnom kene hova rakjam vissza, tolas menedzseles nincs meg
                                 notStaticElementsID.Add(5);
                                 notStaticElementsPosition.Add(new Vector3(placePosition.x, placePosition.y + Configuration.boxGround, placePosition.z));
@@ -236,6 +156,12 @@ public class MapGenerator : MonoBehaviour {
                                 door = Instantiate(doorModel, placePosition + new Vector3(0, Configuration.doorGround, 0), Quaternion.AngleAxis(-90, Vector3.right), parent.transform) as GameObject;
                                 notStaticElements.Add(door);
                                 doorPosition = placePosition;
+                                break;
+                            case -2:
+                                GameObject Key = Instantiate(KeyModel, placePosition + new Vector3(0, Configuration.keyGround, 0), Quaternion.AngleAxis(-90, Vector3.right), parent.transform) as GameObject;
+                                notStaticElementsID.Add(-2);
+                                notStaticElementsPosition.Add(new Vector3(placePosition.x, placePosition.y + Configuration.keyGround, placePosition.z));
+                                notStaticElements.Add(Key);
                                 break;
                             default:
                                 break;
@@ -286,10 +212,6 @@ public class MapGenerator : MonoBehaviour {
         {
             switch (notStaticElementsID[i])
             {
-                case 2:
-                    GameObject Key = Instantiate(KeyModel, notStaticElementsPosition[i], Quaternion.AngleAxis(-90, Vector3.right), parent.transform) as GameObject;
-                    notStaticElements.Add(Key);
-                    break;
                 case 3:
                     GameObject trap = Instantiate(trapModel, notStaticElementsPosition[i], Quaternion.AngleAxis(-90, Vector3.right), parent.transform.GetChild(TrapChild)) as GameObject;
                     notStaticElements.Add(trap);
@@ -300,11 +222,15 @@ public class MapGenerator : MonoBehaviour {
                     count++;
                     break;
                 case 5:
-                    GameObject box = Instantiate(boxModel, notStaticElementsPosition[i], Quaternion.AngleAxis(-90, Vector3.right), parent.transform.GetChild(BoxChild)) as GameObject;
-                    box.GetComponent<OnePushPerRound>().x = (int)(notStaticElementsPosition[i].x - startPosition.x)/Configuration.unit;
-                    box.GetComponent<OnePushPerRound>().z = (int)(startPosition.z-notStaticElementsPosition[i].z)/Configuration.unit;
+                    GameObject box = Instantiate(boxModel, notStaticElementsPosition[i], Quaternion.AngleAxis(0, Vector3.right), parent.transform.GetChild(BoxChild)) as GameObject;
+                    box.GetComponent<BoxController>().x = (int)(notStaticElementsPosition[i].x - startPosition.x)/Configuration.unit;
+                    box.GetComponent<BoxController>().z = (int)(startPosition.z-notStaticElementsPosition[i].z)/Configuration.unit;
                     notStaticElements.Add(box);
                     boxes.Add(box);
+                    break;
+                case -2:
+                    GameObject Key = Instantiate(KeyModel, notStaticElementsPosition[i], Quaternion.AngleAxis(-90, Vector3.right), parent.transform) as GameObject;
+                    notStaticElements.Add(Key);
                     break;
                 default:
                     break;
@@ -341,45 +267,102 @@ public class MapGenerator : MonoBehaviour {
         {
             z++;
             reCalc[0] = 0;
-            reCalc[1] = -1;
+            reCalc[1] = 1;
         }
         else
         {
             z--;
             reCalc[0] = 0;
-            reCalc[1] = 1;
+            reCalc[1] = -1;
         }
 
-        if (actMap[z, x] < 0)
+        if(actMap[charMatrixPositionZ, charMatrixPositionX] == HoleID)
+        {
+            if(actMap[z, x] == HoleID || actMap[z, x]==EdgeID)
+            {
+                Joe.GetComponent<JoeCommandControl>().GoForward();
+                charMatrixPositionX = x;
+                charMatrixPositionZ = z;
+            }
+            else
+            {
+                return; //In the Hole and he cant go forward
+            }
+        }
+        else if (actMap[z, x] < 0)
         {
             return; //TODO: valami animaciot adni neki
         }
-        else if (actMap[z, x] == 5) //doboz
+        else if (actMap[z, x] == BoxID) 
         {
-            if(actMap[z+reCalc[0], x + reCalc[1]] < 0 || actMap[z + reCalc[0], x + reCalc[1]] == 5) //static element or another box
+            //Debug.Log(actMap[z, x]);
+            //Debug.Log(actMap[z + reCalc[1], x + reCalc[0]]);
+            if(actMap[z+reCalc[1], x + reCalc[0]] < 0 || actMap[z + reCalc[1], x + reCalc[0]] == BoxID) //static element: <0
             {
                 return; //TODO: valami animaciot adni neki
             }
             //else if(actMap)
-            else if(actMap[z + reCalc[0], x + reCalc[1]] == 1) //edge
+            else if(actMap[z + reCalc[1], x + reCalc[0]] == EdgeID) //edge
             {
+                int i = 0;
+                while (!(boxes[i].GetComponent<BoxController>().x == x && boxes[i].GetComponent<BoxController>().z == z))
+                {
+                    i++;
+                }
+                actMap[z, x] = BrickID;
+                actMap[z + reCalc[1], x + reCalc[0]] = HoleID;
+                boxes[i].GetComponent<BoxController>().x += reCalc[0];
+                boxes[i].GetComponent<BoxController>().z += reCalc[1];
+                boxes[i].GetComponent<BoxController>().MoveToThere(Joe.transform.forward);
+                Joe.GetComponent<JoeCommandControl>().GoForward();
+                charMatrixPositionX = x;
+                charMatrixPositionZ = z;
 
             }
-            else if(actMap[z + reCalc[0], x + reCalc[1]]==6)
+            else if(actMap[z + reCalc[1], x + reCalc[0]] == TrapID)
+            {
+                int i = 0;
+                while (!(boxes[i].GetComponent<BoxController>().x == x && boxes[i].GetComponent<BoxController>().z == z))
+                {
+                    i++;
+                }
+                actMap[z, x] = BrickID;
+                boxes[i].GetComponent<BoxController>().x += reCalc[0];
+                boxes[i].GetComponent<BoxController>().z += reCalc[1];
+                boxes[i].GetComponent<BoxController>().MoveToThere(Joe.transform.forward);
+                Joe.GetComponent<JoeCommandControl>().GoForward();
+                charMatrixPositionX = x;
+                charMatrixPositionZ = z;
+            }
+            else if(actMap[z + reCalc[1], x + reCalc[0]]==HoleID)
             {
                 //New element
+                int i = 0;
+                while (!(boxes[i].GetComponent<BoxController>().x == x && boxes[i].GetComponent<BoxController>().z == z))
+                {
+                    i++;
+                }
+                actMap[z, x] = BrickID;
+                actMap[z + reCalc[1], x + reCalc[0]] = BrickID;
+                boxes[i].GetComponent<BoxController>().x += reCalc[0];
+                boxes[i].GetComponent<BoxController>().z += reCalc[1];
+                boxes[i].GetComponent<BoxController>().MoveToThere(Joe.transform.forward);
+                Joe.GetComponent<JoeCommandControl>().GoForward();
+                charMatrixPositionX = x;
+                charMatrixPositionZ = z;
             }
             else
             {
                 int i = 0;
-                while (boxes[i].GetComponent<OnePushPerRound>().x != x && boxes[i].GetComponent<OnePushPerRound>().z != z) {
+                while (!(boxes[i].GetComponent<BoxController>().x == x && boxes[i].GetComponent<BoxController>().z == z)) {
                     i++;
                 }
-                actMap[z, x] = 0; //hardcode
-                actMap[z + reCalc[1], x + reCalc[0]] = 5;
-                boxes[i].GetComponent<OnePushPerRound>().x += reCalc[0];
-                boxes[i].GetComponent<OnePushPerRound>().z += reCalc[1];
-                boxes[i].GetComponent<OnePushPerRound>().MoveToThere(Joe.transform.forward);
+                actMap[z, x] = BrickID; 
+                actMap[z + reCalc[1], x + reCalc[0]] = BoxID;
+                boxes[i].GetComponent<BoxController>().x += reCalc[0];
+                boxes[i].GetComponent<BoxController>().z += reCalc[1];
+                Debug.Log(boxes[i].GetComponent<BoxController>().z + " "+ boxes[i].GetComponent<BoxController>().x);
+                boxes[i].GetComponent<BoxController>().MoveToThere(Joe.transform.forward);
                 Joe.GetComponent<JoeCommandControl>().GoForward();
                 charMatrixPositionX = x;
                 charMatrixPositionZ = z;
