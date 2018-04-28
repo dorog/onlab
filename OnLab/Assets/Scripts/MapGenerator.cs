@@ -19,6 +19,8 @@ public class MapGenerator : MonoBehaviour {
     public GameObject buttonModel;  // 4
     public GameObject boxModel;     // 5: box + brick under it
     public GameObject holeModel;    // 6
+    public GameObject BridgeMakeModel; //7
+    public GameObject BridgeElementModel; //8
 
     private int EdgeID = 1;
     private int BrickID = 0;
@@ -27,12 +29,14 @@ public class MapGenerator : MonoBehaviour {
     private int TrapID = 3;
     private int ButtonID = 4;
     private int BoxID = 5;
-    private int HoleID = 2;
+    private int HoleID = 6;
+    private int BridgeElementID = 8;
+    private int TwoBoxOnBridgeElement = -3;
 
 
     private Vector3 joePosition;
     
-    public int mapNumber = 1;
+    public int mapNumber = 0;
     GameObject parent;
     private List<GameObject> notStaticElements = new List<GameObject>();
 
@@ -45,12 +49,14 @@ public class MapGenerator : MonoBehaviour {
     private int TrapChild = 2;
     private int ButtonChild = 1;
     private int BoxChild = 4;
+    public int BridgeChild = 5;
 
     private Vector3 doorPosition;
 
     private List<int> notStaticElementsID = new List<int>(); //clear it ?
     private List<Vector3> notStaticElementsPosition = new List<Vector3>();
     private List<GameObject> boxes = new List<GameObject>();
+    private List<GameObject> bridges = new List<GameObject>();
 
     private Vector3 startPosition;
 
@@ -68,22 +74,14 @@ public class MapGenerator : MonoBehaviour {
         mapNumber = CurrentGameDatas.mapNumber;
         Joe = GameObject.Find(Configuration.characterName);
 
-        switch (mapNumber)
-        {
-            case 3:
-                map3();
-                break;
-            default:
-                map3();
-                break;
-        }
+        CreateMap(mapNumber);
     }
 
-    public void map3()
+    public void CreateMap(int number)
     {
         try
         {
-            using (StreamReader sr = new StreamReader("maps.txt")) //TODO: tobbszorozni
+            using (StreamReader sr = new StreamReader("map"+number+".txt"))
             {
                 //Debug.Log("usingba");
                 String line = sr.ReadToEnd();
@@ -152,6 +150,9 @@ public class MapGenerator : MonoBehaviour {
                                 notStaticElements.Add(box);
                                 boxes.Add(box);
                                 break;
+                            case 6:
+                                Instantiate(holeModel, placePosition + new Vector3(0, Configuration.holeGround, -25), Quaternion.AngleAxis(0, Vector3.right), parent.transform.GetChild(BrickChild));
+                                break;
                             case -1:
                                 door = Instantiate(doorModel, placePosition + new Vector3(0, Configuration.doorGround, 0), Quaternion.AngleAxis(-90, Vector3.right), parent.transform) as GameObject;
                                 notStaticElements.Add(door);
@@ -162,6 +163,23 @@ public class MapGenerator : MonoBehaviour {
                                 notStaticElementsID.Add(-2);
                                 notStaticElementsPosition.Add(new Vector3(placePosition.x, placePosition.y + Configuration.keyGround, placePosition.z));
                                 notStaticElements.Add(Key);
+                                break;
+                            case 7:
+                                GameObject BridgeMaker = Instantiate(BridgeMakeModel, placePosition + new Vector3(0, Configuration.bridgeMakeGround, -25), Quaternion.AngleAxis(0, Vector3.right), parent.transform) as GameObject;
+                                notStaticElementsID.Add(7);
+                                notStaticElementsPosition.Add(placePosition + new Vector3(0, Configuration.bridgeMakeGround, -25));
+                                notStaticElements.Add(BridgeMaker);
+                                actMap[i, j] = EdgeID;
+                                originalMap[i, j] = EdgeID;
+                                break;
+                            case 8:
+                                GameObject BridgeElement = Instantiate(BridgeElementModel, placePosition + new Vector3(0, Configuration.holeGround, -25), Quaternion.AngleAxis(0, Vector3.right), parent.transform.GetChild(BridgeChild));
+                                notStaticElementsID.Add(8);
+                                notStaticElementsPosition.Add(placePosition + new Vector3(0, Configuration.bridgeElementGround, -25));
+                                notStaticElements.Add(BridgeElement);
+                                BridgeElement.GetComponent<RiseElement>().x = j;
+                                BridgeElement.GetComponent<RiseElement>().z = i;
+                                bridges.Add(BridgeElement);
                                 break;
                             default:
                                 break;
@@ -184,6 +202,17 @@ public class MapGenerator : MonoBehaviour {
             used = true;
             Animation anim = door.GetComponent<Animation>();
             anim.Play();
+            for(int i=0; i<actMap.GetLength(0); i++)
+            {
+                for(int j=0; j<actMap.GetLength(1); j++)
+                {
+                    if(actMap[i, j] == DoorID)
+                    {
+                        actMap[i, j] = BrickID;
+                        break;
+                    }
+                }
+            }
         }
     }
 
@@ -196,6 +225,7 @@ public class MapGenerator : MonoBehaviour {
     public void restartMap(int number)
     {
         boxes.Clear();
+        bridges.Clear();
         charMatrixPositionX = originMatrixPositionX;
         charMatrixPositionZ = originMatrixPositionZ;
         count = 0;
@@ -232,6 +262,15 @@ public class MapGenerator : MonoBehaviour {
                     GameObject Key = Instantiate(KeyModel, notStaticElementsPosition[i], Quaternion.AngleAxis(-90, Vector3.right), parent.transform) as GameObject;
                     notStaticElements.Add(Key);
                     break;
+                case 7:
+                    GameObject BridgeMaker = Instantiate(BridgeMakeModel, notStaticElementsPosition[i], Quaternion.AngleAxis(0, Vector3.right), parent.transform) as GameObject;
+                    notStaticElements.Add(BridgeMaker);
+                    break;
+                case 8:
+                    GameObject BridgeElement = Instantiate(BridgeElementModel, notStaticElementsPosition[i], Quaternion.AngleAxis(0, Vector3.right), parent.transform.GetChild(BridgeChild));
+                    notStaticElements.Add(BridgeElement);
+                    bridges.Add(BridgeElement);
+                    break;
                 default:
                     break;
             }
@@ -242,6 +281,25 @@ public class MapGenerator : MonoBehaviour {
            for(int j=0; j<originalMap.GetLength(1); j++)
             {
                 actMap[i, j] = originalMap[i, j];
+            }
+        }
+    }
+
+    public void RiseBridgeElements()
+    {
+        for(int i=0; i<bridges.Count; i++)
+        {
+            if (bridges[i].GetComponent<RiseElement>().boxOnIt == 0)
+            {
+                actMap[bridges[i].GetComponent<RiseElement>().z, bridges[i].GetComponent<RiseElement>().x] = BrickID;
+            }
+            else if(bridges[i].GetComponent<RiseElement>().boxOnIt == 1)
+            {
+                actMap[bridges[i].GetComponent<RiseElement>().z, bridges[i].GetComponent<RiseElement>().x] = BoxID;
+            }
+            else
+            {
+                actMap[bridges[i].GetComponent<RiseElement>().z, bridges[i].GetComponent<RiseElement>().x] = TwoBoxOnBridgeElement;
             }
         }
     }
@@ -289,19 +347,16 @@ public class MapGenerator : MonoBehaviour {
                 return; //In the Hole and he cant go forward
             }
         }
-        else if (actMap[z, x] < 0)
+        else if (actMap[z, x] == DoorID || actMap[z, x] == TwoBoxOnBridgeElement )
         {
             return; //TODO: valami animaciot adni neki
         }
         else if (actMap[z, x] == BoxID) 
         {
-            //Debug.Log(actMap[z, x]);
-            //Debug.Log(actMap[z + reCalc[1], x + reCalc[0]]);
             if(actMap[z+reCalc[1], x + reCalc[0]] < 0 || actMap[z + reCalc[1], x + reCalc[0]] == BoxID) //static element: <0
             {
                 return; //TODO: valami animaciot adni neki
             }
-            //else if(actMap)
             else if(actMap[z + reCalc[1], x + reCalc[0]] == EdgeID) //edge
             {
                 int i = 0;
@@ -327,8 +382,8 @@ public class MapGenerator : MonoBehaviour {
                     i++;
                 }
                 actMap[z, x] = BrickID;
-                boxes[i].GetComponent<BoxController>().x += reCalc[0];
-                boxes[i].GetComponent<BoxController>().z += reCalc[1];
+                boxes[i].GetComponent<BoxController>().x = -1; // he cant push now, i didnt want to move it
+                boxes[i].GetComponent<BoxController>().z = -1;
                 boxes[i].GetComponent<BoxController>().MoveToThere(Joe.transform.forward);
                 Joe.GetComponent<JoeCommandControl>().GoForward();
                 charMatrixPositionX = x;
@@ -344,12 +399,37 @@ public class MapGenerator : MonoBehaviour {
                 }
                 actMap[z, x] = BrickID;
                 actMap[z + reCalc[1], x + reCalc[0]] = BrickID;
-                boxes[i].GetComponent<BoxController>().x += reCalc[0];
-                boxes[i].GetComponent<BoxController>().z += reCalc[1];
+                boxes[i].GetComponent<BoxController>().x = -1; //in the hole, he cant push it now
+                boxes[i].GetComponent<BoxController>().z = -1; // -||-
                 boxes[i].GetComponent<BoxController>().MoveToThere(Joe.transform.forward);
                 Joe.GetComponent<JoeCommandControl>().GoForward();
                 charMatrixPositionX = x;
                 charMatrixPositionZ = z;
+            }
+            else if(actMap[z + reCalc[1], x + reCalc[0]] == BridgeElementID)
+            {
+                int i = 0;
+                while (!(bridges[i].GetComponent<RiseElement>().x == x && bridges[i].GetComponent<RiseElement>().z == z))
+                {
+                    i++;
+                }
+                if (bridges[i].GetComponent<RiseElement>().boxOnIt < 2)
+                {
+                    int j = 0;
+                    while (!(boxes[j].GetComponent<BoxController>().x == x && boxes[j].GetComponent<BoxController>().z == z))
+                    {
+                        j++;
+                    }
+                    actMap[z, x] = BrickID;
+                    boxes[j].GetComponent<BoxController>().x += reCalc[0];
+                    boxes[j].GetComponent<BoxController>().z += reCalc[1];
+                    boxes[j].GetComponent<BoxController>().MoveToThere(Joe.transform.forward);
+                    Joe.GetComponent<JoeCommandControl>().GoForward();
+                    charMatrixPositionX = x;
+                    charMatrixPositionZ = z;
+                    bridges[i].GetComponent<RiseElement>().boxOnIt++;
+                    bridges[i].GetComponent<RiseElement>().boxes.Add(boxes[j]);
+                }
             }
             else
             {
@@ -361,11 +441,29 @@ public class MapGenerator : MonoBehaviour {
                 actMap[z + reCalc[1], x + reCalc[0]] = BoxID;
                 boxes[i].GetComponent<BoxController>().x += reCalc[0];
                 boxes[i].GetComponent<BoxController>().z += reCalc[1];
-                Debug.Log(boxes[i].GetComponent<BoxController>().z + " "+ boxes[i].GetComponent<BoxController>().x);
                 boxes[i].GetComponent<BoxController>().MoveToThere(Joe.transform.forward);
                 Joe.GetComponent<JoeCommandControl>().GoForward();
                 charMatrixPositionX = x;
                 charMatrixPositionZ = z;
+            }
+        }
+        else if (actMap[z, x] == BridgeElementID)
+        {
+            int i = 0;
+            while (!(bridges[i].GetComponent<RiseElement>().x == x && bridges[i].GetComponent<RiseElement>().z == z))
+            {
+                i++;
+            }
+            if (bridges[i].GetComponent<RiseElement>().boxOnIt<2)
+            {
+                Joe.GetComponent<JoeCommandControl>().GoForward();
+                charMatrixPositionX = x;
+                charMatrixPositionZ = z;
+            }
+            else
+            {
+                //box on it, we can push it
+                //TODO: check the next for pushing box: do a function
             }
         }
         else

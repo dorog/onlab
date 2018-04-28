@@ -59,14 +59,7 @@ public class TrapActive : MonoBehaviour {
                 {
                     fill++;
                 }
-                
-                
-                //fill++;
-                Debug.Log(fill);
             }
-        }
-        
-        //Debug.Log(colliders.Length);
-        
+        } 
     }
 }

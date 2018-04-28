@@ -7,6 +7,9 @@ public class Configuration {
     //datas for models
     public static int unit = 50;
     public static float brickGround = -90;
+    public static float holeGround = -65;
+    public static float bridgeElementGround = -65;
+    public static float bridgeMakeGround = -90;
     public static float doorGround = 0;
     public static float keyGround = -90;
     public static float trapGround = -90;

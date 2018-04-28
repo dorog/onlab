@@ -791,8 +791,13 @@ MonoBehaviour:
   buttonModel: {fileID: 1662418838933890, guid: e77e7da3edc39fe40b822eb8c6970b65,
     type: 2}
   boxModel: {fileID: 1810559649718812, guid: 7e7b3cab6315d6442a7e416848719b77, type: 2}
-  holeModel: {fileID: 0}
+  holeModel: {fileID: 1404507333167178, guid: fb75c23917beee5478cd19b967160f15, type: 2}
+  BridgeMakeModel: {fileID: 1307175826224488, guid: b62fef5a9f3deef42b0c09500d916db5,
+    type: 2}
+  BridgeElementModel: {fileID: 1326378262974662, guid: d824fd90bde79904a8d939a9c8d2b552,
+    type: 2}
   mapNumber: 1
+  BridgeChild: 5
 --- !u!224 &372076463
 RectTransform:
   m_ObjectHideFlags: 0
@@ -808,6 +813,7 @@ RectTransform:
   - {fileID: 894981677}
   - {fileID: 46842776}
   - {fileID: 335457440}
+  - {fileID: 1505332756}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2715,6 +2721,39 @@ Transform:
   m_PrefabParentObject: {fileID: 4497770357648116, guid: 409b4e43ac7aca247b6f1755771b6bfe,
     type: 2}
   m_PrefabInternal: {fileID: 1216677484}
+--- !u!1 &1505332755
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1505332756}
+  m_Layer: 5
+  m_Name: BridgeElements
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1505332756
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1505332755}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 372076463}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1558782086
 GameObject:
   m_ObjectHideFlags: 0
