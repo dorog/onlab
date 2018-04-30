@@ -123,6 +123,7 @@ public class StartActions : MonoBehaviour
     {
         //character.GetComponent<Animator>().SetBool("start", true);
         character.GetComponent<JoeCommandControl>().stopped = true;
+        character.GetComponent<JoeCommandControl>().gravityOff = false;
         aimnumber = commandsForExecute.Count;
         character.GetComponent<JoeCommandControl>().ResetActions();
 

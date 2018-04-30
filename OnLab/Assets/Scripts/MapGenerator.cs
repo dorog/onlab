@@ -9,7 +9,7 @@ public class MapGenerator : MonoBehaviour {
     private bool used;
     private GameObject door;
     private GameObject Joe;
-    private int count = 1;
+    private int count = 0;
     // public GameObject Joe;               //ID:
     public GameObject KeyModel;             // -2
     public GameObject doorModel;            // -1
@@ -23,15 +23,15 @@ public class MapGenerator : MonoBehaviour {
 
     public GameObject boxModel;     // 
 
-    private int KeyID = -2;
+    //private int KeyID = -2;
     private int DoorID = -1;
-    private int BrickID = 0;
-    private int EdgeID = 1;
-    private int TrapID = 2;
-    private int ButtonID = 3;
-    private int HoleID = 4;
+    //private int BrickID = 0;
+    //private int EdgeID = 1;
+    //private int TrapID = 2;
+    //private int ButtonID = 3;
+    //private int HoleID = 4;
     private int BridgeMakeID = 5;
-    private int BridgeElementID = 6;
+    //private int BridgeElementID = 6;
 
     private int BoxID = 10;
 
@@ -56,8 +56,6 @@ public class MapGenerator : MonoBehaviour {
     private List<GameObject> notStaticElements = new List<GameObject>();
     private List<int> notStaticElementsID = new List<int>(); 
     private List<Vector3> notStaticElementsPosition = new List<Vector3>();
-    private List<GameObject> boxes = new List<GameObject>();
-    private List<GameObject> bridges = new List<GameObject>();
 
     private Vector3 startPosition;
 
@@ -234,13 +232,24 @@ public class MapGenerator : MonoBehaviour {
         charMatrixPositionX = originMatrixPositionX;
         charMatrixPositionZ = originMatrixPositionZ;
         count = 0;
-        for(int i=notStaticElements.Count-1; i>-1; i--)
+
+        for (int i = 0; i < objectMap.GetLength(0); i++)
+        {
+            for (int j = 0; j < objectMap.GetLength(1); j++)
+            {
+                objectMap[i, j].GetComponent<HighData>().boxes.Clear();
+            }
+        }
+
+        for (int i=notStaticElements.Count-1; i>-1; i--)
         {
             GameObject.Destroy(notStaticElements[i]);
         }
+        
         used = false;
 
         door = Instantiate(doorModel, doorPosition, Quaternion.AngleAxis(-90, Vector3.right), parent.transform) as GameObject;
+        objectMap[(int)(startPosition.z - doorPosition.z) / Configuration.unit, (int)(doorPosition.x - startPosition.x) / Configuration.unit] = door;
         notStaticElements.Add(door);
 
         for(int i=0; i<notStaticElementsID.Count; i++)
@@ -286,9 +295,9 @@ public class MapGenerator : MonoBehaviour {
 
     public void RiseBridgeElements()
     {
-        for(int i=0; i<bridges.Count; i++)
+        for(int i=0; i<this.transform.GetChild(BridgeChild).childCount; i++)
         {
-            bridges[i].GetComponent<HighData>().baseHigh++;
+            this.transform.GetChild(BridgeChild).transform.GetChild(i).GetComponent<HighData>().baseHigh++;
         }
     }
 

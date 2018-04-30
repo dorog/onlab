@@ -23,6 +23,7 @@ public class JoeCommandControl : MonoBehaviour {
     public float left_time = 0;
     public bool stopped = false;
     public float gravity = 10;
+    public bool gravityOff = false;
 
     private Vector3 aimPosition;
 
@@ -112,7 +113,7 @@ public class JoeCommandControl : MonoBehaviour {
                 }
             }
         }
-        if (!this.GetComponent<CharacterController>().isGrounded)
+        if (!this.GetComponent<CharacterController>().isGrounded && !gravityOff)
         {
             this.GetComponent<CharacterController>().Move(new Vector3(0, Time.deltaTime*gravity*-1, 0));
         }
