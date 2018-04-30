@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 95902645102247200}
   - component: {fileID: 65229935913748234}
   - component: {fileID: 114746796953203646}
+  - component: {fileID: 114170804443139734}
   m_Layer: 0
   m_Name: Edge
   m_TagString: Untagged
@@ -114,6 +115,19 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114170804443139734
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1940690599555412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e04b874890db0fb40a38ffe616c88947, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boxes: []
+  baseHigh: 0
 --- !u!114 &114746796953203646
 MonoBehaviour:
   m_ObjectHideFlags: 1

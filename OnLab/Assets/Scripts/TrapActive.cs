@@ -19,7 +19,7 @@ public class TrapActive : MonoBehaviour {
     // Update is called once per frame
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("if elott: " + fill);
+        //Debug.Log("if elott: " + fill);
         if (fill <= 2)
         {
             Collider[] colliders = Physics.OverlapBox(this.transform.position, new Vector3(25, 150, 25));

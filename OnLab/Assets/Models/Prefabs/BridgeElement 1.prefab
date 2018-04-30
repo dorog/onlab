@@ -45,6 +45,7 @@ GameObject:
   - component: {fileID: 65382975426706630}
   - component: {fileID: 114033133968583862}
   - component: {fileID: 54091912813454950}
+  - component: {fileID: 114908463689307584}
   m_Layer: 0
   m_Name: BridgeElement 1
   m_TagString: Untagged
@@ -248,7 +249,6 @@ MonoBehaviour:
   x: 0
   z: 0
   boxes: []
-  boxOnIt: 0
 --- !u!114 &114367623776121108
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -261,3 +261,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resetTime: 2
+--- !u!114 &114908463689307584
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1326378262974662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e04b874890db0fb40a38ffe616c88947, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boxes: []
+  baseHigh: 1

@@ -112,6 +112,10 @@ public class JoeCommandControl : MonoBehaviour {
                 }
             }
         }
+        if (!this.GetComponent<CharacterController>().isGrounded)
+        {
+            this.GetComponent<CharacterController>().Move(new Vector3(0, Time.deltaTime*gravity*-1, 0));
+        }
        
 	}
 

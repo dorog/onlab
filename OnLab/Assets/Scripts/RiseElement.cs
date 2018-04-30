@@ -6,12 +6,13 @@ public class RiseElement : MonoBehaviour {
 
     private bool rising = false;
     private float rising_time = 0.5f;
+    private Vector3 aimPosition;
 
     public int x;
     public int z;
 
     public List<GameObject> boxes = new List<GameObject>();
-    public int boxOnIt = 0;
+    //public int boxOnIt = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -29,7 +30,7 @@ public class RiseElement : MonoBehaviour {
             }
             else if (rising_time > 0)
             {
-                this.transform.GetComponent<Rigidbody>().MovePosition(this.transform.position + new Vector3(0, Configuration.unit * rising_time * 2, 0));
+                this.transform.GetComponent<Rigidbody>().MovePosition(aimPosition);
                 rising_time = 0;
                 rising = false;
             }
@@ -39,6 +40,11 @@ public class RiseElement : MonoBehaviour {
 
     public void Rise()
     {
+        for(int i=0; i<boxes.Count; i++)
+        {
+            boxes[i].GetComponent<BoxController>().RiseBox(rising_time);
+        }
+        aimPosition = this.transform.position + new Vector3(0, Configuration.unit, 0);
         rising = true;
     }
 }

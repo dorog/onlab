@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 23094463114539562}
   - component: {fileID: 95641405604345922}
   - component: {fileID: 65027571745406294}
+  - component: {fileID: 114772631822997286}
   m_Layer: 0
   m_Name: column_in_lava
   m_TagString: Untagged
@@ -115,3 +116,16 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114772631822997286
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1406325461132120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e04b874890db0fb40a38ffe616c88947, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boxes: []
+  baseHigh: 2

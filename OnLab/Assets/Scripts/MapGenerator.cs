@@ -10,39 +10,39 @@ public class MapGenerator : MonoBehaviour {
     private GameObject door;
     private GameObject Joe;
     private int count = 1;
-    // public GameObject Joe;          //ID:
-    public GameObject EdgeModel;    // 1    
-    public GameObject brickModel;   // 0
-    public GameObject doorModel;    // -1
-    public GameObject KeyModel;     // 2
-    public GameObject trapModel;    // 3
-    public GameObject buttonModel;  // 4
-    public GameObject boxModel;     // 5: box + brick under it
-    public GameObject holeModel;    // 6
-    public GameObject BridgeMakeModel; //7
-    public GameObject BridgeElementModel; //8
+    // public GameObject Joe;               //ID:
+    public GameObject KeyModel;             // -2
+    public GameObject doorModel;            // -1
+    public GameObject brickModel;           // 0
+    public GameObject EdgeModel;            // 1   
+    public GameObject trapModel;            // 2
+    public GameObject buttonModel;          // 3
+    public GameObject holeModel;            // 4
+    public GameObject BridgeMakeModel;      // 5
+    public GameObject BridgeElementModel;   // 6
 
-    private int EdgeID = 1;
-    private int BrickID = 0;
-    private int DoorID = -1;
+    public GameObject boxModel;     // 
+
     private int KeyID = -2;
-    private int TrapID = 3;
-    private int ButtonID = 4;
-    private int BoxID = 5;
-    private int HoleID = 6;
-    private int BridgeElementID = 8;
-    private int TwoBoxOnBridgeElement = -3;
+    private int DoorID = -1;
+    private int BrickID = 0;
+    private int EdgeID = 1;
+    private int TrapID = 2;
+    private int ButtonID = 3;
+    private int HoleID = 4;
+    private int BridgeMakeID = 5;
+    private int BridgeElementID = 6;
 
+    private int BoxID = 10;
 
     private Vector3 joePosition;
     
     public int mapNumber = 0;
     GameObject parent;
-    private List<GameObject> notStaticElements = new List<GameObject>();
-
 
     private int[,] actMap;
     private int[,] originalMap;
+    private GameObject[,] objectMap; 
 
     private int EdgeChild = 3;
     private const int BrickChild = 0;
@@ -53,7 +53,8 @@ public class MapGenerator : MonoBehaviour {
 
     private Vector3 doorPosition;
 
-    private List<int> notStaticElementsID = new List<int>(); //clear it ?
+    private List<GameObject> notStaticElements = new List<GameObject>();
+    private List<int> notStaticElementsID = new List<int>(); 
     private List<Vector3> notStaticElementsPosition = new List<Vector3>();
     private List<GameObject> boxes = new List<GameObject>();
     private List<GameObject> bridges = new List<GameObject>();
@@ -94,6 +95,7 @@ public class MapGenerator : MonoBehaviour {
                 string[] matrixDatas = datas[1].Split(' ');
                 actMap = new int[Convert.ToInt32(matrixDatas[0]), Convert.ToInt32(matrixDatas[1])];
                 originalMap = new int[Convert.ToInt32(matrixDatas[0]), Convert.ToInt32(matrixDatas[1])];
+                objectMap = new GameObject[Convert.ToInt32(matrixDatas[0]), Convert.ToInt32(matrixDatas[1])];
 
                 string[] stPos = datas[2].Split(' ');
                 
@@ -103,7 +105,6 @@ public class MapGenerator : MonoBehaviour {
                 originMatrixPositionZ = charMatrixPositionZ;
                 charMatrixPositionX = (Convert.ToInt32(charPosition[0]) - Convert.ToInt32(stPos[0])) / Configuration.unit;
                 originMatrixPositionX = charMatrixPositionX;
-
 
                 for (int i=0; i< Convert.ToInt32(matrixDatas[0]); i++)
                 {
@@ -117,74 +118,78 @@ public class MapGenerator : MonoBehaviour {
                         Vector3 placePosition = startPosition + new Vector3(Configuration.unit*j, 0, i * -1 * Configuration.unit);
                         int id = Convert.ToInt32(row[j]);
                         actMap[i,j] = id;
-                        originalMap[i, j] = id;
                         switch (id)
                         {
                             case 0:
-                                Instantiate(brickModel, placePosition + new Vector3(0, Configuration.brickGround, 0), Quaternion.AngleAxis(-90, Vector3.right), parent.transform.GetChild(BrickChild));
+                                GameObject brick = Instantiate(brickModel, placePosition + new Vector3(0, Configuration.brickGround, 0), Quaternion.AngleAxis(-90, Vector3.right), parent.transform.GetChild(BrickChild));
+                                objectMap[i, j] = brick;
                                 break;
                             case 1:
-                                Instantiate(EdgeModel, placePosition+new Vector3(0, Configuration.edgeGround, 0), Quaternion.AngleAxis(0, Vector3.right), parent.transform.GetChild(EdgeChild));
+                                GameObject edge = Instantiate(EdgeModel, placePosition+new Vector3(0, Configuration.edgeGround, 0), Quaternion.AngleAxis(0, Vector3.right), parent.transform.GetChild(EdgeChild));
+                                objectMap[i, j] = edge;
                                 break;
-                            case 3:
+                            case 2:
                                 GameObject trap = Instantiate(trapModel, placePosition + new Vector3(0, Configuration.trapGround, 0), Quaternion.AngleAxis(-90, Vector3.right), parent.transform.GetChild(TrapChild)) as GameObject;
-                                notStaticElementsID.Add(3);
+                                objectMap[i, j] = trap;
+                                notStaticElementsID.Add(2);
                                 notStaticElementsPosition.Add(new Vector3(placePosition.x, placePosition.y+Configuration.trapGround, placePosition.z));
                                 notStaticElements.Add(trap);
                                 break;
-                            case 4:
+                            case 3:
                                 GameObject doorButton = Instantiate(buttonModel, placePosition + new Vector3(0, Configuration.buttonGround, 0), Quaternion.AngleAxis(-90, Vector3.right), parent.transform.GetChild(ButtonChild)) as GameObject;
-                                notStaticElementsID.Add(4);
+                                objectMap[i, j] = doorButton;
+                                notStaticElementsID.Add(3);
                                 notStaticElementsPosition.Add(new Vector3(placePosition.x, placePosition.y+Configuration.buttonGround, placePosition.z));
                                 notStaticElements.Add(doorButton);
                                 count++;
                                 break;
-                            case 5:
-                                Instantiate(brickModel, placePosition + new Vector3(0, Configuration.brickGround, 0), Quaternion.AngleAxis(-90, Vector3.right), parent.transform.GetChild(BrickChild));
-                                GameObject box = Instantiate(boxModel, placePosition + new Vector3(0, Configuration.boxGround, 0), Quaternion.AngleAxis(0, Vector3.right), parent.transform.GetChild(BoxChild)) as GameObject;
-                                box.GetComponent<BoxController>().x = j;
-                                box.GetComponent<BoxController>().z = i;
-                                //Visszaallitasnak tudnom kene hova rakjam vissza, tolas menedzseles nincs meg
-                                notStaticElementsID.Add(5);
-                                notStaticElementsPosition.Add(new Vector3(placePosition.x, placePosition.y + Configuration.boxGround, placePosition.z));
-                                notStaticElements.Add(box);
-                                boxes.Add(box);
-                                break;
-                            case 6:
-                                Instantiate(holeModel, placePosition + new Vector3(0, Configuration.holeGround, -25), Quaternion.AngleAxis(0, Vector3.right), parent.transform.GetChild(BrickChild));
+                            case 4:
+                                GameObject hole = Instantiate(holeModel, placePosition + new Vector3(0, Configuration.holeGround, -25), Quaternion.AngleAxis(0, Vector3.right), parent.transform.GetChild(BrickChild));
+                                objectMap[i, j] = hole;
                                 break;
                             case -1:
                                 door = Instantiate(doorModel, placePosition + new Vector3(0, Configuration.doorGround, 0), Quaternion.AngleAxis(-90, Vector3.right), parent.transform) as GameObject;
+                                objectMap[i, j] = door;
                                 notStaticElements.Add(door);
                                 doorPosition = placePosition;
                                 break;
                             case -2:
                                 GameObject Key = Instantiate(KeyModel, placePosition + new Vector3(0, Configuration.keyGround, 0), Quaternion.AngleAxis(-90, Vector3.right), parent.transform) as GameObject;
+                                objectMap[i, j] = Key;
                                 notStaticElementsID.Add(-2);
                                 notStaticElementsPosition.Add(new Vector3(placePosition.x, placePosition.y + Configuration.keyGround, placePosition.z));
                                 notStaticElements.Add(Key);
                                 break;
-                            case 7:
+                            case 5:
                                 GameObject BridgeMaker = Instantiate(BridgeMakeModel, placePosition + new Vector3(0, Configuration.bridgeMakeGround, -25), Quaternion.AngleAxis(0, Vector3.right), parent.transform) as GameObject;
-                                notStaticElementsID.Add(7);
+                                objectMap[i, j] = BridgeMaker;
+                                notStaticElementsID.Add(5);
                                 notStaticElementsPosition.Add(placePosition + new Vector3(0, Configuration.bridgeMakeGround, -25));
                                 notStaticElements.Add(BridgeMaker);
-                                actMap[i, j] = EdgeID;
-                                originalMap[i, j] = EdgeID;
+                                originalMap[i, j] = BridgeMakeID;
                                 break;
-                            case 8:
+                            case 6:
                                 GameObject BridgeElement = Instantiate(BridgeElementModel, placePosition + new Vector3(0, Configuration.holeGround, -25), Quaternion.AngleAxis(0, Vector3.right), parent.transform.GetChild(BridgeChild));
-                                notStaticElementsID.Add(8);
+                                objectMap[i, j] = BridgeElement;
+                                notStaticElementsID.Add(6);
                                 notStaticElementsPosition.Add(placePosition + new Vector3(0, Configuration.bridgeElementGround, -25));
-                                notStaticElements.Add(BridgeElement);
-                                BridgeElement.GetComponent<RiseElement>().x = j;
-                                BridgeElement.GetComponent<RiseElement>().z = i;
-                                bridges.Add(BridgeElement);
                                 break;
                             default:
                                 break;
                         }
                     }
+                }
+                int index = Convert.ToInt32(matrixDatas[0]);
+                int boxNumber = Convert.ToInt32(datas[index+3]);
+                for(int i=0; i<boxNumber; i++)
+                {
+                    string[] VectorCoord = datas[index+4+i].Split(' ');
+                    Vector3 position = new Vector3(Convert.ToInt32(VectorCoord[0]), Convert.ToInt32(VectorCoord[1]), Convert.ToInt32(VectorCoord[2]));
+                    GameObject box = Instantiate(boxModel, position, Quaternion.AngleAxis(0, Vector3.right), parent.transform.GetChild(BoxChild)) as GameObject;
+                    objectMap[(int)(startPosition.z - position.z) / Configuration.unit, (int)(position.x - startPosition.x) / Configuration.unit].GetComponent<HighData>().boxes.Add(box);
+                    notStaticElements.Add(box);
+                    notStaticElementsID.Add(BoxID);
+                    notStaticElementsPosition.Add(position);
                 }
             }
         }
@@ -202,17 +207,17 @@ public class MapGenerator : MonoBehaviour {
             used = true;
             Animation anim = door.GetComponent<Animation>();
             anim.Play();
-            for(int i=0; i<actMap.GetLength(0); i++)
+            /*for(int i=0; i<actMap.GetLength(0); i++)
             {
                 for(int j=0; j<actMap.GetLength(1); j++)
                 {
                     if(actMap[i, j] == DoorID)
                     {
-                        actMap[i, j] = BrickID;
+                        actMap[i, j] = OpenedDoorID;
                         break;
                     }
                 }
-            }
+            }*/
         }
     }
 
@@ -224,12 +229,12 @@ public class MapGenerator : MonoBehaviour {
 
     public void restartMap(int number)
     {
-        boxes.Clear();
-        bridges.Clear();
+        //boxes.Clear();
+        //bridges.Clear();
         charMatrixPositionX = originMatrixPositionX;
         charMatrixPositionZ = originMatrixPositionZ;
         count = 0;
-        for(int i=0; i<notStaticElements.Count; i++)
+        for(int i=notStaticElements.Count-1; i>-1; i--)
         {
             GameObject.Destroy(notStaticElements[i]);
         }
@@ -242,45 +247,39 @@ public class MapGenerator : MonoBehaviour {
         {
             switch (notStaticElementsID[i])
             {
-                case 3:
+                case 2:
                     GameObject trap = Instantiate(trapModel, notStaticElementsPosition[i], Quaternion.AngleAxis(-90, Vector3.right), parent.transform.GetChild(TrapChild)) as GameObject;
                     notStaticElements.Add(trap);
+                    objectMap[(int)(startPosition.z-notStaticElementsPosition[i].z) / Configuration.unit, (int)(notStaticElementsPosition[i].x - startPosition.x) / Configuration.unit] = trap;
                     break;
-                case 4:
+                case 3:
                     GameObject doorButton = Instantiate(buttonModel, notStaticElementsPosition[i], Quaternion.AngleAxis(-90, Vector3.right), parent.transform.GetChild(ButtonChild)) as GameObject;
                     notStaticElements.Add(doorButton);
                     count++;
+                    objectMap[(int)(startPosition.z- notStaticElementsPosition[i].z) / Configuration.unit, (int)(notStaticElementsPosition[i].x - startPosition.x) / Configuration.unit] = doorButton;
                     break;
-                case 5:
+                case 10:
                     GameObject box = Instantiate(boxModel, notStaticElementsPosition[i], Quaternion.AngleAxis(0, Vector3.right), parent.transform.GetChild(BoxChild)) as GameObject;
-                    box.GetComponent<BoxController>().x = (int)(notStaticElementsPosition[i].x - startPosition.x)/Configuration.unit;
-                    box.GetComponent<BoxController>().z = (int)(startPosition.z-notStaticElementsPosition[i].z)/Configuration.unit;
+                    objectMap[(int)(startPosition.z-notStaticElementsPosition[i].z) / Configuration.unit, (int)(notStaticElementsPosition[i].x - startPosition.x) / Configuration.unit].GetComponent<HighData>().boxes.Add(box);
                     notStaticElements.Add(box);
-                    boxes.Add(box);
                     break;
                 case -2:
                     GameObject Key = Instantiate(KeyModel, notStaticElementsPosition[i], Quaternion.AngleAxis(-90, Vector3.right), parent.transform) as GameObject;
                     notStaticElements.Add(Key);
+                    objectMap[(int)(startPosition.z-notStaticElementsPosition[i].z) / Configuration.unit, (int)(notStaticElementsPosition[i].x - startPosition.x) / Configuration.unit] = Key;
                     break;
-                case 7:
+                case 5:
                     GameObject BridgeMaker = Instantiate(BridgeMakeModel, notStaticElementsPosition[i], Quaternion.AngleAxis(0, Vector3.right), parent.transform) as GameObject;
                     notStaticElements.Add(BridgeMaker);
+                    objectMap[(int)(startPosition.z-notStaticElementsPosition[i].z) / Configuration.unit, (int)(notStaticElementsPosition[i].x - startPosition.x) / Configuration.unit] = BridgeMaker;
                     break;
-                case 8:
+                case 6:
                     GameObject BridgeElement = Instantiate(BridgeElementModel, notStaticElementsPosition[i], Quaternion.AngleAxis(0, Vector3.right), parent.transform.GetChild(BridgeChild));
                     notStaticElements.Add(BridgeElement);
-                    bridges.Add(BridgeElement);
+                    objectMap[(int)(startPosition.z-notStaticElementsPosition[i].z) / Configuration.unit, (int)(notStaticElementsPosition[i].x - startPosition.x) / Configuration.unit] = BridgeElement;
                     break;
                 default:
                     break;
-            }
-        }
-
-        for(int i=0; i<originalMap.GetLength(0); i++)
-        {
-           for(int j=0; j<originalMap.GetLength(1); j++)
-            {
-                actMap[i, j] = originalMap[i, j];
             }
         }
     }
@@ -289,18 +288,7 @@ public class MapGenerator : MonoBehaviour {
     {
         for(int i=0; i<bridges.Count; i++)
         {
-            if (bridges[i].GetComponent<RiseElement>().boxOnIt == 0)
-            {
-                actMap[bridges[i].GetComponent<RiseElement>().z, bridges[i].GetComponent<RiseElement>().x] = BrickID;
-            }
-            else if(bridges[i].GetComponent<RiseElement>().boxOnIt == 1)
-            {
-                actMap[bridges[i].GetComponent<RiseElement>().z, bridges[i].GetComponent<RiseElement>().x] = BoxID;
-            }
-            else
-            {
-                actMap[bridges[i].GetComponent<RiseElement>().z, bridges[i].GetComponent<RiseElement>().x] = TwoBoxOnBridgeElement;
-            }
+            bridges[i].GetComponent<HighData>().baseHigh++;
         }
     }
 
@@ -333,144 +321,68 @@ public class MapGenerator : MonoBehaviour {
             reCalc[0] = 0;
             reCalc[1] = -1;
         }
-
-        if(actMap[charMatrixPositionZ, charMatrixPositionX] == HoleID)
+        if (actMap[z, x]!=DoorID || count==0)
         {
-            if(actMap[z, x] == HoleID || actMap[z, x]==EdgeID)
+            //next position is in a lower level, and it is not a door
+            if (objectMap[z, x].GetComponent<HighData>().HighCalculate() - objectMap[charMatrixPositionZ, charMatrixPositionX].GetComponent<HighData>().HighCalculate() == 0)
             {
-                Joe.GetComponent<JoeCommandControl>().GoForward();
-                charMatrixPositionX = x;
-                charMatrixPositionZ = z;
-            }
-            else
-            {
-                return; //In the Hole and he cant go forward
-            }
-        }
-        else if (actMap[z, x] == DoorID || actMap[z, x] == TwoBoxOnBridgeElement )
-        {
-            return; //TODO: valami animaciot adni neki
-        }
-        else if (actMap[z, x] == BoxID) 
-        {
-            if(actMap[z+reCalc[1], x + reCalc[0]] < 0 || actMap[z + reCalc[1], x + reCalc[0]] == BoxID) //static element: <0
-            {
-                return; //TODO: valami animaciot adni neki
-            }
-            else if(actMap[z + reCalc[1], x + reCalc[0]] == EdgeID) //edge
-            {
-                int i = 0;
-                while (!(boxes[i].GetComponent<BoxController>().x == x && boxes[i].GetComponent<BoxController>().z == z))
+                //Closed door
+                if(actMap[z, x] == DoorID && count != 0)
                 {
-                    i++;
+                    return; //TODO: animation, closed door
                 }
-                actMap[z, x] = BrickID;
-                actMap[z + reCalc[1], x + reCalc[0]] = HoleID;
-                boxes[i].GetComponent<BoxController>().x += reCalc[0];
-                boxes[i].GetComponent<BoxController>().z += reCalc[1];
-                boxes[i].GetComponent<BoxController>().MoveToThere(Joe.transform.forward);
-                Joe.GetComponent<JoeCommandControl>().GoForward();
-                charMatrixPositionX = x;
-                charMatrixPositionZ = z;
-
-            }
-            else if(actMap[z + reCalc[1], x + reCalc[0]] == TrapID)
-            {
-                int i = 0;
-                while (!(boxes[i].GetComponent<BoxController>().x == x && boxes[i].GetComponent<BoxController>().z == z))
+                else
                 {
-                    i++;
-                }
-                actMap[z, x] = BrickID;
-                boxes[i].GetComponent<BoxController>().x = -1; // he cant push now, i didnt want to move it
-                boxes[i].GetComponent<BoxController>().z = -1;
-                boxes[i].GetComponent<BoxController>().MoveToThere(Joe.transform.forward);
-                Joe.GetComponent<JoeCommandControl>().GoForward();
-                charMatrixPositionX = x;
-                charMatrixPositionZ = z;
-            }
-            else if(actMap[z + reCalc[1], x + reCalc[0]]==HoleID)
-            {
-                //New element
-                int i = 0;
-                while (!(boxes[i].GetComponent<BoxController>().x == x && boxes[i].GetComponent<BoxController>().z == z))
-                {
-                    i++;
-                }
-                actMap[z, x] = BrickID;
-                actMap[z + reCalc[1], x + reCalc[0]] = BrickID;
-                boxes[i].GetComponent<BoxController>().x = -1; //in the hole, he cant push it now
-                boxes[i].GetComponent<BoxController>().z = -1; // -||-
-                boxes[i].GetComponent<BoxController>().MoveToThere(Joe.transform.forward);
-                Joe.GetComponent<JoeCommandControl>().GoForward();
-                charMatrixPositionX = x;
-                charMatrixPositionZ = z;
-            }
-            else if(actMap[z + reCalc[1], x + reCalc[0]] == BridgeElementID)
-            {
-                int i = 0;
-                while (!(bridges[i].GetComponent<RiseElement>().x == x && bridges[i].GetComponent<RiseElement>().z == z))
-                {
-                    i++;
-                }
-                if (bridges[i].GetComponent<RiseElement>().boxOnIt < 2)
-                {
-                    int j = 0;
-                    while (!(boxes[j].GetComponent<BoxController>().x == x && boxes[j].GetComponent<BoxController>().z == z))
-                    {
-                        j++;
-                    }
-                    actMap[z, x] = BrickID;
-                    boxes[j].GetComponent<BoxController>().x += reCalc[0];
-                    boxes[j].GetComponent<BoxController>().z += reCalc[1];
-                    boxes[j].GetComponent<BoxController>().MoveToThere(Joe.transform.forward);
                     Joe.GetComponent<JoeCommandControl>().GoForward();
                     charMatrixPositionX = x;
                     charMatrixPositionZ = z;
-                    bridges[i].GetComponent<RiseElement>().boxOnIt++;
-                    bridges[i].GetComponent<RiseElement>().boxes.Add(boxes[j]);
+                }
+                
+            }
+            else if (objectMap[z, x].GetComponent<HighData>().HighCalculate() - objectMap[charMatrixPositionZ, charMatrixPositionX].GetComponent<HighData>().HighCalculate()<0)
+            {
+                //Door, we cant fall in door
+                if(actMap[z, x] == DoorID)
+                {
+                    return; //TODO: animation
+                }
+                else
+                {
+                    Joe.GetComponent<JoeCommandControl>().GoForward();
+                    charMatrixPositionX = x;
+                    charMatrixPositionZ = z;
+                }
+            }
+            else if (objectMap[z, x].GetComponent<HighData>().HighCalculate() - objectMap[charMatrixPositionZ, charMatrixPositionX].GetComponent<HighData>().HighCalculate() == 1)
+            {
+                if (objectMap[z, x].GetComponent<HighData>().boxes.Count > 0)
+                {
+                    //there is a box, and he can push it
+                    if (objectMap[z + reCalc[1], x + reCalc[0]].GetComponent<HighData>().HighCalculate() - objectMap[z, x].GetComponent<HighData>().HighCalculate() < 0 && actMap[z + reCalc[1], x + reCalc[0]]>=0)
+                    {
+                        objectMap[z, x].GetComponent<HighData>().boxes[objectMap[z, x].GetComponent<HighData>().boxes.Count - 1].GetComponent<BoxController>().MoveToThere(Joe.transform.forward);
+                        objectMap[z + reCalc[1], x + reCalc[0]].GetComponent<HighData>().boxes.Add(objectMap[z, x].GetComponent<HighData>().boxes[objectMap[z, x].GetComponent<HighData>().boxes.Count - 1]);
+                        objectMap[z, x].GetComponent<HighData>().boxes.RemoveAt(objectMap[z, x].GetComponent<HighData>().boxes.Count - 1);
+                        Joe.GetComponent<JoeCommandControl>().GoForward();
+                        charMatrixPositionX = x;
+                        charMatrixPositionZ = z;
+                    }
+                    //there is a box, but next element as high as it, or higher
+                    else
+                    {
+                        return; //TODO: animation
+                    }
+
+                }
+                else
+                {
+                    return; //TODO: animation: no box
                 }
             }
             else
             {
-                int i = 0;
-                while (!(boxes[i].GetComponent<BoxController>().x == x && boxes[i].GetComponent<BoxController>().z == z)) {
-                    i++;
-                }
-                actMap[z, x] = BrickID; 
-                actMap[z + reCalc[1], x + reCalc[0]] = BoxID;
-                boxes[i].GetComponent<BoxController>().x += reCalc[0];
-                boxes[i].GetComponent<BoxController>().z += reCalc[1];
-                boxes[i].GetComponent<BoxController>().MoveToThere(Joe.transform.forward);
-                Joe.GetComponent<JoeCommandControl>().GoForward();
-                charMatrixPositionX = x;
-                charMatrixPositionZ = z;
+                return; //TODO: animation
             }
-        }
-        else if (actMap[z, x] == BridgeElementID)
-        {
-            int i = 0;
-            while (!(bridges[i].GetComponent<RiseElement>().x == x && bridges[i].GetComponent<RiseElement>().z == z))
-            {
-                i++;
-            }
-            if (bridges[i].GetComponent<RiseElement>().boxOnIt<2)
-            {
-                Joe.GetComponent<JoeCommandControl>().GoForward();
-                charMatrixPositionX = x;
-                charMatrixPositionZ = z;
-            }
-            else
-            {
-                //box on it, we can push it
-                //TODO: check the next for pushing box: do a function
-            }
-        }
-        else
-        {
-            Joe.GetComponent<JoeCommandControl>().GoForward();
-            charMatrixPositionX = x;
-            charMatrixPositionZ = z;
-        }
+        }       
     }
 }

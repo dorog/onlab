@@ -43,6 +43,8 @@ GameObject:
   - component: {fileID: 23160662468820900}
   - component: {fileID: 95196339570756720}
   - component: {fileID: 65857166585194194}
+  - component: {fileID: 114311215968993076}
+  - component: {fileID: 114036398081023072}
   m_Layer: 0
   m_Name: Hole
   m_TagString: Untagged
@@ -217,6 +219,31 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114036398081023072
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1404507333167178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e04b874890db0fb40a38ffe616c88947, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boxes: []
+  baseHigh: 1
+--- !u!114 &114311215968993076
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1404507333167178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 829c2dcd539dcba4d9fce3c93cfc6e3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boxes: []
 --- !u!114 &114491913482275672
 MonoBehaviour:
   m_ObjectHideFlags: 1

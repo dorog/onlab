@@ -6,6 +6,7 @@ public class BoxController : MonoBehaviour {
 
     private Vector3 direction;
     private bool Move = false;
+    private bool Rise = false;
     private Rigidbody body;
     public float time = 1.1f;
     private float originTime;
@@ -54,13 +55,32 @@ public class BoxController : MonoBehaviour {
             }
 
         }
+        else if (Rise)
+        {
+            if (time - Time.deltaTime >= 0)
+            {
+                body.MovePosition(this.transform.position + new Vector3(0, Configuration.unit, 0)*Time.deltaTime/0.5f);
+                time -= Time.deltaTime;
+            }
+            else if (time > 0)
+            {
+                body.MovePosition(aimPosition);
+            }
+        }
     }
 
     public void MoveToThere(Vector3 forward)
     {
-            aimPosition = this.transform.position + forward * 50;
-            Move = true;
-            direction = forward;
+         aimPosition = this.transform.position + forward * 50;
+         Move = true;
+         direction = forward;
+         time = originTime;
+    }
 
+    public void RiseBox(float time)
+    {
+        Rise = true;
+        aimPosition = this.transform.position + new Vector3(0, Configuration.unit, 0);
+        this.time = time;
     }
 }

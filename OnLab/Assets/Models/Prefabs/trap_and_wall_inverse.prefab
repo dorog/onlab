@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 111403279311699448}
   - component: {fileID: 65745348282363788}
   - component: {fileID: 114903144924240688}
+  - component: {fileID: 114533877195796420}
   m_Layer: 0
   m_Name: trap_and_wall_inverse
   m_TagString: Untagged
@@ -259,6 +260,19 @@ Animation:
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 1
+--- !u!114 &114533877195796420
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1181428921923188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e04b874890db0fb40a38ffe616c88947, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boxes: []
+  baseHigh: 0
 --- !u!114 &114903144924240688
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -270,6 +284,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 133cc05f3abc67444b1ccff8b31ab5e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetTime: 2
 --- !u!137 &137394077425168852
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
