@@ -152,12 +152,6 @@ public class StartActions : MonoBehaviour
             {
                 commandsForExecute[lastPlace - i] = commandsForExecute[aimnumber + afterAim - i];
             }
-            /*for (int i = 0; i < commandsForExecute.Count - aimnumber - fv1.Count; i++)
-            {
-                commandsForExecute[aimnumber + fv1.Count + i] = commandsForExecute[aimnumber + 1 + i];
-            }*/
-
-
 
             for (int i = 0; i < fv1.Count; i++)
             {

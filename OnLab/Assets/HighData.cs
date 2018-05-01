@@ -6,7 +6,7 @@ public class HighData : MonoBehaviour {
 
     public List<GameObject> boxes = new List<GameObject>();
     public int baseHigh;
-
+    public bool isTrap = false;
 
 	// Use this for initialization
 	void Start () {
@@ -20,6 +20,20 @@ public class HighData : MonoBehaviour {
 
     public int HighCalculate()
     {
-        return baseHigh + boxes.Count;
+        if (!isTrap)
+        {
+            return baseHigh + boxes.Count;
+        }
+        else
+        {
+            if (boxes.Count < 3)
+            {
+                return baseHigh;
+            }
+            else
+            {
+                return baseHigh + boxes.Count - 2;
+            }
+        }
     }
 }

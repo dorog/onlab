@@ -171,6 +171,7 @@ public class MapGenerator : MonoBehaviour {
                                 objectMap[i, j] = BridgeElement;
                                 notStaticElementsID.Add(6);
                                 notStaticElementsPosition.Add(placePosition + new Vector3(0, Configuration.bridgeElementGround, -25));
+                                notStaticElements.Add(BridgeElement);
                                 break;
                             default:
                                 break;

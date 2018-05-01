@@ -40,9 +40,10 @@ public class RiseElement : MonoBehaviour {
 
     public void Rise()
     {
-        for(int i=0; i<boxes.Count; i++)
+        HighData myData = this.GetComponent<HighData>();
+        for(int i=0; i<myData.boxes.Count; i++)
         {
-            boxes[i].GetComponent<BoxController>().RiseBox(rising_time);
+            myData.boxes[myData.boxes.Count-i-1].GetComponent<BoxController>().RiseBox(rising_time);
         }
         aimPosition = this.transform.position + new Vector3(0, Configuration.unit, 0);
         rising = true;
