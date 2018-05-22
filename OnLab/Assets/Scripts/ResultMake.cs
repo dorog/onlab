@@ -12,7 +12,7 @@ public class ResultMake : MonoBehaviour {
         GameObject finishPanel = GameObject.Find(Configuration.finishedPanelName);
         scLoader = GameObject.Find(Configuration.loadSceneGOName).GetComponent<SceneLoader>();
 
-        finishPanel.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>(Configuration.GSB_part + CurrentGameDatas.solvedMap.scarab);
+        finishPanel.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>(Configuration.GSB_sprite + CurrentGameDatas.solvedMap.scarab);
         finishPanel.transform.GetChild(1).GetComponent<Text>().text = "Score: "+ CurrentGameDatas.solvedMap.mapScore;
         finishPanel.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(LoadSameScene);
     }

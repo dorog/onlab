@@ -41,6 +41,7 @@ public class Configuration {
     public static string leftIcon = "Icons/leftarrow";
     public static string rightIcon = "Icons/rightarrow";
     public static string GSB_part = "Map_guide/GSB_part";
+    public static string GSB_sprite = "Map_guide/GSB";
     public static string numberIcon= "Map_guide/number";
 
     //TXT files

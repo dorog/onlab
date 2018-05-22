@@ -60,8 +60,6 @@ public class GuideMake : MonoBehaviour {
         int DoorsChild = Doors.transform.childCount;
         for(int i=0; i< gmdatas.maxMap && i < DoorsChild; i++) //&& i< mapsGOchildNumber
         {
-            //Doors.transform.GetChild(i).transform.GetChild(4).GetChild(0).GetComponent<Text>().text="Score: "+gmdatas.mapDatas[i].mapScore;
-            //Debug.Log(gmdatas.mapDatas[i].scarab);
             Material[] mats = Doors.transform.GetChild(i).transform.GetChild(scoreBoardPlace).GetChild(0).GetComponent<MeshRenderer>().materials; //Resources.Load<Material>("Map_guide/GSB_part" + gmdatas.mapDatas[i].scarab);
             mats[1] = Resources.Load<Material>(Configuration.GSB_part+gmdatas.mapDatas[i].scarab);
             Doors.transform.GetChild(i).transform.GetChild(scoreBoardPlace).GetChild(0).GetComponent<MeshRenderer>().materials = mats;
