@@ -1215,10 +1215,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 4497770357648116, guid: 409b4e43ac7aca247b6f1755771b6bfe, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1287369496984260, guid: 409b4e43ac7aca247b6f1755771b6bfe, type: 2}
       propertyPath: m_Name
       value: Torch(sizex50) (4)
