@@ -8,7 +8,7 @@ public class Command {
     public int ID { get; set; }
     public int PanelSlot { get; set; }
     public Sprite sprite { get; set; }
-    public bool newcmd { get; set; }
+    public bool newcmd { get; set; } //Kell? refactor?
 
     public Command(int id)
     {

@@ -6,7 +6,7 @@ using UnityEngine;
 public static class CurrentGameDatas{
 
     
-    static public int mapNumber = 4;
+    static public int mapNumber = 2;
     static public int maxMap = 1;
     static public bool HaveKey = false;
     static public List<MapDatas> mapDatas = new List<MapDatas>();

@@ -2233,7 +2233,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: f83de5cd4bb4ca04d943ba55ca26a8da, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f83de5cd4bb4ca04d943ba55ca26a8da, type: 3}
@@ -2824,7 +2824,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1561360179}
   m_Layer: 0
-  m_Name: BackGround
+  m_Name: Envirement
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

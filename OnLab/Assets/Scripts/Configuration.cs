@@ -63,4 +63,8 @@ public class Configuration {
     public static string idleAnimation = "start";
     public static string trapAnimation = "trap";
     public static string fallAnimation = "lava";
+
+    //Screen data
+    public static int bestScreenWidth = 1920;
+    public static int bestScreenHeight = 1080;
 }
