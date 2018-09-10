@@ -52,6 +52,7 @@ public class Configuration {
     public static string resultScene = "FinishedMap";
     public static string mapGuideScene = "Map_guide";
     public static string mapScene = "Map_scene";
+    public static bool isLoad = false;
 
     //Joe anims in menu
     public static string footAnimation = "foot";

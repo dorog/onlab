@@ -16,7 +16,6 @@ public class ReadSlot : MonoBehaviour {
     private int solvedMap = 0;
     private int summKeys=0;
     public GameDatas gmdata;
-    public bool forload = true;
     public int fontSize = 20;
     public int padding = 160;
 
@@ -33,19 +32,30 @@ public class ReadSlot : MonoBehaviour {
                 CurrentGameDatas.maxMap = maxMap;
                 gmdata = new GameDatas(maxMap);
 
+                Button myBtn = this.transform.GetComponent<Button>();
+                Text textData = GameObject.Find(this.name).transform.GetChild(1).GetComponent<Text>();
+                textData.fontSize = textData.fontSize * Screen.height / Configuration.bestScreenHeight;
+
                 if (slotState == 0)
                 {
                     Image panelImg = GameObject.Find(this.name).transform.GetChild(0).GetComponent<Image>();
                     Color tempColor = panelImg.color;
                     tempColor.a = 0f;
                     panelImg.color = tempColor;
-                    if (forload)
+                    if (Configuration.isLoad)
                     {
-                        this.transform.GetComponent<Button>().interactable = false;
+                        myBtn.interactable = false;
                     }
                 }
                 else
                 {
+                    if (Configuration.isLoad)
+                    {
+                        ColorBlock highLited = myBtn.colors;
+                        highLited.highlightedColor = Color.yellow;
+                        myBtn.colors = highLited;
+                    }
+
                     gmdata = new GameDatas(maxMap);
                     for (int i=0; i<maxMap; i++)
                     {
@@ -75,17 +85,20 @@ public class ReadSlot : MonoBehaviour {
                     Image background = this.transform.GetComponent<Image>();
                     background.sprite = img;
                     Text textDatas = GameObject.Find(this.name).transform.GetChild(1).GetComponent<Text>();
-                    Transform textTransform = GameObject.Find(this.name).transform.GetChild(1).transform;
-                    textTransform.position += Vector3.up * -padding * Screen.height / Configuration.bestScreenHeight;
-                    textDatas.fontSize = fontSize * Screen.height / Configuration.bestScreenHeight;
+
+                    RectTransform textRt = GameObject.Find(this.name).transform.GetChild(1).GetComponent<RectTransform>();
+                    textRt.offsetMin = new Vector2(0, -padding * Screen.height / Configuration.bestScreenHeight);
+                    textRt.offsetMax = new Vector2(0, -padding * Screen.height / Configuration.bestScreenHeight);
+
                     textDatas.color = Color.yellow;
                     textDatas.text = "Cleared maps: "+(solvedMap)+"\nScore: "+summScore+"\nScarab parts: "+summBuggPart+"\nPerfect Maps: "+perfectMap+"\nKeys: "+summKeys;
+                    textDatas.fontSize = fontSize * Screen.height / Configuration.bestScreenHeight;
                 }
 
 
                 Button thisBtn = this.GetComponent<Button>();
 
-                if (forload)
+                if (Configuration.isLoad)
                 {
                     thisBtn.onClick.AddListener(ChangeSceneLoad);
                 }

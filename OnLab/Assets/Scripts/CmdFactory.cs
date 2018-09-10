@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,8 +21,6 @@ public class CmdFactory : MonoBehaviour {
 
         for (int i = 0; i < factoryElementsIds.Length; i++)
         {
-
-
             commands.Add(new Command());
             factorySlots.Add(Instantiate(factorySlot));
             factorySlots[i].transform.SetParent(factoryPanel.transform);

@@ -50,9 +50,10 @@ public class CreateNewElement : MonoBehaviour {
             commandObj.GetComponent<Image>().sprite = element.sprite;
             commandObj.transform.position = commandObj.transform.parent.position;
             commandObj.GetComponent<CommandData>().command = element;
-
+            RectTransform rt = commandObj.GetComponent<RectTransform>();
+            rt.sizeDelta = new Vector2(rt.sizeDelta.x * Screen.width / Configuration.bestScreenWidth, rt.sizeDelta.y * Screen.height / Configuration.bestScreenHeight);
             //last item must be a delete slot (slots + 1 (delete slot))
-            
+
             commandObj.GetComponent<CommandData>().slot = cmdpanelmanager.summSlots; // .slotAmount Update: .summSlots -> 0
             
         }

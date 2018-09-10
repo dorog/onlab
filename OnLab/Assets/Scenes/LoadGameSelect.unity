@@ -706,7 +706,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   filename: Slot2.txt
   img: {fileID: 21300000, guid: 668dd72a8d5c6a241ad502c89c3d08af, type: 3}
-  forload: 1
   fontSize: 20
   padding: 160
 --- !u!114 &472613320
@@ -1544,7 +1543,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   filename: Slot3.txt
   img: {fileID: 21300000, guid: 668dd72a8d5c6a241ad502c89c3d08af, type: 3}
-  forload: 1
   fontSize: 20
   padding: 160
 --- !u!114 &1305954251
@@ -2043,7 +2041,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   filename: Slot1.txt
   img: {fileID: 21300000, guid: 668dd72a8d5c6a241ad502c89c3d08af, type: 3}
-  forload: 1
   fontSize: 20
   padding: 160
 --- !u!114 &1981553121

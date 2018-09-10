@@ -12,14 +12,11 @@ EditorBuildSettings:
     path: Assets/Scenes/Map_guide.unity
     guid: 28549f7e8e933234db1d962606649f39
   - enabled: 1
-    path: Assets/Scenes/NewGameSelect.unity
-    guid: 697f5993bf3b22c4e882405d0b5f1209
-  - enabled: 1
-    path: Assets/Scenes/LoadGameSelect.unity
-    guid: e45a6623804893f4eafbf9f45ab67ef9
-  - enabled: 1
     path: Assets/Scenes/Map_scene.unity
     guid: d478bb6773ce82144bdc54b9ec8bfc43
   - enabled: 1
     path: Assets/Scenes/FinishedMap.unity
     guid: 1be48431049a5a8499a6a6548845029a
+  - enabled: 1
+    path: Assets/Scenes/Load_Save.unity
+    guid: de5a4241ad9a2244d89813e2ab9330f4

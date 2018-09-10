@@ -21,9 +21,9 @@ public class CommandPanel : MonoBehaviour {
 
     public int summSlots = 0;
 
-    private int delete_number = 0;
-    private int fv1_number = 5;
-    private int fv2_number = 6;
+    public GameObject deleteGO;
+    public GameObject fv1GO;
+    public GameObject fv2GO;
 
     void Start()
     {
@@ -93,7 +93,7 @@ public class CommandPanel : MonoBehaviour {
         {
             commands.Add(new Command());
             slots.Add(Instantiate(cmdSlot));
-            slots[i].transform.SetParent(commandPanelBorder.transform.GetChild(fv1_number));
+            slots[i].transform.SetParent(fv1GO.transform);
             slots[i].GetComponent<Slot>().id = i;
         }
 
@@ -101,7 +101,7 @@ public class CommandPanel : MonoBehaviour {
         {
             commands.Add(new Command());
             slots.Add(Instantiate(cmdSlot));
-            slots[i].transform.SetParent(commandPanelBorder.transform.GetChild(fv2_number));
+            slots[i].transform.SetParent(fv2GO.transform);
             slots[i].GetComponent<Slot>().id = i;
         }
         //
@@ -110,7 +110,7 @@ public class CommandPanel : MonoBehaviour {
         commands.Add(new Command());
         slots.Add(Instantiate(deleteSlot));
         
-        slots[summSlots].transform.SetParent(commandPanelBorder.transform.GetChild(delete_number));
+        slots[summSlots].transform.SetParent(deleteGO.transform);
         slots[summSlots].GetComponent<Slot>().id = summSlots;
         // change: +fv1 + fv2
         /*for(int i=0; i<commands.Count; i++)
@@ -135,22 +135,22 @@ public class CommandPanel : MonoBehaviour {
             GameObject.Destroy(slotPanel.transform.GetChild(i).gameObject);
         }
 
-        for(int i=0; i<commandPanelBorder.transform.GetChild(fv1_number).childCount; i++)
+        for(int i=0; i< fv1GO.transform.childCount; i++)
         {
-            if (commandPanelBorder.transform.GetChild(fv1_number).transform.GetChild(i).childCount>0)
+            if (fv1GO.transform.GetChild(i).childCount>0)
             {
-                GameObject.Destroy(commandPanelBorder.transform.GetChild(fv1_number).transform.GetChild(i).GetChild(0).gameObject);
+                GameObject.Destroy(fv1GO.transform.GetChild(i).GetChild(0).gameObject);
             }
-            GameObject.Destroy(commandPanelBorder.transform.GetChild(fv1_number).transform.GetChild(i).gameObject);
+            GameObject.Destroy(fv1GO.transform.GetChild(i).gameObject);
         }
 
-        for (int i = 0; i < commandPanelBorder.transform.GetChild(fv2_number).childCount; i++)
+        for (int i = 0; i < fv2GO.transform.childCount; i++)
         {
-            if (commandPanelBorder.transform.GetChild(fv2_number).transform.GetChild(i).childCount > 0)
+            if (fv2GO.transform.GetChild(i).childCount > 0)
             {
-                GameObject.Destroy(commandPanelBorder.transform.GetChild(fv2_number).transform.GetChild(i).GetChild(0).gameObject);
+                GameObject.Destroy(fv2GO.transform.GetChild(i).GetChild(0).gameObject);
             }
-            GameObject.Destroy(commandPanelBorder.transform.GetChild(fv2_number).transform.GetChild(i).gameObject);
+            GameObject.Destroy(fv2GO.transform.GetChild(i).gameObject);
         }
 
         cmdLoad();

@@ -1771,8 +1771,19 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: LoadGameSelect
+          m_StringArgument: Load_Save
           m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1320372719}
+        m_MethodName: SetIsLoad
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
@@ -4100,7 +4111,18 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: NewGameSelect
+          m_StringArgument: Load_Save
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1320372719}
+        m_MethodName: SetIsLoad
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
@@ -15329,8 +15351,6 @@ MonoBehaviour:
   - {fileID: 178768508}
   - {fileID: 36207894}
   - {fileID: 1824228308}
-  bestHeigh: 1080
-  bestWidht: 1920
   menuGO: {fileID: 1047617648}
 --- !u!1001 &1891403809
 Prefab:

@@ -20,4 +20,9 @@ public class SceneLoader : MonoBehaviour {
     {
         Application.Quit();
     }
+
+    public void SetIsLoad(bool isLoad)
+    {
+        Configuration.isLoad = isLoad;
+    }
 }

@@ -25,10 +25,8 @@ public class UI_ls_Set : MonoBehaviour {
             rt = rt.GetChild(0).GetComponent<RectTransform>();
             rt.sizeDelta = new Vector2(rt.sizeDelta[0] * Screen.width / Configuration.bestScreenWidth, rt.sizeDelta[1] * Screen.height / Configuration.bestScreenHeight);
             RectTransform bpanel = rt.GetChild(0).GetComponent<RectTransform>();
-            Text emptyText = rt.GetChild(1).GetComponent<Text>();
             bpanel.offsetMin = new Vector2(0, bpanel.offsetMin[1] * Screen.height / Configuration.bestScreenHeight);
             bpanel.offsetMax = new Vector2(0, bpanel.offsetMax[1] * Screen.height / Configuration.bestScreenHeight);
-            emptyText.fontSize = emptyText.fontSize * Screen.height / Configuration.bestScreenHeight;
         }
 	}
 	
