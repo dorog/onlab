@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.IO;
+﻿using System.IO;
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;

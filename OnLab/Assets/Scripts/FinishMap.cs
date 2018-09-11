@@ -1,11 +1,13 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
 public class FinishMap : MonoBehaviour {
 
+    public int maxPoint = 999;
+    public int maxScarabNumber = 3;
+    public int missingScarabWeight = 100;
+    public int moreCmdWeight = 10;
 
     // Use this for initialization
     void Start () {
@@ -40,7 +42,7 @@ public class FinishMap : MonoBehaviour {
         }
 
         int scarabNumber = 0;
-        if (realCommandsNumber < MinCmdNumber[0])
+        if (realCommandsNumber <= MinCmdNumber[0])
         {
             if (CurrentGameDatas.HaveKey)
             {
@@ -51,7 +53,7 @@ public class FinishMap : MonoBehaviour {
                 scarabNumber = 2;
             }
         }
-        else if (realCommandsNumber < MinCmdNumber[1])
+        else if (realCommandsNumber <= MinCmdNumber[1])
         {
             scarabNumber = 2;
         }
@@ -59,23 +61,25 @@ public class FinishMap : MonoBehaviour {
         {
             scarabNumber = 1;
         }
+ 
+        int thisGameScore = maxPoint - (maxScarabNumber - scarabNumber) * missingScarabWeight - (MinCmdNumber[0] - realCommandsNumber) * moreCmdWeight; 
 
-        int thisGameScore = CurrentGameDatas.mapNumber * scarabNumber * 10 - realCommandsNumber;
-
-        if(CurrentGameDatas.mapDatas[CurrentGameDatas.mapNumber - 1].scarab< scarabNumber)
+        if (CurrentGameDatas.mapDatas[CurrentGameDatas.mapNumber - 1].scarab < scarabNumber)
         {
             CurrentGameDatas.mapDatas[CurrentGameDatas.mapNumber - 1].scarab = scarabNumber;
         }
-        if((CurrentGameDatas.mapDatas[CurrentGameDatas.mapNumber - 1].mapScore) < (CurrentGameDatas.mapNumber * CurrentGameDatas.mapDatas[CurrentGameDatas.mapNumber - 1].scarab * 10 - realCommandsNumber))
+        if ((CurrentGameDatas.mapDatas[CurrentGameDatas.mapNumber - 1].mapScore) < thisGameScore)
         {
-            int score = CurrentGameDatas.mapNumber * CurrentGameDatas.mapDatas[CurrentGameDatas.mapNumber - 1].scarab * 10 + MinCmdNumber[0] - realCommandsNumber;
-            if (score < 0)
+            if (thisGameScore < 0)
             {
-                score = 0;
+                thisGameScore = 0;
             }
-            CurrentGameDatas.mapDatas[CurrentGameDatas.mapNumber - 1].mapScore =  score; //calculate
+            else if(thisGameScore > maxPoint)
+            {
+                thisGameScore = maxPoint;
+            }
+            CurrentGameDatas.mapDatas[CurrentGameDatas.mapNumber - 1].mapScore = thisGameScore; //calculate
         }
-
 
         //save this
         using (StreamWriter sw = new StreamWriter(CurrentGameDatas.slotName))
@@ -113,5 +117,4 @@ public class FinishMap : MonoBehaviour {
         //Todo: different scene for last map
         scLoader.LoadScene(Configuration.resultScene);
     }
-
 }

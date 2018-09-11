@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class JoeCommandControl : MonoBehaviour {
 
@@ -62,25 +60,23 @@ public class JoeCommandControl : MonoBehaviour {
                 if (time - Time.deltaTime <= 0)
                 {
                     forward = false;
-                    this.transform.GetComponent<CharacterController>().Move(this.transform.forward * 50 * time);
+                    //this.transform.GetComponent<CharacterController>().Move(this.transform.forward * Configuration.unit * time);
+                    this.transform.position = aimPosition;
 
-                    if(Mathf.Pow(Mathf.Pow(this.transform.position.x-aimPosition.x, 2)+ Mathf.Pow(this.transform.position.z - aimPosition.z, 2), 0.5f) < 25){
+                    /*if(Mathf.Pow(Mathf.Pow(this.transform.position.x-aimPosition.x, 2)+ Mathf.Pow(this.transform.position.z - aimPosition.z, 2), 0.5f) < Configuration.unit/2){
                         this.transform.position = aimPosition;
-                        //Debug.Log("if");
                     }
                     else
                     {
-                        this.transform.position = aimPosition - 50 * this.transform.forward;
-                        //Debug.Log("else");
-                    }
-                    //this.transform.position = aimPosition; // it will be certain
+                        this.transform.position = aimPosition - Configuration.unit * this.transform.forward;
+                    }*/
                     time = originTime;
                     joeAnim.SetBool(Configuration.forwardAnimation, false);
                     joeAnim.SetBool(Configuration.idleAnimation, true);
                 }
                 else
                 {
-                    this.transform.GetComponent<CharacterController>().Move(this.transform.forward * 50 * Time.deltaTime);
+                    this.transform.GetComponent<CharacterController>().Move(this.transform.forward * Configuration.unit * Time.deltaTime);
                     time -= Time.deltaTime;
                 }
             }
@@ -132,7 +128,7 @@ public class JoeCommandControl : MonoBehaviour {
 
     public void GoForward()
     {
-        aimPosition = this.transform.position + this.transform.forward * 50;
+        aimPosition = this.transform.position + this.transform.forward * Configuration.unit;
         forward = true;
         joeAnim.SetBool(Configuration.idleAnimation, false);
         joeAnim.SetBool(Configuration.forwardAnimation, forward);

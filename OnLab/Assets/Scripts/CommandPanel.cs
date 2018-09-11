@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,8 +24,11 @@ public class CommandPanel : MonoBehaviour {
     public GameObject fv1GO;
     public GameObject fv2GO;
 
+    public Text speedText;
+
     void Start()
     {
+        speedText.text = Configuration.speedTextText + Configuration.speed;
         commandPanelBorder = GameObject.Find(Configuration.cmdPanelBorderName);
         slotPanel = commandPanelBorder.transform.Find(Configuration.cmdPanelName).gameObject;
 
@@ -164,6 +166,20 @@ public class CommandPanel : MonoBehaviour {
         commands.RemoveAt(slotNumber);
         //commands[0].Effect();
         commands.Add(new Command());
+    }
+
+    public void ChangeSpeed()
+    {
+        if(Configuration.speed == Configuration.maxSpeed)
+        {
+            Time.timeScale = Configuration.minSpeed;
+            Configuration.speed = Configuration.minSpeed;
+            speedText.text = Configuration.speedTextText + Configuration.speed;
+            return;
+        }
+        Time.timeScale = Configuration.speed + 1;
+        Configuration.speed++;
+        speedText.text = Configuration.speedTextText + Configuration.speed;
     }
 
     public List<Command> getRealCommands(List<Command> fv1, List<Command> fv2)

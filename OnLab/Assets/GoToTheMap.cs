@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class GoToTheMap : MonoBehaviour {
 
@@ -21,11 +19,11 @@ public class GoToTheMap : MonoBehaviour {
     {
         if (mapNumber != CurrentGameDatas.maxMap)
         {
-            scLoad.LoadMap(mapNumber);
+            scLoad.LoadMapTimeScaleUsed(mapNumber);
         }
         else if (CurrentGameDatas.KeyNumber >= CurrentGameDatas.maxMap - 1)
         {
-            scLoad.LoadMap(mapNumber);
+            scLoad.LoadMapTimeScaleUsed(mapNumber);
         }  
     }
 

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour {
@@ -10,10 +8,22 @@ public class SceneLoader : MonoBehaviour {
         SceneManager.LoadScene(sceneName);
     }
 
+    public void LoadSceneAndTimeScaleUsedGame(string sceneName)
+    {
+        Time.timeScale = Configuration.speed;
+        SceneManager.LoadScene(sceneName);
+    }
+
     public void LoadMap(int mapNumber)
     {
         CurrentGameDatas.mapNumber = mapNumber;
         SceneManager.LoadScene(Configuration.mapScene);
+    }
+
+    public void LoadMapTimeScaleUsed(int mapNumber)
+    {
+        CurrentGameDatas.mapNumber = mapNumber;
+        LoadSceneAndTimeScaleUsedGame(Configuration.mapScene);
     }
 
     public void Quit()

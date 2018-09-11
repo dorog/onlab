@@ -1,11 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class StartActions : MonoBehaviour
 {
-    public int endwait = 1;
+    public float EndWait = 2;
     public float TimeBeetweenCommands;
     CommandPanel cmdPanel;
     static int aimnumber = 0;
@@ -23,7 +22,9 @@ public class StartActions : MonoBehaviour
     public string charName;
     public float resetTime = 2;
     private bool die = false;
- 
+
+    public float effectTime = 1;
+
 
     private int executedCommands = 0;
 
@@ -60,20 +61,17 @@ public class StartActions : MonoBehaviour
         executedCommands = 0;
         actionBtn.enabled = false;
         //Debug.Log(commandsForExecute.Count);
+        Invoke("ExecuteCmd", 0);
     }
 
     private void Update()
     {
-        //Debug.Log(fv1_aimnumber);
+
+        /*//Debug.Log(TimeBeetweenCommands/Configuration.speed);
         if (start)
         {
-            if (((System.DateTime.Now - lastTime).Seconds >= TimeBeetweenCommands) && (commandsForExecute.Count > aimnumber))
+            if (((System.DateTime.Now - lastTime).Seconds >= TimeBeetweenCommands/Configuration.speed) && (commandsForExecute.Count > aimnumber))
             {
-                /*for (int i = 0; i < commandsForExecute.Count; i++)
-                {
-                    commandsForExecute[i].Identity(i, aimnumber);
-                }
-                Debug.Log("ciklus end " + aimnumber);*/
                 commandsForExecute[aimnumber].Effect();
                 //Debug.Log("aimnumber: " + aimnumber);
                 aimnumber++;
@@ -83,14 +81,8 @@ public class StartActions : MonoBehaviour
                 //Debug.Log(fv1_aimnumber + " " + System.DateTime.Now);
 
             }
-            else if (commandsForExecute.Count <= aimnumber && (System.DateTime.Now - lastTime).Seconds >= TimeBeetweenCommands * endwait)
+            else if (commandsForExecute.Count <= aimnumber && (System.DateTime.Now - lastTime).Seconds >= TimeBeetweenCommands/Configuration.speed * EndWait/Configuration.speed)
             {
-
-                /*for (int i = 0; i < commandsForExecute.Count; i++)
-                {
-                    
-                    commandsForExecute[i].Identity(i);
-                }*/
 
                 start = false;
                 aimnumber = 0;
@@ -109,14 +101,15 @@ public class StartActions : MonoBehaviour
         else if (die)
         {
             resetTime -= Time.deltaTime;
-        }
+        }*/
     }
 
     public void ObjectHit(float rTime)
     {
-        start = false;
+        //start = false;
         die = true;
-        resetTime = rTime;
+        //resetTime = rTime;
+        Invoke("EndCommands", rTime);
     }
 
     public void EndCommands()
@@ -195,5 +188,33 @@ public class StartActions : MonoBehaviour
     private void NotStaticBack()
     {
         mapGen.restartMap(CurrentGameDatas.mapNumber);
+    }
+
+    private void ExecuteCmd()
+    {
+        if (die)
+        {
+            return;
+        }
+        if(commandsForExecute.Count > aimnumber)
+        {
+            commandsForExecute[aimnumber].Effect();
+            aimnumber++;
+            executedCommands++;
+            Invoke("ExecuteCmd", TimeBeetweenCommands + effectTime);
+        }
+        else
+        {
+            Invoke("WaitBeforeEnd", EndWait);
+        }
+    }
+
+    private void WaitBeforeEnd()
+    {
+        aimnumber = 0;
+        character.transform.position = characterPosition;
+        character.transform.forward = characterForward;
+        Invoke("NotStaticBack", 0.1f); //Black Magic: joe is still here, so we need time
+        actionBtn.enabled = true;
     }
 }

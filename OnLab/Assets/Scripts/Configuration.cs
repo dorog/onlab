@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Configuration {
 
@@ -68,4 +66,11 @@ public class Configuration {
     //Screen data
     public static int bestScreenWidth = 1920;
     public static int bestScreenHeight = 1080;
+
+    //Speed data
+    public static int speed = 1;
+    public static int minSpeed = 1;
+    public static int maxSpeed = 4;
+    public static int basicSpeed = 1;
+    public static string speedTextText = "Speed x";
 }
