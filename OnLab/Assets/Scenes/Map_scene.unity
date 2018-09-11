@@ -89,7 +89,8 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaIndirect: 2
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ShowResolutionOverlay: 1
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000002, guid: 61f7fdd93d6605c498b944d72b20a105,
+    type: 2}
   m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
@@ -686,6 +687,7 @@ GameObject:
   - component: {fileID: 327271632}
   - component: {fileID: 327271631}
   - component: {fileID: 327271630}
+  - component: {fileID: 327271634}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -770,6 +772,35 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &327271634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 327271629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4d0802030e0c5e428fddf2a36cedc33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cmdPanelBorderRt: {fileID: 664295251}
+  deleteRt: {fileID: 1898189736}
+  cmdPanel: {fileID: 508253682}
+  cmdFactoryBorderRt: {fileID: 1926797735}
+  cmdFactoryBackgroundRt: {fileID: 1717879431}
+  cmdFactory: {fileID: 2043969895}
+  actionMenuGOBackgroundRt: {fileID: 59144745}
+  actionMenuGO: {fileID: 1068010415}
+  buttonTexts:
+  - {fileID: 339811377}
+  - {fileID: 891736091}
+  - {fileID: 776198143}
+  - {fileID: 520640179}
+  fvPartRt: {fileID: 168556396}
+  fv1Text: {fileID: 204237278}
+  fv2Text: {fileID: 1980907602}
+  fv1: {fileID: 77910940}
+  fv2: {fileID: 2102482105}
 --- !u!1 &335457439
 GameObject:
   m_ObjectHideFlags: 0
@@ -1012,7 +1043,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 664295251}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1404,8 +1435,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 508253683}
   - {fileID: 1898189736}
+  - {fileID: 508253683}
   - {fileID: 1701337623}
   - {fileID: 168556396}
   m_Father: {fileID: 983718081}
@@ -3363,12 +3394,12 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 664295251}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1500, y: 1500}
+  m_AnchoredPosition: {x: 722, y: 0}
+  m_SizeDelta: {x: 1920, y: 1000}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1903156377
 GameObject:
@@ -3426,6 +3457,7 @@ MonoBehaviour:
   fv1_Counts: 12
   fv2_Counts: 12
   summSlots: 0
+  deleteGO: {fileID: 1898189735}
   fv1GO: {fileID: 77910940}
   fv2GO: {fileID: 2102482105}
 --- !u!1 &1904666506
@@ -3653,7 +3685,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 140, y: 30}
+  m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1980907604
 MonoBehaviour:

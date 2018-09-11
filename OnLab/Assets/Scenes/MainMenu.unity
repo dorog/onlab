@@ -89,7 +89,8 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaIndirect: 2
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ShowResolutionOverlay: 1
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000042, guid: cae3cb16f485643449e654438f93eceb,
+    type: 2}
   m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
@@ -12729,7 +12730,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UFO: {fileID: 1602873987}
   UFO_place: {fileID: 264081806}
-  minWait: 30
+  minWait: 10
   maxWait: 60
 --- !u!1 &1603785427
 GameObject:
@@ -16281,7 +16282,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4334154204796246, guid: f97d2a23fb53f1340a054b9dd3c85fb4, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 2454.4888
+      value: 2476
       objectReference: {fileID: 0}
     - target: {fileID: 4334154204796246, guid: f97d2a23fb53f1340a054b9dd3c85fb4, type: 2}
       propertyPath: m_LocalPosition.y
