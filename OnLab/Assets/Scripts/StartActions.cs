@@ -7,12 +7,16 @@ public class StartActions : MonoBehaviour
     public float EndWait = 2;
     public float TimeBeetweenCommands;
     CommandPanel cmdPanel;
+    private GameObject commandPanelGO;
+    private GameObject fv1GO;
+    private GameObject fv2GO;
     static int aimnumber = 0;
-
+    private Transform lastSwitchedOff;
 
     public bool start = false;
     private System.DateTime lastTime;
     List<Command> commandsForExecute = new List<Command>();
+    List<GameObject> uiForSign = new List<GameObject>(); 
 
     List<Command> fv1 = new List<Command>();
 
@@ -36,6 +40,9 @@ public class StartActions : MonoBehaviour
 
     void Start()
     {
+        fv1GO = GameObject.Find(Configuration.fv1Name);
+        fv2GO = GameObject.Find(Configuration.fv2Name);
+        commandPanelGO = GameObject.Find(Configuration.cmdPanelName);
         cmdPanel = GameObject.Find(Configuration.cmdPanelManagerName).GetComponent<CommandPanel>();
         character = GameObject.Find(charName);
         characterPosition = new Vector3(character.transform.position.x, character.transform.position.y, character.transform.position.z);
@@ -51,6 +58,7 @@ public class StartActions : MonoBehaviour
         character.transform.forward = characterForward;*/
 
         start = true;
+        die = false;
         commandsForExecute.Clear();
         fv1.Clear();
         fv2.Clear();
@@ -61,6 +69,7 @@ public class StartActions : MonoBehaviour
         executedCommands = 0;
         actionBtn.enabled = false;
         //Debug.Log(commandsForExecute.Count);
+        lastSwitchedOff = null;
         Invoke("ExecuteCmd", 0);
     }
 
@@ -151,10 +160,12 @@ public class StartActions : MonoBehaviour
                 commandsForExecute[aimnumber + i] = fv1[i];
             }
             commandsForExecute[aimnumber].Effect();
+            LightUp();
         }
         else if (fvNumber == 1 && fv1.Count == 0 && aimnumber == commandsForExecute.Count - 1)
         {
-            EndCommands();
+            //EndCommands();
+            Invoke("WaitBeforeEnd", EndWait);
         }
 
         else if (fvNumber == 2 && fv2.Count != 0)
@@ -178,10 +189,12 @@ public class StartActions : MonoBehaviour
             }
 
             commandsForExecute[aimnumber].Effect();
+            LightUp();
         }
         else if (fvNumber == 2 && fv2.Count == 0 && aimnumber == commandsForExecute.Count - 1)
         {
-            EndCommands();
+            //EndCommands();
+            Invoke("WaitBeforeEnd", EndWait);
         }
     }
 
@@ -194,10 +207,12 @@ public class StartActions : MonoBehaviour
     {
         if (die)
         {
+            SwitchOffLastLightedUp(null);
             return;
         }
         if(commandsForExecute.Count > aimnumber)
         {
+            LightUp();
             commandsForExecute[aimnumber].Effect();
             aimnumber++;
             executedCommands++;
@@ -211,10 +226,46 @@ public class StartActions : MonoBehaviour
 
     private void WaitBeforeEnd()
     {
+        SwitchOffLastLightedUp(null);
+
         aimnumber = 0;
         character.transform.position = characterPosition;
         character.transform.forward = characterForward;
         Invoke("NotStaticBack", 0.1f); //Black Magic: joe is still here, so we need time
         actionBtn.enabled = true;
+    }
+
+    private void LightUp()
+    {
+        //Main thread
+        if(commandsForExecute[aimnumber].PanelSlot < commandPanelGO.transform.childCount)
+        {
+            Transform forExecute = commandPanelGO.transform.GetChild(commandsForExecute[aimnumber].PanelSlot).transform.GetChild(0);
+            forExecute.GetComponent<Image>().color = Color.red;
+            SwitchOffLastLightedUp(forExecute);
+        }
+        //Fv1
+        else if(commandsForExecute[aimnumber].PanelSlot < commandPanelGO.transform.childCount + fv1.Count)
+        {
+            Transform forExecuteF1= fv1GO.transform.GetChild(commandsForExecute[aimnumber].PanelSlot - commandPanelGO.transform.childCount).transform.GetChild(0);
+            forExecuteF1.GetComponent<Image>().color = Color.red;
+            SwitchOffLastLightedUp(forExecuteF1);
+        }
+        //Fv2
+        else
+        {
+            Transform forExecuteF2 = fv2GO.transform.GetChild(commandsForExecute[aimnumber].PanelSlot - commandPanelGO.transform.childCount - fv1GO.transform.childCount).transform.GetChild(0);
+            forExecuteF2.GetComponent<Image>().color = Color.red;
+            SwitchOffLastLightedUp(forExecuteF2);
+        }
+    }
+
+    private void SwitchOffLastLightedUp(Transform newLastSwitchedOff)
+    {
+        if (lastSwitchedOff != null)
+        {
+            lastSwitchedOff.GetComponent<Image>().color = Color.white;
+        }
+        lastSwitchedOff = newLastSwitchedOff;
     }
 }

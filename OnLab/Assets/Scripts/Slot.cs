@@ -19,6 +19,9 @@ public class Slot : MonoBehaviour, IDropHandler
             cmdpanelmanager.commands[droppedCommand.slot] = new Command();
             cmdpanelmanager.commands[id] = droppedCommand.command;
             droppedCommand.slot = id;
+            //New
+            droppedCommand.command.PanelSlot = id;
+            //--
         }
         else if (droppedCommand.slot != id)
         {
@@ -34,8 +37,15 @@ public class Slot : MonoBehaviour, IDropHandler
             cmdpanelmanager.commands[droppedCommand.slot] = commandplace.GetComponent<CommandData>().command;
 
             //new row: bugg is solved: exchange is good now
+            //New
+            int forChange = commandplace.GetComponent<CommandData>().command.PanelSlot;
+            //--
+
             commandplace.GetComponent<CommandData>().command.PanelSlot = droppedCommand.slot;
-            //
+
+            //New
+            droppedCommand.command.PanelSlot = forChange;
+            //--
 
             droppedCommand.slot = id;
             droppedCommand.transform.SetParent(this.transform);

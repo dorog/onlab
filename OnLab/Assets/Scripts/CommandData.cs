@@ -41,7 +41,7 @@ public class CommandData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     {
         this.transform.SetParent(cmdpanelmanager.slots[slot].transform);
         this.transform.position = cmdpanelmanager.slots[slot].transform.position;
-        command.PanelSlot = slot;
+        //command.PanelSlot = slot;
         GetComponent<CanvasGroup>().blocksRaycasts = true;
     }
 

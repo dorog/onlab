@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class CmdFactory : MonoBehaviour {
 
@@ -30,7 +29,7 @@ public class CmdFactory : MonoBehaviour {
         }
     }
 
-    public void AddCommand(Command it)
+    /*public void AddCommand(Command it)
     {
         Command commandToAdd = it;
 
@@ -63,6 +62,6 @@ public class CmdFactory : MonoBehaviour {
                 }
             }
         }
-    }
+    }*/
 
 }

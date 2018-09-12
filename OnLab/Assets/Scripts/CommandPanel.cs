@@ -37,7 +37,7 @@ public class CommandPanel : MonoBehaviour {
         cmdLoad();
     }
 
-    public void AddCommand(Command it) 
+    /*public void AddCommand(Command it) 
     {
         Command commandToAdd = it;
 
@@ -70,7 +70,7 @@ public class CommandPanel : MonoBehaviour {
                 }
             }
         }
-    }
+    }*/
 
     void cmdLoad()
     {

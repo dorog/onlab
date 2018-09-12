@@ -26,6 +26,8 @@ public class Configuration {
     public static string loadSceneGOName = "LoadSceneGO";
     public static string finishedPanelName = "FinishedPanel";
     public static string startButton = "StartButton";
+    public static string fv1Name = "FV1";
+    public static string fv2Name = "FV2";
 
     //Map_guide GameObjects
     public static string doorStr = "Doors";

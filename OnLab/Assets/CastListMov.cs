@@ -12,6 +12,13 @@ public class CastListMov : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        rt.anchoredPosition = new Vector3(0, rt.anchoredPosition.y + Time.deltaTime * speed, 0);
+        if(rt.anchoredPosition.y < (Screen.height / 2 + rt.sizeDelta[1] / 2))
+        {
+            rt.anchoredPosition = new Vector3(0, rt.anchoredPosition.y + Time.deltaTime * speed, 0);
+        }
+        else
+        {
+            this.transform.parent.gameObject.SetActive(false);
+        }
 	}
 }
