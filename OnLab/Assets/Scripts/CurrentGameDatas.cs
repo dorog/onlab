@@ -3,7 +3,7 @@
 public static class CurrentGameDatas{
 
     
-    static public int mapNumber = 2;
+    static public int mapNumber = 6;
     static public int maxMap = 1;
     static public bool HaveKey = false;
     static public List<MapDatas> mapDatas = new List<MapDatas>();

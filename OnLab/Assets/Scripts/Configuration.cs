@@ -7,13 +7,17 @@ public class Configuration {
     public static float brickGround = -90;
     public static float holeGround = -65;
     public static float bridgeElementGround = -65;
-    public static float bridgeMakeGround = -90;
+    public static float bridgeMakeGround = -65;
     public static float doorGround = 0;
+    public static float doorEdgeGround = -90;
     public static float keyGround = -90;
     public static float trapGround = -90;
     public static float buttonGround = 0;
     public static float edgeGround = 0;
     public static float boxGround = 40;
+    public static float laserGateGround = -90;
+    public static float laserGateEdgeGround = -90;
+    public static float laserSwitchGround = -40;
 
     //GameObjects
     public static string mapGeneratorName = "MapGeneratorGO";
@@ -40,9 +44,10 @@ public class Configuration {
     public static string forwardIcon = "Icons/uparrow";
     public static string leftIcon = "Icons/leftarrow";
     public static string rightIcon = "Icons/rightarrow";
+    public static string activateIcon = "Icons/lightbulb";
     public static string GSB_part = "Map_guide/GSB_part";
     public static string GSB_sprite = "Map_guide/GSB";
-    public static string numberIcon= "Map_guide/number";
+    public static string numberIcon = "Map_guide/number";
 
     //TXT files
     public static string slotName = "Slot0.txt";

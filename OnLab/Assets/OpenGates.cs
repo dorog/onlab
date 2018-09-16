@@ -16,7 +16,7 @@ public class OpenGates : MonoBehaviour {
 	void Update () {
         if (door_is_Opening)
         {
-            if (doorNumber < CurrentGameDatas.maxMap - 2)
+            if (doorNumber < CurrentGameDatas.maxMap - 3)
             {
                 if (OpeningTime - Time.deltaTime >= 0)
                 {

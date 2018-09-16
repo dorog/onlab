@@ -15,12 +15,11 @@ public class TrapActive : MonoBehaviour {
         highData = this.transform.GetComponent<HighData>();
     }
 
-    // Update is called once per frame
     private void OnTriggerEnter(Collider other)
     {
         if (!used)
         {
-            trapAnim.Play();
+            trapAnim.Play("OpenTrap");
             used = true;
         }
         //Debug.Log("if elott: " + fill);

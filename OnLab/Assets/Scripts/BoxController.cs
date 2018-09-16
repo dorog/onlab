@@ -50,6 +50,7 @@ public class BoxController : MonoBehaviour {
                 }
                 Move = false;
                 time = originTime;
+                //this.GetComponent<Rigidbody>().useGravity = true;
             }
 
         }
@@ -63,6 +64,9 @@ public class BoxController : MonoBehaviour {
             else if (time > 0)
             {
                 body.MovePosition(aimPosition);
+                Rise = false;
+                time = originTime;
+                this.GetComponent<Rigidbody>().useGravity = true;
             }
         }
     }
@@ -78,6 +82,7 @@ public class BoxController : MonoBehaviour {
     public void RiseBox(float time)
     {
         Rise = true;
+        this.GetComponent<Rigidbody>().useGravity = false;
         aimPosition = this.transform.position + new Vector3(0, Configuration.unit, 0);
         this.time = time;
     }

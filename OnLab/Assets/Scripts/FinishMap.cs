@@ -11,8 +11,8 @@ public class FinishMap : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-		
-	}
+        CurrentGameDatas.HaveNewKey = false;
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -21,7 +21,11 @@ public class FinishMap : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     { 
-
+        if(other.gameObject.name != Configuration.characterName)
+        {
+            Destroy(other.gameObject);
+            return;
+        }
         //Calulate datas
         CommandPanel slotPanel = GameObject.Find(Configuration.cmdPanelManagerName).GetComponent<CommandPanel>();
         SceneLoader scLoader = GameObject.Find(Configuration.loadSceneGOName).GetComponent<SceneLoader>();

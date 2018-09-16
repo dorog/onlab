@@ -16,8 +16,10 @@ public class KeyEffects : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        CurrentGameDatas.HaveKey = true;
-        //Debug.Log("RIP");
+        if(other.gameObject.name == Configuration.characterName)
+        {
+            CurrentGameDatas.HaveKey = true;
+        }
         Destroy(this.transform.gameObject);
     }
 }

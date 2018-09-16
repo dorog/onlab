@@ -2,39 +2,33 @@
 
 public class SolvedButton : MonoBehaviour {
 
-    public bool used;
+    private bool used;
     MapGenerator mapGenerator;
+    public Material usedMat;
+    private Material originalMat;
 
     // Use this for initialization
     void Start()
     {
         mapGenerator = GameObject.Find(Configuration.mapGeneratorName).GetComponent<MapGenerator>();
         used = false;
+        originalMat = this.transform.GetComponent<MeshRenderer>().material;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ActivateButton()
     {
-
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        Collider[] colliders = Physics.OverlapBox(this.transform.position, new Vector3(40, 40, 20));
-        //Debug.Log(colliders.Length);
-        for(int i=0; i<colliders.Length; i++)
+        if (!used)
+         {
+            mapGenerator.lessCount();
+            used = true;
+            //light up
+            this.transform.GetComponent<MeshRenderer>().material = usedMat;
+        }
+        else
         {
-            Rigidbody body = colliders[i].GetComponent<Rigidbody>();
-            if (!body)
-            {
-                continue;
-            }
-            if (!used)
-            {
-                mapGenerator.lessCount();
-                used = true;
-                //Debug.Log("mukszik " + used);
-            }
+            used = false;
+            mapGenerator.moreCount();
+            this.transform.GetComponent<MeshRenderer>().material = originalMat;
         }
     }
 }

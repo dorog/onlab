@@ -5,18 +5,13 @@ public class RiseElement : MonoBehaviour {
 
     private bool rising = false;
     private float rising_time = 0.5f;
+    public float originRisingTime;
     private Vector3 aimPosition;
 
     public int x;
     public int z;
 
     public List<GameObject> boxes = new List<GameObject>();
-    //public int boxOnIt = 0;
-
-	// Use this for initialization
-	void Start () {
-		
-	}
 	
 	// Update is called once per frame
 	void Update () {
@@ -39,6 +34,7 @@ public class RiseElement : MonoBehaviour {
 
     public void Rise()
     {
+        rising_time = originRisingTime;
         HighData myData = this.GetComponent<HighData>();
         for(int i=0; i<myData.boxes.Count; i++)
         {

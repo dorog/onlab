@@ -18,8 +18,5 @@ EditorBuildSettings:
     path: Assets/Scenes/FinishedMap.unity
     guid: 1be48431049a5a8499a6a6548845029a
   - enabled: 1
-    path: Assets/Scenes/Load_Save.unity
-    guid: de5a4241ad9a2244d89813e2ab9330f4
-  - enabled: 1
     path: Assets/Scenes/New_Load.unity
     guid: 378ee2ba1a2a72148967b5b592d6429a

@@ -31,9 +31,12 @@ public class CreateNewElement : MonoBehaviour {
                     element = new TurnLeftCmd(1);
                     break;
                 case 3:
-                    element = new FV(1, 1);
+                    element = new ActivateCmd(1);
                     break;
                 case 4:
+                    element = new FV(1, 1);
+                    break;
+                case 5:
                     element = new FV(1, 2);
                     break;
                 default:

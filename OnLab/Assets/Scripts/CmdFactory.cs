@@ -28,40 +28,4 @@ public class CmdFactory : MonoBehaviour {
             //factorySlots[i].GetComponent<CreateNewElement>().charName = charName;
         }
     }
-
-    /*public void AddCommand(Command it)
-    {
-        Command commandToAdd = it;
-
-        if (commandToAdd.PanelSlot != -1)
-        {
-            commands[commandToAdd.PanelSlot] = commandToAdd;
-            GameObject commandObj = Instantiate(cmdpanelcmd);
-            commandObj.transform.SetParent(factorySlots[commandToAdd.PanelSlot].transform);
-            commandObj.GetComponent<Image>().sprite = commandToAdd.sprite;
-            commandObj.transform.position = commandObj.transform.parent.position;
-            commandObj.GetComponent<CommandData>().command = commandToAdd;
-            commandObj.GetComponent<CommandData>().slot = commandToAdd.PanelSlot;
-        }
-        else
-        {
-            for (int i = 0; i < commands.Count; i++)
-            {
-
-                if (commands[i].ID == -1)
-                {
-                    commands[i] = commandToAdd;
-                    commands[i].PanelSlot = i;
-                    GameObject itemObj = Instantiate(cmdpanelcmd);
-                    itemObj.transform.SetParent(factorySlots[i].transform);
-                    itemObj.GetComponent<Image>().sprite = commandToAdd.sprite;
-                    itemObj.transform.position = itemObj.transform.parent.position;
-                    itemObj.GetComponent<CommandData>().command = commandToAdd;
-                    itemObj.GetComponent<CommandData>().slot = i;
-                    break;
-                }
-            }
-        }
-    }*/
-
 }

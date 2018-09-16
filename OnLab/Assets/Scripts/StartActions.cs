@@ -16,7 +16,6 @@ public class StartActions : MonoBehaviour
     public bool start = false;
     private System.DateTime lastTime;
     List<Command> commandsForExecute = new List<Command>();
-    List<GameObject> uiForSign = new List<GameObject>(); 
 
     List<Command> fv1 = new List<Command>();
 
@@ -167,7 +166,6 @@ public class StartActions : MonoBehaviour
             //EndCommands();
             Invoke("WaitBeforeEnd", EndWait);
         }
-
         else if (fvNumber == 2 && fv2.Count != 0)
         {
             int afterAim = commandsForExecute.Count - aimnumber - 1;
@@ -245,7 +243,7 @@ public class StartActions : MonoBehaviour
             SwitchOffLastLightedUp(forExecute);
         }
         //Fv1
-        else if(commandsForExecute[aimnumber].PanelSlot < commandPanelGO.transform.childCount + fv1.Count)
+        else if(commandsForExecute[aimnumber].PanelSlot < commandPanelGO.transform.childCount + cmdPanel.fv1_Counts)
         {
             Transform forExecuteF1= fv1GO.transform.GetChild(commandsForExecute[aimnumber].PanelSlot - commandPanelGO.transform.childCount).transform.GetChild(0);
             forExecuteF1.GetComponent<Image>().color = Color.red;
