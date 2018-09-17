@@ -28,17 +28,17 @@ public class MapGenerator : MonoBehaviour
 
     public GameObject boxModel;     // 
 
-    
+
     /*private int DoorID = -1;
     private int BrickID = 0;
     private int EdgeID = 1;
     private int TrapID = 2;
     private int ButtonID = 3;
     private int HoleID = 4;
-    private int BridgeElementID = 6;*/
+    private int BridgeElementID = 6;
     private int BridgeMakeID = 5;
-    //private int KeyID = -2;
-    private int DoorID = -1;
+    private int KeyID = -2;
+    private int DoorID = -1;*/
 
     private int BoxID = 10;
 
@@ -96,148 +96,120 @@ public class MapGenerator : MonoBehaviour
     {
         try
         {
-            using (StreamReader sr = new StreamReader("map" + number + ".txt"))
+            Map map = initMap(number);
+
+            for (int i = 0; i < map.heigth; i++)
             {
-                //Debug.Log("usingba");
-                String line = sr.ReadToEnd();
-                string[] datas = line.Split('\n');
-                string[] charPosition = datas[0].Split(' ');
-
-                //character position ready
-                Joe.transform.position = new Vector3(Convert.ToInt32(charPosition[0]), Convert.ToInt32(charPosition[1]), Convert.ToInt32(charPosition[2]));
-
-                string[] matrixDatas = datas[1].Split(' ');
-                actMap = new int[Convert.ToInt32(matrixDatas[0]), Convert.ToInt32(matrixDatas[1])];
-                originalMap = new int[Convert.ToInt32(matrixDatas[0]), Convert.ToInt32(matrixDatas[1])];
-                objectMap = new GameObject[Convert.ToInt32(matrixDatas[0]), Convert.ToInt32(matrixDatas[1])];
-
-                string[] stPos = datas[2].Split(' ');
-
-                startPosition = new Vector3(Convert.ToInt32(stPos[0]), 0, Convert.ToInt32(stPos[1]));
-
-                charMatrixPositionZ = (Convert.ToInt32(stPos[1]) - Convert.ToInt32(charPosition[2])) / Configuration.unit;
-                originMatrixPositionZ = charMatrixPositionZ;
-                charMatrixPositionX = (Convert.ToInt32(charPosition[0]) - Convert.ToInt32(stPos[0])) / Configuration.unit;
-                originMatrixPositionX = charMatrixPositionX;
-
-                for (int i = 0; i < Convert.ToInt32(matrixDatas[0]); i++)
+                for (int j = 0; j < map.width; j++)
                 {
 
-                    string[] row = datas[i + 3].Split(' ');
-
-
-                    for (int j = 0; j < Convert.ToInt32(matrixDatas[1]); j++)
+                    Vector3 placePosition = startPosition + new Vector3(Configuration.unit * j, 0, i * -1 * Configuration.unit);
+                    int id = map.mapMatrix[i, j];
+                    actMap[i, j] = id;
+                    switch (id)
                     {
-
-                        Vector3 placePosition = startPosition + new Vector3(Configuration.unit * j, 0, i * -1 * Configuration.unit);
-                        int id = Convert.ToInt32(row[j]);
-                        actMap[i, j] = id;
-                        switch (id)
-                        {
-                            case 0:
-                                GameObject brick = Instantiate(brickModel, placePosition + new Vector3(0, Configuration.brickGround, 0), Quaternion.AngleAxis(-90, Vector3.right), parent.transform.GetChild(BrickChild));
-                                objectMap[i, j] = brick;
-                                break;
-                            case 1:
-                                GameObject edge = Instantiate(EdgeModel, placePosition + new Vector3(0, Configuration.edgeGround, 0), Quaternion.AngleAxis(0, Vector3.right), parent.transform.GetChild(EdgeChild));
-                                objectMap[i, j] = edge;
-                                break;
-                            case 2:
-                                GameObject trap = Instantiate(trapModel, placePosition + new Vector3(0, Configuration.trapGround, 0), Quaternion.AngleAxis(-90, Vector3.right), parent.transform.GetChild(TrapChild)) as GameObject;
-                                objectMap[i, j] = trap;
-                                notStaticElementsID.Add(2);
-                                notStaticElementsPosition.Add(new Vector3(placePosition.x, placePosition.y + Configuration.trapGround, placePosition.z));
-                                notStaticElements.Add(trap);
-                                break;
-                            case 3:
-                                GameObject doorButton = Instantiate(buttonModel, placePosition + new Vector3(0, Configuration.buttonGround, 0), Quaternion.AngleAxis(-90, Vector3.right), parent.transform.GetChild(ButtonChild)) as GameObject;
-                                objectMap[i, j] = doorButton;
-                                notStaticElementsID.Add(3);
-                                notStaticElementsPosition.Add(new Vector3(placePosition.x, placePosition.y + Configuration.buttonGround, placePosition.z));
-                                notStaticElements.Add(doorButton);
-                                count++;
-                                break;
-                            case 4:
-                                GameObject hole = Instantiate(holeModel, placePosition + new Vector3(0, Configuration.holeGround, -25), Quaternion.AngleAxis(0, Vector3.right), parent.transform.GetChild(BrickChild));
-                                objectMap[i, j] = hole;
-                                break;
-                            case -1:
-                                door = Instantiate(doorModel, placePosition + new Vector3(0, Configuration.doorGround, 0), Quaternion.AngleAxis(-90, Vector3.right), parent.transform.GetChild(DoorChild)) as GameObject;
-                                objectMap[i, j] = door;
-                                notStaticElements.Add(door);
-                                doorPosition = placePosition;
-                                break;
-                            case -2:
-                                GameObject Key = Instantiate(KeyModel, placePosition + new Vector3(0, Configuration.keyGround, 0), Quaternion.AngleAxis(-90, Vector3.right), parent.transform) as GameObject;
-                                objectMap[i, j] = Key;
-                                notStaticElementsID.Add(-2);
-                                notStaticElementsPosition.Add(new Vector3(placePosition.x, placePosition.y + Configuration.keyGround, placePosition.z));
-                                notStaticElements.Add(Key);
-                                break;
-                            case -3:
-                                GameObject doorEdge = Instantiate(doorEdgeModel, placePosition + new Vector3(0, Configuration.doorEdgeGround, 0), Quaternion.AngleAxis(-90, Vector3.right), parent.transform.GetChild(DoorChild)) as GameObject;
-                                objectMap[i, j] = doorEdge;
-                                break;
-                            case 5:
-                                GameObject BridgeMaker = Instantiate(BridgeMakeModel, placePosition + new Vector3(0, Configuration.bridgeMakeGround, -25), Quaternion.AngleAxis(0, Vector3.right), parent.transform.GetChild(BridgeChild)) as GameObject;
-                                objectMap[i, j] = BridgeMaker;
-                                notStaticElementsID.Add(5);
-                                notStaticElementsPosition.Add(placePosition + new Vector3(0, Configuration.bridgeMakeGround, -25));
-                                notStaticElements.Add(BridgeMaker);
-                                originalMap[i, j] = BridgeMakeID;
-                                break;
-                            case 6:
-                                GameObject BridgeElement = Instantiate(BridgeElementModel, placePosition + new Vector3(0, Configuration.bridgeElementGround, -25), Quaternion.AngleAxis(0, Vector3.right), parent.transform.GetChild(BridgeChild));
-                                objectMap[i, j] = BridgeElement;
-                                notStaticElementsID.Add(6);
-                                notStaticElementsPosition.Add(placePosition + new Vector3(0, Configuration.bridgeElementGround, -25));
-                                notStaticElements.Add(BridgeElement);
-                                break;
-                            case 7:
-                                GameObject laserGate = Instantiate(laserGateModel, placePosition + new Vector3(0, Configuration.laserGateGround, 0), Quaternion.AngleAxis(0, Vector3.right), parent.transform.GetChild(LaserGateChild)) as GameObject;
-                                objectMap[i, j] = laserGate;
-                                laserGates.Add(laserGate.GetComponent<LaserGate>());
-                                break;
-                            case 8:
-                                GameObject laserGateEdge = Instantiate(laserGateEdgeModel, placePosition + new Vector3(0, Configuration.laserGateEdgeGround, 0), Quaternion.AngleAxis(-90, Vector3.right), parent.transform.GetChild(LaserGateChild)) as GameObject;
-                                objectMap[i, j] = laserGateEdge;
-                                break;
-                            case 9:
-                                GameObject laserSwitch = Instantiate(laserSwitchModel, placePosition + new Vector3(0, Configuration.laserSwitchGround, 0), Quaternion.AngleAxis(-90, Vector3.right), parent.transform.GetChild(LaserSwitchChild)) as GameObject;
-                                objectMap[i, j] = laserSwitch;
-                                notStaticElementsID.Add(9);
-                                notStaticElementsPosition.Add(new Vector3(placePosition.x, placePosition.y + Configuration.laserSwitchGround, placePosition.z));
-                                notStaticElements.Add(laserSwitch);
-                                summSwitches++;
-                                break;
-                            default:
-                                break;
-                        }
+                        case 0:
+                            GameObject brick = Instantiate(brickModel, placePosition + new Vector3(0, Configuration.brickGround, 0), Quaternion.AngleAxis(-90, Vector3.right), parent.transform.GetChild(BrickChild));
+                            objectMap[i, j] = brick;
+                            break;
+                        case 1:
+                            GameObject edge = Instantiate(EdgeModel, placePosition + new Vector3(0, Configuration.edgeGround, 0), Quaternion.AngleAxis(0, Vector3.right), parent.transform.GetChild(EdgeChild));
+                            objectMap[i, j] = edge;
+                            break;
+                        case 2:
+                            GameObject trap = Instantiate(trapModel, placePosition + new Vector3(0, Configuration.trapGround, 0), Quaternion.AngleAxis(-90, Vector3.right), parent.transform.GetChild(TrapChild)) as GameObject;
+                            objectMap[i, j] = trap;
+                            notStaticElementsID.Add(2);
+                            notStaticElementsPosition.Add(new Vector3(placePosition.x, placePosition.y + Configuration.trapGround, placePosition.z));
+                            notStaticElements.Add(trap);
+                            break;
+                        case 3:
+                            GameObject doorButton = Instantiate(buttonModel, placePosition + new Vector3(0, Configuration.buttonGround, 0), Quaternion.AngleAxis(-90, Vector3.right), parent.transform.GetChild(ButtonChild)) as GameObject;
+                            objectMap[i, j] = doorButton;
+                            notStaticElementsID.Add(3);
+                            notStaticElementsPosition.Add(new Vector3(placePosition.x, placePosition.y + Configuration.buttonGround, placePosition.z));
+                            notStaticElements.Add(doorButton);
+                            count++;
+                            break;
+                        case 4:
+                            GameObject hole = Instantiate(holeModel, placePosition + new Vector3(0, Configuration.holeGround, -25), Quaternion.AngleAxis(0, Vector3.right), parent.transform.GetChild(BrickChild));
+                            objectMap[i, j] = hole;
+                            break;
+                        case -1:
+                            door = Instantiate(doorModel, placePosition + new Vector3(0, Configuration.doorGround, 0), Quaternion.AngleAxis(-90, Vector3.right), parent.transform.GetChild(DoorChild)) as GameObject;
+                            objectMap[i, j] = door;
+                            notStaticElements.Add(door);
+                            doorPosition = placePosition;
+                            break;
+                        case -2:
+                            GameObject Key = Instantiate(KeyModel, placePosition + new Vector3(0, Configuration.keyGround, 0), Quaternion.AngleAxis(-90, Vector3.right), parent.transform) as GameObject;
+                            objectMap[i, j] = Key;
+                            notStaticElementsID.Add(-2);
+                            notStaticElementsPosition.Add(new Vector3(placePosition.x, placePosition.y + Configuration.keyGround, placePosition.z));
+                            notStaticElements.Add(Key);
+                            break;
+                        case -3:
+                            GameObject doorEdge = Instantiate(doorEdgeModel, placePosition + new Vector3(0, Configuration.doorEdgeGround, 0), Quaternion.AngleAxis(-90, Vector3.right), parent.transform.GetChild(DoorChild)) as GameObject;
+                            objectMap[i, j] = doorEdge;
+                            break;
+                        case 5:
+                            GameObject BridgeMaker = Instantiate(BridgeMakeModel, placePosition + new Vector3(0, Configuration.bridgeMakeGround, -25), Quaternion.AngleAxis(0, Vector3.right), parent.transform.GetChild(BridgeChild)) as GameObject;
+                            objectMap[i, j] = BridgeMaker;
+                            notStaticElementsID.Add(5);
+                            notStaticElementsPosition.Add(placePosition + new Vector3(0, Configuration.bridgeMakeGround, -25));
+                            notStaticElements.Add(BridgeMaker);
+                            originalMap[i, j] = 5;
+                            break;
+                        case 6:
+                            GameObject BridgeElement = Instantiate(BridgeElementModel, placePosition + new Vector3(0, Configuration.bridgeElementGround, -25), Quaternion.AngleAxis(0, Vector3.right), parent.transform.GetChild(BridgeChild));
+                            objectMap[i, j] = BridgeElement;
+                            notStaticElementsID.Add(6);
+                            notStaticElementsPosition.Add(placePosition + new Vector3(0, Configuration.bridgeElementGround, -25));
+                            notStaticElements.Add(BridgeElement);
+                            break;
+                        case 7:
+                            GameObject laserGate = Instantiate(laserGateModel, placePosition + new Vector3(0, Configuration.laserGateGround, 0), Quaternion.AngleAxis(0, Vector3.right), parent.transform.GetChild(LaserGateChild)) as GameObject;
+                            objectMap[i, j] = laserGate;
+                            laserGates.Add(laserGate.GetComponent<LaserGate>());
+                            break;
+                        case 8:
+                            GameObject laserGateEdge = Instantiate(laserGateEdgeModel, placePosition + new Vector3(0, Configuration.laserGateEdgeGround, 0), Quaternion.AngleAxis(-90, Vector3.right), parent.transform.GetChild(LaserGateChild)) as GameObject;
+                            objectMap[i, j] = laserGateEdge;
+                            break;
+                        case 9:
+                            GameObject laserSwitch = Instantiate(laserSwitchModel, placePosition + new Vector3(0, Configuration.laserSwitchGround, 0), Quaternion.AngleAxis(-90, Vector3.right), parent.transform.GetChild(LaserSwitchChild)) as GameObject;
+                            objectMap[i, j] = laserSwitch;
+                            notStaticElementsID.Add(9);
+                            notStaticElementsPosition.Add(new Vector3(placePosition.x, placePosition.y + Configuration.laserSwitchGround, placePosition.z));
+                            notStaticElements.Add(laserSwitch);
+                            summSwitches++;
+                            break;
+                        default:
+                            break;
                     }
                 }
-                int index = Convert.ToInt32(matrixDatas[0]);
-                int boxNumber = Convert.ToInt32(datas[index + 3]);
-                for (int i = 0; i < boxNumber; i++)
-                {
-                    string[] VectorCoord = datas[index + 4 + i].Split(' ');
-                    Vector3 position = new Vector3(Convert.ToInt32(VectorCoord[0]), Convert.ToInt32(VectorCoord[1]), Convert.ToInt32(VectorCoord[2]));
-                    GameObject box = Instantiate(boxModel, position, Quaternion.AngleAxis(0, Vector3.right), parent.transform.GetChild(BoxChild)) as GameObject;
-                    objectMap[(int)(startPosition.z - position.z) / Configuration.unit, (int)(position.x - startPosition.x) / Configuration.unit].GetComponent<HighData>().boxes.Add(box);
-                    notStaticElements.Add(box);
-                    notStaticElementsID.Add(BoxID);
-                    notStaticElementsPosition.Add(position);
-                }
-                for(int i=0; i<laserGates.Count; i++)
-                {
-                    laserGates[i].summSwitches = summSwitches;
-                    laserGates[i].activeSwitches = summSwitches;
-                    laserGates[i].setted = true;
-                }
+            }
+
+            int boxNumber = map.boxNumber;
+            for (int i = 0; i < boxNumber; i++)
+            {
+                Vector3 position = map.boxLocations[i];
+                GameObject box = Instantiate(boxModel, position, Quaternion.AngleAxis(0, Vector3.right), parent.transform.GetChild(BoxChild)) as GameObject;
+                objectMap[(int)(startPosition.z - position.z) / Configuration.unit, (int)(position.x - startPosition.x) / Configuration.unit].GetComponent<HighData>().boxes.Add(box);
+                notStaticElements.Add(box);
+                notStaticElementsID.Add(BoxID);
+                notStaticElementsPosition.Add(position);
+            }
+            for (int i = 0; i < laserGates.Count; i++)
+            {
+                laserGates[i].summSwitches = summSwitches;
+                laserGates[i].activeSwitches = summSwitches;
+                laserGates[i].setted = true;
             }
         }
         catch (Exception e)
         {
-            Debug.Log("The file could not be read:");
+            Debug.Log("The map could not be read:");
             Debug.Log(e.Message);
         }
     }
@@ -250,7 +222,7 @@ public class MapGenerator : MonoBehaviour
             Animation anim = door.GetComponent<Animation>();
             anim[doorAnimName].speed = doorOpenSpeed;
             anim.Play();
-            door.transform.GetChild(door.transform.childCount-1).gameObject.SetActive(true);
+            door.transform.GetChild(door.transform.childCount - 1).gameObject.SetActive(true);
             door.transform.GetComponent<DoorHighData>().opened = true;
         }
     }
@@ -272,7 +244,7 @@ public class MapGenerator : MonoBehaviour
             door.transform.GetChild(door.transform.childCount - 1).gameObject.SetActive(false);
             door.transform.GetComponent<DoorHighData>().opened = false;
         }
-        count++;    
+        count++;
     }
 
     public void restartMap(int number)
@@ -388,9 +360,9 @@ public class MapGenerator : MonoBehaviour
         }
         if (objectMap[z, x].GetComponent<HighData>().HeightCalculate() - objectMap[charMatrixPositionZ, charMatrixPositionX].GetComponent<HighData>().HeightCalculate() <= 0)
         {
-                Joe.GetComponent<JoeCommandControl>().GoForward();
-                charMatrixPositionX = x;
-                charMatrixPositionZ = z;
+            Joe.GetComponent<JoeCommandControl>().GoForward();
+            charMatrixPositionX = x;
+            charMatrixPositionZ = z;
         }
         else if (objectMap[z, x].GetComponent<HighData>().HeightCalculate() - objectMap[charMatrixPositionZ, charMatrixPositionX].GetComponent<HighData>().HeightCalculate() == 1)
         {
@@ -426,7 +398,7 @@ public class MapGenerator : MonoBehaviour
 
     public void LaserSwitchOff()
     {
-        for(int i=0; i<laserGates.Count; i++)
+        for (int i = 0; i < laserGates.Count; i++)
         {
             laserGates[i].GetComponent<LaserGate>().SwitchedOffOne();
         }
@@ -444,6 +416,28 @@ public class MapGenerator : MonoBehaviour
     {
         int x = charMatrixPositionX;
         int z = charMatrixPositionZ;
-        objectMap[z, x].GetComponent<SolvedButton>().ActivateButton();
+        SolvedButton sbutton = objectMap[z, x].GetComponent<SolvedButton>();
+        if (sbutton != null)
+        {
+            sbutton.ActivateButton();
+        }
+    }
+
+    private Map initMap(int number)
+    {
+        Map map = MapCollection.ReadMap(number);
+        Joe.transform.position = map.charPosition;
+        actMap = new int[map.heigth, map.width];
+        originalMap = new int[map.heigth, map.width];
+        objectMap = new GameObject[map.heigth, map.width];
+        startPosition = map.startPosition;
+        charMatrixPositionZ = (int)(startPosition.z - map.charPosition.z) / Configuration.unit;
+        charMatrixPositionX = (int)(map.charPosition.x - startPosition.x) / Configuration.unit;
+        originMatrixPositionZ = charMatrixPositionZ;
+        originMatrixPositionX = charMatrixPositionX;
+
+        CurrentGameDatas.Scarab3PartCmd = map.Scarab3PartNumber;
+        CurrentGameDatas.Scarab2PartCmd = map.Scarab2PartNumber;
+        return map;
     }
 }

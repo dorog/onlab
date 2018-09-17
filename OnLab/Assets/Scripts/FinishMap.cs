@@ -31,22 +31,9 @@ public class FinishMap : MonoBehaviour {
         SceneLoader scLoader = GameObject.Find(Configuration.loadSceneGOName).GetComponent<SceneLoader>();
 
         int realCommandsNumber = slotPanel.getRealCommandsNumber();
-        int[] MinCmdNumber = new int[2];
-
-
-        using (StreamReader sr = new StreamReader(Configuration.buggSystemFile))
-        {
-            string line = sr.ReadToEnd();
-            string[] datas = line.Split('\n');
-            string[] currentDatas = datas[CurrentGameDatas.mapNumber - 1].Split('\t');
-            for (int i = 0; i < currentDatas.Length; i++)
-            {
-                MinCmdNumber[i] = Convert.ToInt32(currentDatas[i]);
-            }
-        }
 
         int scarabNumber = 0;
-        if (realCommandsNumber <= MinCmdNumber[0])
+        if (realCommandsNumber <= CurrentGameDatas.Scarab3PartCmd)
         {
             if (CurrentGameDatas.HaveKey)
             {
@@ -57,7 +44,7 @@ public class FinishMap : MonoBehaviour {
                 scarabNumber = 2;
             }
         }
-        else if (realCommandsNumber <= MinCmdNumber[1])
+        else if (realCommandsNumber <= CurrentGameDatas.Scarab2PartCmd)
         {
             scarabNumber = 2;
         }
@@ -66,7 +53,7 @@ public class FinishMap : MonoBehaviour {
             scarabNumber = 1;
         }
  
-        int thisGameScore = maxPoint - (maxScarabNumber - scarabNumber) * missingScarabWeight - (MinCmdNumber[0] - realCommandsNumber) * moreCmdWeight; 
+        int thisGameScore = maxPoint - (maxScarabNumber - scarabNumber) * missingScarabWeight - (CurrentGameDatas.Scarab3PartCmd - realCommandsNumber) * moreCmdWeight; 
 
         if (CurrentGameDatas.mapDatas[CurrentGameDatas.mapNumber - 1].scarab < scarabNumber)
         {
@@ -111,7 +98,6 @@ public class FinishMap : MonoBehaviour {
             {
                 CurrentGameDatas.KeyNumber++;
             }
-            //Debug.Log(CurrentGameDatas.HaveNewKey);
         }
         
         
