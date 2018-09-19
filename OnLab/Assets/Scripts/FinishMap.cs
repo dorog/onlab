@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
 public class FinishMap : MonoBehaviour {
@@ -72,7 +73,17 @@ public class FinishMap : MonoBehaviour {
             CurrentGameDatas.mapDatas[CurrentGameDatas.mapNumber - 1].mapScore = thisGameScore; //calculate
         }
 
-        //save this
+        Save();
+
+        CurrentGameDatas.solvedMap = new MapDatas(thisGameScore, scarabNumber, CurrentGameDatas.HaveKey);
+        CurrentGameDatas.HaveKey = false;
+
+        //Todo: different scene for last map
+        scLoader.LoadScene(Configuration.resultScene);
+    }
+
+    /*void SaveInWindows()
+    {
         using (StreamWriter sw = new StreamWriter(CurrentGameDatas.slotName))
         {
             sw.WriteLine(1);
@@ -84,27 +95,41 @@ public class FinishMap : MonoBehaviour {
                 {
                     key = 0;
                 }
-                if(CurrentGameDatas.mapNumber-1 == i && CurrentGameDatas.HaveKey)
+                if (CurrentGameDatas.mapNumber - 1 == i && CurrentGameDatas.HaveKey)
                 {
                     key = 1;
                 }
                 CurrentGameDatas.HaveNewKey = !CurrentGameDatas.mapDatas[i].key && CurrentGameDatas.HaveKey;
 
-                sw.WriteLine(CurrentGameDatas.mapDatas[i].mapScore + "\t" + CurrentGameDatas.mapDatas[i].scarab +"\t" +key);
+                sw.WriteLine(CurrentGameDatas.mapDatas[i].mapScore + "\t" + CurrentGameDatas.mapDatas[i].scarab + "\t" + key);
             }
-            
-            CurrentGameDatas.HaveNewKey = !CurrentGameDatas.mapDatas[CurrentGameDatas.mapNumber-1].key && CurrentGameDatas.HaveKey;
+
+            CurrentGameDatas.HaveNewKey = !CurrentGameDatas.mapDatas[CurrentGameDatas.mapNumber - 1].key && CurrentGameDatas.HaveKey;
             if (CurrentGameDatas.HaveNewKey)
             {
                 CurrentGameDatas.KeyNumber++;
             }
         }
-        
-        
-        CurrentGameDatas.solvedMap = new MapDatas(thisGameScore, scarabNumber, CurrentGameDatas.HaveKey);
-        CurrentGameDatas.HaveKey = false;
+    }*/
 
-        //Todo: different scene for last map
-        scLoader.LoadScene(Configuration.resultScene);
+    void Save()
+    {
+        BinaryFormatter bf = new BinaryFormatter();
+        FileStream file = File.Open(CurrentGameDatas.slotName, FileMode.Open);
+        PlayerSlotData data = (PlayerSlotData)bf.Deserialize(file);
+        file.Close();
+
+        data.mapResults[CurrentGameDatas.mapNumber - 1].Score = CurrentGameDatas.mapDatas[CurrentGameDatas.mapNumber - 1].mapScore;
+        data.mapResults[CurrentGameDatas.mapNumber - 1].ScarabNumber = CurrentGameDatas.mapDatas[CurrentGameDatas.mapNumber - 1].scarab;
+        data.mapResults[CurrentGameDatas.mapNumber - 1].Key = (CurrentGameDatas.mapDatas[CurrentGameDatas.mapNumber - 1].key) || CurrentGameDatas.HaveKey ? 1 : 0;
+        FileStream fileForSave = File.Create(CurrentGameDatas.slotName);
+        bf.Serialize(fileForSave, data);
+        fileForSave.Close();
+
+        CurrentGameDatas.HaveNewKey = !CurrentGameDatas.mapDatas[CurrentGameDatas.mapNumber - 1].key && CurrentGameDatas.HaveKey;
+        if (CurrentGameDatas.HaveNewKey)
+        {
+            CurrentGameDatas.KeyNumber++;
+        }
     }
 }

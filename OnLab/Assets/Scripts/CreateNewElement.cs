@@ -5,6 +5,7 @@ public class CreateNewElement : MonoBehaviour {
 
     public int id = 2;
     public GameObject cmdpanelcmd;
+    private float androidUISize = 2f;
 
     CommandPanel cmdpanelmanager;
 
@@ -49,7 +50,12 @@ public class CreateNewElement : MonoBehaviour {
             commandObj.transform.position = commandObj.transform.parent.position;
             commandObj.GetComponent<CommandData>().command = element;
             RectTransform rt = commandObj.GetComponent<RectTransform>();
-            rt.sizeDelta = new Vector2(rt.sizeDelta.x * Screen.width / Configuration.bestScreenWidth, rt.sizeDelta.y * Screen.height / Configuration.bestScreenHeight);
+#if UNITY_STANDALONE_WIN
+                rt.sizeDelta = new Vector2(rt.sizeDelta.x * Screen.width / Configuration.bestScreenWidth, rt.sizeDelta.y * Screen.height / Configuration.bestScreenHeight);
+#else
+                rt.sizeDelta = new Vector2(rt.sizeDelta.x * Screen.width / Configuration.bestScreenWidth * androidUISize, rt.sizeDelta.y * Screen.height / Configuration.bestScreenHeight * androidUISize);
+#endif
+
             //last item must be a delete slot (slots + 1 (delete slot))
 
             commandObj.GetComponent<CommandData>().slot = cmdpanelmanager.summSlots; // .slotAmount Update: .summSlots -> 0

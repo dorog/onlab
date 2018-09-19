@@ -396,7 +396,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2b052619b657a745bc2dab19b0e7904, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  filename: Slot3.txt
+  fileName: Slot3.bat
   img: {fileID: 21300000, guid: 668dd72a8d5c6a241ad502c89c3d08af, type: 3}
   fontSize: 20
   padding: 160
@@ -1181,7 +1181,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2b052619b657a745bc2dab19b0e7904, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  filename: Slot2.txt
+  fileName: Slot2.bat
   img: {fileID: 21300000, guid: 668dd72a8d5c6a241ad502c89c3d08af, type: 3}
   fontSize: 20
   padding: 160
@@ -2058,7 +2058,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2b052619b657a745bc2dab19b0e7904, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  filename: Slot1.txt
+  fileName: Slot1.bat
   img: {fileID: 21300000, guid: 668dd72a8d5c6a241ad502c89c3d08af, type: 3}
   fontSize: 20
   padding: 160

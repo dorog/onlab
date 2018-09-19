@@ -34,3 +34,5 @@ sysinfo.txt
 *.unitypackage
 OnLab/.vs/OnLab/v15/Server/sqlite3/db.lock
 OnLab/.vs/OnLab/v15/sqlite3/db.lock
+OnLab/Assets/HideIt.cs
+OnLab/Assets/HideIt.cs.meta

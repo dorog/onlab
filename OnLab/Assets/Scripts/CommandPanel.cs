@@ -37,49 +37,8 @@ public class CommandPanel : MonoBehaviour {
         cmdLoad();
     }
 
-    /*public void AddCommand(Command it) 
-    {
-        Command commandToAdd = it;
-
-        if (commandToAdd.PanelSlot != -1)
-        {
-            commands[commandToAdd.PanelSlot] = commandToAdd;
-            GameObject commandObj = Instantiate(cmdpanelcmd);
-            commandObj.transform.SetParent(slots[commandToAdd.PanelSlot].transform);
-            commandObj.GetComponent<Image>().sprite = commandToAdd.sprite;
-            commandObj.transform.position = commandObj.transform.parent.position;
-            commandObj.GetComponent<CommandData>().command = commandToAdd;
-            commandObj.GetComponent<CommandData>().slot = commandToAdd.PanelSlot;
-        }
-        else
-        {
-            for (int i = 0; i < commands.Count; i++)
-            {
-
-                if (commands[i].ID == -1)
-                {
-                    commands[i] = commandToAdd;
-                    commands[i].PanelSlot = i;
-                    GameObject commandObj = Instantiate(cmdpanelcmd);
-                    commandObj.transform.SetParent(slots[i].transform);
-                    commandObj.GetComponent<Image>().sprite = commandToAdd.sprite;
-                    commandObj.transform.position = commandObj.transform.parent.position;
-                    commandObj.GetComponent<CommandData>().command = commandToAdd;
-                    commandObj.GetComponent<CommandData>().slot = i;
-                    break;
-                }
-            }
-        }
-    }*/
-
     void cmdLoad()
     {
-
-        /*commands.Add(new Command());
-        slots.Add(Instantiate(deleteSlot));
-        slots[0].transform.SetParent(commandPanelBorder.transform.GetChild(delete_number));
-        slots[0].GetComponent<Slot>().id = 0; // summ -> 0*/
-
         for (int i = 0; i < slotAmount; i++)
         {
             commands.Add(new Command());
@@ -97,14 +56,20 @@ public class CommandPanel : MonoBehaviour {
             slots.Add(Instantiate(cmdSlot));
             slots[i].transform.SetParent(fv1GO.transform);
             slots[i].GetComponent<Slot>().id = i;
+            #if UNITY_ANDROID
+                slots[i].GetComponent<Image>().enabled = false;
+            #endif
         }
 
-        for(int i=slotAmount+fv1_Counts; i<slotAmount+fv1_Counts+fv2_Counts; i++)
+        for (int i=slotAmount+fv1_Counts; i<slotAmount+fv1_Counts+fv2_Counts; i++)
         {
             commands.Add(new Command());
             slots.Add(Instantiate(cmdSlot));
             slots[i].transform.SetParent(fv2GO.transform);
             slots[i].GetComponent<Slot>().id = i;
+            #if UNITY_ANDROID
+                slots[i].GetComponent<Image>().enabled = false;
+            #endif
         }
         //
 
@@ -114,13 +79,6 @@ public class CommandPanel : MonoBehaviour {
         
         slots[summSlots].transform.SetParent(deleteGO.transform);
         slots[summSlots].GetComponent<Slot>().id = summSlots;
-        // change: +fv1 + fv2
-        /*for(int i=0; i<commands.Count; i++)
-        {
-            Debug.Log(commands[i].ID + " " + commands[i].PanelSlot);
-        }
-        Debug.Log(slots.Count);
-        Debug.Log(commands.Count);*/
     }
 
     public void Clear()

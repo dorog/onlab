@@ -23,20 +23,25 @@ public class ChangeCamera : MonoBehaviour {
     void Update () {
         if (Input.GetKeyDown(KeyCode.V))
         {
-            if(cameras.Count == 1)
-            {
-                return;
-            }
-            cameras[activeCamera].gameObject.SetActive(false);
-            if(activeCamera == cameras.Count - 1)
-            {
-                activeCamera = 0;
-            }
-            else
-            {
-                activeCamera++;
-            }
-            cameras[activeCamera].gameObject.SetActive(true);
+            SwitchCamera();
         }
 	}
+
+    public void SwitchCamera()
+    {
+        if (cameras.Count == 1)
+        {
+            return;
+        }
+        cameras[activeCamera].gameObject.SetActive(false);
+        if (activeCamera == cameras.Count - 1)
+        {
+            activeCamera = 0;
+        }
+        else
+        {
+            activeCamera++;
+        }
+        cameras[activeCamera].gameObject.SetActive(true);
+    }
 }
