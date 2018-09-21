@@ -6,33 +6,19 @@ public class UI_Map_Scene_Set : MonoBehaviour {
     public GameObject androidUI;
     public GameObject windowsUI;
     private GameObject deviceUI;
-    /*public RectTransform cmdPanelBorderRt;
-    public RectTransform deleteRt;
-    public GameObject cmdPanel;
-    public RectTransform cmdFactoryBorderRt;
-    public RectTransform cmdFactoryBackgroundRt;
-    public GameObject cmdFactory;
-    public RectTransform actionMenuGOBackgroundRt;
-    public GameObject actionMenuGO;
-    public Text[] buttonTexts;
-    public RectTransform fvPartRt;
-    public GameObject fv1Text;
-    public GameObject fv2Text;
-    public GameObject fv1;
-    public GameObject fv2;
-    public RectTransform[] buttons;*/
+
 
 	void Start () {
 
     #if UNITY_STANDALONE_WIN
         deviceUI = windowsUI;
         windowsUI.SetActive(true);
-        deviceUI.SetActive(false);
+        androidUI.SetActive(false);
 
     #else
         deviceUI = androidUI;
         windowsUI.SetActive(false);
-        deviceUI.SetActive(true);
+        androidUI.SetActive(true);
     #endif
 
         UIMake();

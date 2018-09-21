@@ -4,7 +4,7 @@ public static class CurrentGameDatas
 {
 
 
-    static public int mapNumber = 1;
+    static public int mapNumber = 8;
     static public int maxMap = 1;
     static public int Scarab3PartCmd;
     static public int Scarab2PartCmd;

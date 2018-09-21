@@ -4,16 +4,25 @@ using UnityEngine;
 
 public class ChangeCamera : MonoBehaviour {
 
-    public List<Camera> cameras = new List<Camera>();
+    public GameObject androidCameras;
+    public GameObject windowsCameras;
+    private Camera[] cameras;
     private int activeCamera = 0;
 
     private void Start()
     {
-        if (cameras.Count == 0)
+        #if UNITY_ANDROID
+            cameras = androidCameras.GetComponentsInChildren<Camera>();
+            windowsCameras.SetActive(false);
+        #else
+            cameras = windowsCameras.GetComponentsInChildren<Camera>();
+            androidCameras.SetActive(false);
+        #endif
+        if (cameras.Length == 0)
         {
             return;
         }
-        for(int i=1; i<cameras.Count; i++)
+        for(int i=1; i<cameras.Length; i++)
         {
             cameras[i].gameObject.SetActive(false);
         }
@@ -29,12 +38,12 @@ public class ChangeCamera : MonoBehaviour {
 
     public void SwitchCamera()
     {
-        if (cameras.Count == 1)
+        if (cameras.Length == 1)
         {
             return;
         }
         cameras[activeCamera].gameObject.SetActive(false);
-        if (activeCamera == cameras.Count - 1)
+        if (activeCamera == cameras.Length - 1)
         {
             activeCamera = 0;
         }

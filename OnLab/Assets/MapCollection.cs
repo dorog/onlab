@@ -53,8 +53,8 @@ public class MapCollection {
     private static Map InitMap2()
     {
         Map map2 = new Map();
-        map2.charPosition = new Vector3(175, 26, 325);
-        map2.startPosition = new Vector3(125, 0, 475);
+        map2.charPosition = new Vector3(225, 26, 325);
+        map2.startPosition = new Vector3(175, 0, 475);
         map2.heigth = 7;
         map2.width = 12;
         map2.mapMatrix = new int[,] { {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
@@ -65,7 +65,7 @@ public class MapCollection {
                                       {1, 1, 1, 1, -2, 3, 0, 0, 0, -1, 1, 1},
                                       {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, -3, 1}};
         map2.boxNumber = 2;
-        map2.boxLocations = new Vector3[2]{ new Vector3(375, 30, 375), new Vector3(475, 30, 375)};
+        map2.boxLocations = new Vector3[2]{ new Vector3(425, 30, 375), new Vector3(525, 30, 375)};
         map2.Scarab3PartNumber = 43;
         map2.Scarab2PartNumber = 50;
         return map2;
@@ -74,8 +74,8 @@ public class MapCollection {
     private static Map InitMap3()
     {
         Map map3 = new Map();
-        map3.charPosition = new Vector3(175, 26, 425);
-        map3.startPosition = new Vector3(75, 0, 625);
+        map3.charPosition = new Vector3(275, 26, 425);
+        map3.startPosition = new Vector3(175, 0, 625);
         map3.heigth = 10;
         map3.width = 11;
         map3.mapMatrix = new int[,] { {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
@@ -89,7 +89,7 @@ public class MapCollection {
                                       {1, 1, 1, 6, 6, 6, 0, 1, 1, 1, 1},
                                       {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};
         map3.boxNumber = 3;
-        map3.boxLocations = new Vector3[3] {new Vector3(225, 30, 425), new Vector3(275, 30, 425), new Vector3(375, 30, 325) };
+        map3.boxLocations = new Vector3[3] {new Vector3(325, 30, 425), new Vector3(375, 30, 425), new Vector3(475, 30, 325) };
         map3.Scarab3PartNumber = 38;
         map3.Scarab2PartNumber = 45;
         return map3;
@@ -121,8 +121,8 @@ public class MapCollection {
     private static Map InitMap5()
     {
         Map map5 = new Map();
-        map5.charPosition = new Vector3(225, 26, 375);
-        map5.startPosition = new Vector3(125, 0, 625);
+        map5.charPosition = new Vector3(225, 26, 325);
+        map5.startPosition = new Vector3(125, 0, 575);
         map5.heigth = 11;
         map5.width = 11;
         map5.mapMatrix = new int[,] { {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
@@ -137,7 +137,7 @@ public class MapCollection {
                                       {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
                                       {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};
         map5.boxNumber = 4;
-        map5.boxLocations = new Vector3[4] { new Vector3(325, 30, 375), new Vector3(375, 30, 375), new Vector3(375, 30, 325), new Vector3(375, 30, 425)};
+        map5.boxLocations = new Vector3[4] { new Vector3(325, 30, 325), new Vector3(375, 30, 325), new Vector3(375, 30, 275), new Vector3(375, 30, 375)};
         map5.Scarab3PartNumber = 69;
         map5.Scarab2PartNumber = 80;
         return map5;
@@ -146,18 +146,18 @@ public class MapCollection {
     private static Map InitMap6()
     {
         Map map6 = new Map();
-        map6.charPosition = new Vector3(175, 26, 375);
-        map6.startPosition = new Vector3(125, 0, 575);
+        map6.charPosition = new Vector3(225, 26, 325);
+        map6.startPosition = new Vector3(175, 0, 525);
         map6.heigth = 8;
-        map6.width = 15;
-        map6.mapMatrix = new int[,] { {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-                                      {1, 0, 0, 3, 1, 3, 0, 0, 1, -2, 0, 0, 1, 1, 1},
-                                      {1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, -3},
-                                      {1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, -1},
-                                      {1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, -3},
-                                      {1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
-                                      {1, 1, 1, 3, 0, 0, 1, 3, 0, 0, 1, 0, 0, 0, 1},
-                                      {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};
+        map6.width = 11;
+        map6.mapMatrix = new int[,] { {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                                      {1, 0, 0, 3, 1, -2, 0, 0, 1, 1, 1},
+                                      {1, 0, 1, 0, 1, 0, 1, 0, 1, 1, -3},
+                                      {1, 0, 1, 0, 1, 0, 1, 0, 1, 0, -1},
+                                      {1, 0, 1, 0, 1, 0, 1, 0, 1, 0, -3},
+                                      {1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1},
+                                      {1, 1, 1, 3, 0, 0, 1, 0, 0, 0, 1},
+                                      {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};
         map6.boxNumber = 0;
         map6.Scarab3PartNumber = 62;
         map6.Scarab2PartNumber = 65;
@@ -167,21 +167,21 @@ public class MapCollection {
     private static Map InitMap7()
     {
         Map map7 = new Map();
-        map7.charPosition = new Vector3(175, 26, 375);
-        map7.startPosition = new Vector3(75, 0, 575);
+        map7.charPosition = new Vector3(225, 26, 375);
+        map7.startPosition = new Vector3(125, 0, 575);
         map7.heigth = 9;
-        map7.width = 14;
-        map7.mapMatrix = new int[,] { {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-                                      {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-                                      {1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1},
-                                      {1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, -3},
-                                      {1, 1, 0, 0, 5, 5, 6, 6, 0, 0, 0, -2, 0, -1},
-                                      {1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, -3},
-                                      {1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1},
-                                      {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-                                      {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};
+        map7.width = 13;
+        map7.mapMatrix = new int[,] { {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                                      {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                                      {1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1},
+                                      {1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, -3},
+                                      {1, 1, 0, 0, 5, 5, 6, 6, 0, 0, -2, 0, -1},
+                                      {1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, -3},
+                                      {1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1},
+                                      {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                                      {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};
         map7.boxNumber = 5;
-        map7.boxLocations = new Vector3[5] { new Vector3(225, 30, 375), new Vector3(225, 30, 425), new Vector3(225, 30, 325), new Vector3(475, 30, 375), new Vector3(525, 30, 375)};
+        map7.boxLocations = new Vector3[5] { new Vector3(275, 30, 375), new Vector3(275, 30, 425), new Vector3(275, 30, 325), new Vector3(525, 30, 375), new Vector3(575, 30, 375)};
         map7.Scarab3PartNumber = 31;
         map7.Scarab2PartNumber = 32;
         return map7;
@@ -190,8 +190,8 @@ public class MapCollection {
     private static Map InitMap8()
     {
         Map map8 = new Map();
-        map8.charPosition = new Vector3(175, 26, 375);
-        map8.startPosition = new Vector3(75, 0, 575);
+        map8.charPosition = new Vector3(275, 26, 375);
+        map8.startPosition = new Vector3(175, 0, 575);
         map8.heigth = 9;
         map8.width = 10;
         map8.mapMatrix = new int[,] { {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
@@ -204,7 +204,7 @@ public class MapCollection {
                                       {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
                                       {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};
         map8.boxNumber = 4;
-        map8.boxLocations = new Vector3[4] { new Vector3(275, 30, 425), new Vector3(275, 30, 325), new Vector3(225, -20, 375), new Vector3(225, 35, 375)};
+        map8.boxLocations = new Vector3[4] { new Vector3(375, 30, 425), new Vector3(375, 30, 325), new Vector3(325, -20, 375), new Vector3(325, 35, 375)};
         map8.Scarab3PartNumber = 40;
         map8.Scarab2PartNumber = 43;
         return map8;
