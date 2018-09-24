@@ -13,4 +13,5 @@ public class Map {
     public Vector3[] boxLocations;
     public int Scarab3PartNumber;
     public int Scarab2PartNumber;
+    public int itemType; // 1: Key, 2: Gem
 }

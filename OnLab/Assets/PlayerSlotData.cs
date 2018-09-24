@@ -16,9 +16,11 @@ public class MapResult
     {
         Score = 0;
         ScarabNumber = 0;
-        Key = 0;
+        Item = 0;
+        ItemType = 1;
     }
     public int Score;
     public int ScarabNumber;
-    public int Key;
+    public int Item;
+    public int ItemType;
 }

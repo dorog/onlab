@@ -19,6 +19,10 @@ public class TrapActive : MonoBehaviour {
     {
         if (!used)
         {
+            if (trapAnim == null)
+            {
+                return;
+            }
             trapAnim.Play("OpenTrap");
             used = true;
         }

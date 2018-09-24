@@ -5,19 +5,21 @@ public class MapDatas{
     public int mapScore { get; set; }
     public int scarab { get; set; }
 
-    public bool key { get; set; }
+    public bool item { get; set; }
+    public int itemType { get; set; }
     
     public MapDatas()
     {
         mapScore = 0;
         scarab = 0;
-        key = false;
+        item = false;
     }
 
-    public MapDatas(int mapScr, int bug, bool key)
+    public MapDatas(int mapScr, int bug, bool key, int itemType)
     {
         mapScore = mapScr;
         scarab = bug;
-        this.key = key;
+        this.item = key;
+        this.itemType = itemType;
     }
 }

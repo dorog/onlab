@@ -3,11 +3,6 @@
 public class KeyEffects : MonoBehaviour {
 
     public float rotationSpeed = 5;
-
-	// Use this for initialization
-	void Start () {
-		
-	}
 	
 	// Update is called once per frame
 	void Update () {
@@ -18,7 +13,7 @@ public class KeyEffects : MonoBehaviour {
     {
         if(other.gameObject.name == Configuration.characterName)
         {
-            CurrentGameDatas.HaveKey = true;
+            CurrentGameDatas.HaveItem = true;
         }
         Destroy(this.transform.gameObject);
     }

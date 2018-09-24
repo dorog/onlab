@@ -21,7 +21,7 @@ public class GoToTheMap : MonoBehaviour {
         {
             scLoad.LoadMapTimeScaleUsed(mapNumber);
         }
-        else if (CurrentGameDatas.KeyNumber >= CurrentGameDatas.maxMap - 1)
+        else if (CurrentGameDatas.ItemCount >= CurrentGameDatas.maxMap - 1)
         {
             scLoad.LoadMapTimeScaleUsed(mapNumber);
         }  

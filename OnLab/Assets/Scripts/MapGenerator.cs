@@ -184,6 +184,13 @@ public class MapGenerator : MonoBehaviour
                             notStaticElements.Add(laserSwitch);
                             summSwitches++;
                             break;
+                        case -4:
+                            GameObject Gem = Instantiate(diamondModel, placePosition + new Vector3(0, Configuration.keyGround, 0), Quaternion.AngleAxis(-90, Vector3.right), parent.transform) as GameObject;
+                            objectMap[i, j] = Gem;
+                            notStaticElementsID.Add(-4);
+                            notStaticElementsPosition.Add(new Vector3(placePosition.x, placePosition.y + Configuration.keyGround, placePosition.z));
+                            notStaticElements.Add(Gem);
+                            break;
                         default:
                             break;
                     }
@@ -249,8 +256,11 @@ public class MapGenerator : MonoBehaviour
 
     public void restartMap(int number)
     {
-        //boxes.Clear();
-        //bridges.Clear();
+        for (int i = 0; i < laserGates.Count; i++)
+        {
+            laserGates[i].GetComponent<LaserGate>().resetLaserGate();
+        }
+
         charMatrixPositionX = originMatrixPositionX;
         charMatrixPositionZ = originMatrixPositionZ;
         count = 0;
@@ -314,11 +324,16 @@ public class MapGenerator : MonoBehaviour
                     notStaticElements.Add(laserSwitch);
                     objectMap[(int)(startPosition.z - notStaticElementsPosition[i].z) / Configuration.unit, (int)(notStaticElementsPosition[i].x - startPosition.x) / Configuration.unit] = laserSwitch;
                     break;
+                case -4:
+                    GameObject Gem = Instantiate(diamondModel, notStaticElementsPosition[i], Quaternion.AngleAxis(-90, Vector3.right), parent.transform) as GameObject;
+                    notStaticElements.Add(Gem);
+                    objectMap[(int)(startPosition.z - notStaticElementsPosition[i].z) / Configuration.unit, (int)(notStaticElementsPosition[i].x - startPosition.x) / Configuration.unit] = Gem;
+                    break;
                 default:
                     break;
             }
         }
-        CurrentGameDatas.HaveKey = false;
+        CurrentGameDatas.HaveItem = false;
     }
 
     public void RiseBridgeElements()
@@ -438,6 +453,7 @@ public class MapGenerator : MonoBehaviour
 
         CurrentGameDatas.Scarab3PartCmd = map.Scarab3PartNumber;
         CurrentGameDatas.Scarab2PartCmd = map.Scarab2PartNumber;
+        CurrentGameDatas.solvedMap.itemType = map.itemType;
         return map;
     }
 }

@@ -15,6 +15,10 @@ public class SwitchLaser : MonoBehaviour {
         if(objectOnIt == 0)
         {
             //Laser switch off
+            if (mapGenerator == null)
+            {
+                return;
+            }
             mapGenerator.LaserSwitchOff();
         }
         objectOnIt++;

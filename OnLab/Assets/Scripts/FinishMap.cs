@@ -12,13 +12,8 @@ public class FinishMap : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        CurrentGameDatas.HaveNewKey = false;
+        CurrentGameDatas.HawNewItem = false;
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
     private void OnTriggerEnter(Collider other)
     { 
@@ -36,7 +31,7 @@ public class FinishMap : MonoBehaviour {
         int scarabNumber = 0;
         if (realCommandsNumber <= CurrentGameDatas.Scarab3PartCmd)
         {
-            if (CurrentGameDatas.HaveKey)
+            if (CurrentGameDatas.HaveItem)
             {
                 scarabNumber = 3;
             }
@@ -74,43 +69,15 @@ public class FinishMap : MonoBehaviour {
         }
 
         Save();
+        CurrentGameDatas.mapDatas[CurrentGameDatas.mapNumber - 1].item = (CurrentGameDatas.mapDatas[CurrentGameDatas.mapNumber - 1].item) || CurrentGameDatas.HaveItem;
+        CurrentGameDatas.mapDatas[CurrentGameDatas.mapNumber - 1].itemType = CurrentGameDatas.solvedMap.itemType;
 
-        CurrentGameDatas.solvedMap = new MapDatas(thisGameScore, scarabNumber, CurrentGameDatas.HaveKey);
-        CurrentGameDatas.HaveKey = false;
+        CurrentGameDatas.solvedMap = new MapDatas(thisGameScore, scarabNumber, CurrentGameDatas.HaveItem, CurrentGameDatas.solvedMap.itemType);
+        CurrentGameDatas.HaveItem = false;
 
-        //Todo: different scene for last map
+        //Todo: different scene for last map OR just new look
         scLoader.LoadScene(Configuration.resultScene);
     }
-
-    /*void SaveInWindows()
-    {
-        using (StreamWriter sw = new StreamWriter(CurrentGameDatas.slotName))
-        {
-            sw.WriteLine(1);
-            sw.WriteLine(CurrentGameDatas.maxMap);
-            for (int i = 0; i < CurrentGameDatas.mapDatas.Count; i++)
-            {
-                int key = 1;
-                if (!CurrentGameDatas.mapDatas[i].key)
-                {
-                    key = 0;
-                }
-                if (CurrentGameDatas.mapNumber - 1 == i && CurrentGameDatas.HaveKey)
-                {
-                    key = 1;
-                }
-                CurrentGameDatas.HaveNewKey = !CurrentGameDatas.mapDatas[i].key && CurrentGameDatas.HaveKey;
-
-                sw.WriteLine(CurrentGameDatas.mapDatas[i].mapScore + "\t" + CurrentGameDatas.mapDatas[i].scarab + "\t" + key);
-            }
-
-            CurrentGameDatas.HaveNewKey = !CurrentGameDatas.mapDatas[CurrentGameDatas.mapNumber - 1].key && CurrentGameDatas.HaveKey;
-            if (CurrentGameDatas.HaveNewKey)
-            {
-                CurrentGameDatas.KeyNumber++;
-            }
-        }
-    }*/
 
     void Save()
     {
@@ -121,15 +88,16 @@ public class FinishMap : MonoBehaviour {
 
         data.mapResults[CurrentGameDatas.mapNumber - 1].Score = CurrentGameDatas.mapDatas[CurrentGameDatas.mapNumber - 1].mapScore;
         data.mapResults[CurrentGameDatas.mapNumber - 1].ScarabNumber = CurrentGameDatas.mapDatas[CurrentGameDatas.mapNumber - 1].scarab;
-        data.mapResults[CurrentGameDatas.mapNumber - 1].Key = (CurrentGameDatas.mapDatas[CurrentGameDatas.mapNumber - 1].key) || CurrentGameDatas.HaveKey ? 1 : 0;
+        data.mapResults[CurrentGameDatas.mapNumber - 1].Item = (CurrentGameDatas.mapDatas[CurrentGameDatas.mapNumber - 1].item) || CurrentGameDatas.HaveItem ? 1 : 0;
+        data.mapResults[CurrentGameDatas.mapNumber - 1].ItemType = CurrentGameDatas.solvedMap.itemType;
         FileStream fileForSave = File.Create(CurrentGameDatas.slotName);
         bf.Serialize(fileForSave, data);
         fileForSave.Close();
 
-        CurrentGameDatas.HaveNewKey = !CurrentGameDatas.mapDatas[CurrentGameDatas.mapNumber - 1].key && CurrentGameDatas.HaveKey;
-        if (CurrentGameDatas.HaveNewKey)
+        CurrentGameDatas.HawNewItem = !CurrentGameDatas.mapDatas[CurrentGameDatas.mapNumber - 1].item && CurrentGameDatas.HaveItem;
+        if (CurrentGameDatas.HawNewItem)
         {
-            CurrentGameDatas.KeyNumber++;
+            CurrentGameDatas.ItemCount++;
         }
     }
 }

@@ -32,7 +32,7 @@ public class Torchelight : MonoBehaviour {
 		MainFlame.GetComponent<ParticleSystem>().emissionRate=IntensityLight*20f;
 		BaseFlame.GetComponent<ParticleSystem>().emissionRate=IntensityLight*15f;
 		Etincelles.GetComponent<ParticleSystem>().emissionRate=IntensityLight*7f;
-		Fumee.GetComponent<ParticleSystem>().emissionRate=IntensityLight*12f;		
+        Fumee.GetComponent<ParticleSystem>().emissionRate=IntensityLight*12f;		
 
 	}
 }

@@ -743,8 +743,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -1014, y: 743}
-  m_SizeDelta: {x: 770, y: 170}
+  m_AnchoredPosition: {x: -1005, y: 718}
+  m_SizeDelta: {x: 770, y: 130}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &66852259
 MonoBehaviour:
@@ -1151,10 +1151,10 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 80
+    m_FontSize: 65
     m_FontStyle: 1
     m_BestFit: 0
-    m_MinSize: 1
+    m_MinSize: 0
     m_MaxSize: 80
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -1162,7 +1162,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Speed x1
+  m_Text: 'Speed x1
+
+'
 --- !u!222 &221906550
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1473,7 +1475,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ebb3fc53ead87b4dbfa8dc51e1d614f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  diamondModel: {fileID: 0}
+  diamondModel: {fileID: 1320005453447764, guid: 9e89b4550b32aa14fabc5062d929506d,
+    type: 2}
   doorEdgeModel: {fileID: 1063074864960466, guid: 97525b5fc9d31f543b75f4568e263b07,
     type: 2}
   KeyModel: {fileID: 1987280437086754, guid: 46a5afb507d0edd4db3f77ce0884117e, type: 2}
@@ -3452,8 +3455,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1017, y: 735.3407}
-  m_SizeDelta: {x: 750, y: 150}
+  m_AnchoredPosition: {x: -1008, y: 705.3407}
+  m_SizeDelta: {x: 750, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &853090181
 MonoBehaviour:
@@ -3469,7 +3472,7 @@ MonoBehaviour:
   m_Padding:
     m_Left: 10
     m_Right: 0
-    m_Top: 20
+    m_Top: 5
     m_Bottom: 0
   m_ChildAlignment: 0
   m_StartCorner: 0

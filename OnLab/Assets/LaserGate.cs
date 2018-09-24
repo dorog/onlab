@@ -31,31 +31,11 @@ public class LaserGate : MonoBehaviour {
         originSummSwitches = summSwitches;
         if (summSwitches % 2 == 1)
         {
-            GameObject laser = Instantiate(laserModel, new Vector3(0, 0, 0), Quaternion.AngleAxis(0, new Vector3(0, 0, 0)));
-            laser.transform.SetParent(parent);
-            laser laserScript = laser.GetComponent<laser>();
-            laserScript.aim = new Vector3(this.transform.position.x, middleColumn+Configuration.laserGateGround, this.transform.position.z-50);
-            laserScript.start = new Vector3(this.transform.position.x, middleColumn+Configuration.laserGateGround, this.transform.position.z + 50);
+            OddNumber();
         }
-        if (summSwitches == 0)
+        else
         {
-            return;
-        }
-        float placeBetweenLasers = laserPlaceInterval / summSwitches;
-
-        for(int i=0; i<summSwitches/2; i++)
-        {
-            GameObject laser = Instantiate(laserModel, new Vector3(0, 0, 0), Quaternion.AngleAxis(0, new Vector3(0, 0, 0)));
-            laser.transform.SetParent(parent);
-            laser laserScript = laser.GetComponent<laser>();
-            laserScript.aim = new Vector3(this.transform.position.x, middleColumn + Configuration.laserGateGround + (i+1)*placeBetweenLasers, this.transform.position.z - 50);
-            laserScript.start = new Vector3(this.transform.position.x, middleColumn + Configuration.laserGateGround + (i + 1) * placeBetweenLasers, this.transform.position.z + 50);
-
-            GameObject laser2 = Instantiate(laserModel, new Vector3(0, 0, 0), Quaternion.AngleAxis(0, new Vector3(0, 0, 0)));
-            laser2.transform.SetParent(parent);
-            laser laserScript2 = laser2.GetComponent<laser>();
-            laserScript2.aim = new Vector3(this.transform.position.x, middleColumn + Configuration.laserGateGround - (i + 1) * placeBetweenLasers, this.transform.position.z - 50);
-            laserScript2.start = new Vector3(this.transform.position.x, middleColumn + Configuration.laserGateGround - (i + 1) * placeBetweenLasers, this.transform.position.z + 50);
+            EvenNumber();
         }
     }
 
@@ -78,5 +58,56 @@ public class LaserGate : MonoBehaviour {
             parent.GetChild(i).gameObject.SetActive(true);
         }
         activeSwitches = originSummSwitches;
+    }
+
+    private void EvenNumber()
+    {
+        float placeBetweenLasers = laserPlaceInterval / summSwitches;
+
+        for (int i = 0; i < summSwitches / 2; i++)
+        {
+            GameObject laser = Instantiate(laserModel, new Vector3(0, 0, 0), Quaternion.AngleAxis(0, new Vector3(0, 0, 0)));
+            laser.transform.SetParent(parent);
+            laser laserScript = laser.GetComponent<laser>();
+            laserScript.aim = new Vector3(this.transform.position.x, middleColumn + Configuration.laserGateGround + (i + 0.5f) * placeBetweenLasers, this.transform.position.z - 50);
+            laserScript.start = new Vector3(this.transform.position.x, middleColumn + Configuration.laserGateGround + (i + 0.5f) * placeBetweenLasers, this.transform.position.z + 50);
+
+            GameObject laser2 = Instantiate(laserModel, new Vector3(0, 0, 0), Quaternion.AngleAxis(0, new Vector3(0, 0, 0)));
+            laser2.transform.SetParent(parent);
+            laser laserScript2 = laser2.GetComponent<laser>();
+            laserScript2.aim = new Vector3(this.transform.position.x, middleColumn + Configuration.laserGateGround - (i + 0.5f) * placeBetweenLasers, this.transform.position.z - 50);
+            laserScript2.start = new Vector3(this.transform.position.x, middleColumn + Configuration.laserGateGround - (i + 0.5f) * placeBetweenLasers, this.transform.position.z + 50);
+        }
+    }
+    
+    private void OddNumber()
+    {
+        GameObject middleLaser = Instantiate(laserModel, new Vector3(0, 0, 0), Quaternion.AngleAxis(0, new Vector3(0, 0, 0)));
+        middleLaser.transform.SetParent(parent);
+        laser middleLaserScript = middleLaser.GetComponent<laser>();
+        middleLaserScript.aim = new Vector3(this.transform.position.x, middleColumn + Configuration.laserGateGround, this.transform.position.z - 50);
+        middleLaserScript.start = new Vector3(this.transform.position.x, middleColumn + Configuration.laserGateGround, this.transform.position.z + 50);
+
+        if (summSwitches == 0)
+        {
+            return;
+        }
+
+        float placeBetweenLasers = laserPlaceInterval / summSwitches;
+
+        for (int i = 0; i < summSwitches / 2; i++)
+        {
+            GameObject laser = Instantiate(laserModel, new Vector3(0, 0, 0), Quaternion.AngleAxis(0, new Vector3(0, 0, 0)));
+            laser.transform.SetParent(parent);
+            laser laserScript = laser.GetComponent<laser>();
+            laserScript.aim = new Vector3(this.transform.position.x, middleColumn + Configuration.laserGateGround + (i + 1) * placeBetweenLasers, this.transform.position.z - 50);
+            laserScript.start = new Vector3(this.transform.position.x, middleColumn + Configuration.laserGateGround + (i + 1) * placeBetweenLasers, this.transform.position.z + 50);
+
+            GameObject laser2 = Instantiate(laserModel, new Vector3(0, 0, 0), Quaternion.AngleAxis(0, new Vector3(0, 0, 0)));
+            laser2.transform.SetParent(parent);
+            laser laserScript2 = laser2.GetComponent<laser>();
+            laserScript2.aim = new Vector3(this.transform.position.x, middleColumn + Configuration.laserGateGround - (i + 1) * placeBetweenLasers, this.transform.position.z - 50);
+            laserScript2.start = new Vector3(this.transform.position.x, middleColumn + Configuration.laserGateGround - (i + 1) * placeBetweenLasers, this.transform.position.z + 50);
+        }
     }
 }

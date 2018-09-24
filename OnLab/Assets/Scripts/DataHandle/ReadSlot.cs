@@ -24,7 +24,7 @@ public class ReadSlot : MonoBehaviour
 
     void ChangeSceneLoadBasedOnPlatform()
     {
-        CurrentGameDatas.KeyNumber = summKeys;
+        CurrentGameDatas.ItemCount = summKeys;
         CurrentGameDatas.CopyTheDatas(gmdata, Application.persistentDataPath + "/" + fileName);
         SceneManager.LoadScene(Configuration.mapGuideScene);
     }
@@ -103,12 +103,12 @@ public class ReadSlot : MonoBehaviour
         gmdata = new GameDatas(maxMap);
 
         Button myBtn = this.transform.GetComponent<Button>();
-        Text textData = GameObject.Find(this.name).transform.GetChild(1).GetComponent<Text>();
-        textData.fontSize = textData.fontSize * Screen.height / Configuration.bestScreenHeight;
 
         if (slotState == 0)
         {
-            Image panelImg = GameObject.Find(this.name).transform.GetChild(0).GetComponent<Image>();
+            Text textData = transform.GetChild(1).GetComponent<Text>();
+            textData.fontSize = textData.fontSize * Screen.height / Configuration.bestScreenHeight;
+            Image panelImg = this.transform.GetChild(0).GetComponent<Image>();
             Color tempColor = panelImg.color;
             tempColor.a = 0f;
             panelImg.color = tempColor;
@@ -128,13 +128,13 @@ public class ReadSlot : MonoBehaviour
 
             for (int i = 0; i < maxMap; i++)
             {
-                bool key = ps.mapResults[i].Key == 0 ? false : true;
+                bool key = ps.mapResults[i].Item == 0 ? false : true;
 
-                gmdata.AddMapData(new MapDatas(ps.mapResults[i].Score, ps.mapResults[i].ScarabNumber, key));
+                gmdata.AddMapData(new MapDatas(ps.mapResults[i].Score, ps.mapResults[i].ScarabNumber, key, ps.mapResults[i].ItemType));
 
                 summScore += ps.mapResults[i].Score;
                 summBuggPart += ps.mapResults[i].ScarabNumber;
-                summKeys += ps.mapResults[i].Key;
+                summKeys += ps.mapResults[i].Item;
                 if (ps.mapResults[i].ScarabNumber == 3)
                 {
                     perfectMap++;
@@ -150,12 +150,12 @@ public class ReadSlot : MonoBehaviour
 
             Image background = this.transform.GetComponent<Image>();
             background.sprite = img;
-            Text textDatas = GameObject.Find(this.name).transform.GetChild(1).GetComponent<Text>();
 
-            RectTransform textRt = GameObject.Find(this.name).transform.GetChild(1).GetComponent<RectTransform>();
+            RectTransform textRt = transform.GetChild(1).GetComponent<RectTransform>();
             textRt.offsetMin = new Vector2(0, -padding * Screen.height / Configuration.bestScreenHeight);
             textRt.offsetMax = new Vector2(0, -padding * Screen.height / Configuration.bestScreenHeight);
 
+            Text textDatas = transform.GetChild(1).GetComponent<Text>();
             textDatas.color = Color.yellow;
             textDatas.text = "Cleared maps: " + (solvedMap) + "\nScore: " + summScore + "\nScarab parts: " + summBuggPart + "\nPerfect Maps: " + perfectMap + "\nKeys: " + summKeys;
             textDatas.fontSize = fontSize * Screen.height / Configuration.bestScreenHeight;

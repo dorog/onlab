@@ -45,7 +45,6 @@ public class OpenGates : MonoBehaviour {
 
     public void OpenGate(int number)
     {
-        //Debug.Log("nyugi, nyitom " + number);
         if (number >= 0 && number <= 5)
         {
             this.transform.GetChild(number).transform.position += new Vector3(300, 0, 0);
@@ -58,8 +57,11 @@ public class OpenGates : MonoBehaviour {
 
     public void OpenGateNew(int number)
     {
+        if (number >= CurrentGameDatas.maxMap-1)
+        {
+            return;
+        }
         door_is_Opening = true;
         doorNumber = number;
-        //Debug.Log("New Key");
     }
 }

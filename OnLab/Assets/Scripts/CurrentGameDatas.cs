@@ -4,14 +4,14 @@ public static class CurrentGameDatas
 {
 
 
-    static public int mapNumber = 8;
+    static public int mapNumber = 2;
     static public int maxMap = 1;
     static public int Scarab3PartCmd;
     static public int Scarab2PartCmd;
-    static public bool HaveKey = false;
+    static public bool HaveItem = false;
     static public List<MapDatas> mapDatas = new List<MapDatas>();
-    static public bool HaveNewKey = false;
-    static public int KeyNumber = 0;
+    static public bool HawNewItem = false;
+    static public int ItemCount = 0;
     static public string slotName;
 
     static public MapDatas solvedMap = new MapDatas();
@@ -23,7 +23,7 @@ public static class CurrentGameDatas
         maxMap = data.maxMap;
         for (int i = 0; i < data.mapDatas.Count; i++)
         {
-            mapDatas.Add(new MapDatas(data.mapDatas[i].mapScore, data.mapDatas[i].scarab, data.mapDatas[i].key));
+            mapDatas.Add(new MapDatas(data.mapDatas[i].mapScore, data.mapDatas[i].scarab, data.mapDatas[i].item, data.mapDatas[i].itemType));
         }
     }
 }
