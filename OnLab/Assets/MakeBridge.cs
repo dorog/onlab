@@ -21,7 +21,9 @@ public class MakeBridge : MonoBehaviour {
         {
             if (mapGen == null)
                 return;
-            Transform BridgeElements = mapGen.transform.GetChild(5);
+            used = true;
+            mapGen.GetComponent<MapGenerator>().RiseBridgeElements(); 
+           /* Transform BridgeElements = mapGen.transform.GetChild(5);
             for(int i=0; i<BridgeElements.childCount; i++)
             //for (int i = 0; i < 1; i++)
             {
@@ -33,7 +35,7 @@ public class MakeBridge : MonoBehaviour {
                 riseEl.Rise();
             }
             used = true;
-            mapGen.GetComponent<MapGenerator>().RiseBridgeElements();
+            mapGen.GetComponent<MapGenerator>().RiseBridgeElements();*/
         }
     }
 }

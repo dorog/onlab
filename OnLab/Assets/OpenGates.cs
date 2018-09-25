@@ -1,67 +1,48 @@
 ﻿using UnityEngine;
 
-public class OpenGates : MonoBehaviour {
+public class OpenGates : MonoBehaviour
+{
 
     private bool door_is_Opening = false;
-    private int doorNumber = 0;
-    private float OpeningSpeed = 50;
-    public float OpeningTime = 5;
+    private Vector3 aimPosition;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    public float OpeningSpeed = 50;
+    public float OpeningTime = 5;
+    public Vector3 direction = new Vector3(1, 0, 0);
+    public float distance = 300;
+
+    // Use this for initialization
+    void Start()
+    {
+        aimPosition = this.transform.position + direction * distance;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
         if (door_is_Opening)
         {
-            if (doorNumber < CurrentGameDatas.maxMap - 3)
+
+            if (OpeningTime - Time.deltaTime >= 0)
             {
-                if (OpeningTime - Time.deltaTime >= 0)
-                {
-                    this.transform.GetChild(doorNumber).position += new Vector3(1, 0, 0) * Time.deltaTime * OpeningSpeed;
-                    OpeningTime -= Time.deltaTime;
-                }
-                else
-                {
-                    door_is_Opening = false;
-                }
+                this.transform.position += direction * Time.deltaTime * OpeningSpeed;
+                OpeningTime -= Time.deltaTime;
             }
             else
             {
-                if (OpeningTime - Time.deltaTime >= 0)
-                {
-                    this.transform.GetChild(doorNumber).position += new Vector3(0, 1, 0) * Time.deltaTime * OpeningSpeed*2.5f;
-                    OpeningTime -= Time.deltaTime;
-                }
-                else
-                {
-                    door_is_Opening = false;
-                }
+                this.transform.position = aimPosition;
+                door_is_Opening = false;
             }
-        }
-	}
-
-    public void OpenGate(int number)
-    {
-        if (number >= 0 && number <= 5)
-        {
-            this.transform.GetChild(number).transform.position += new Vector3(300, 0, 0);
-        }
-        else if(number > 5 && number <= 7)
-        {
-            this.transform.GetChild(number).transform.position += new Vector3(0, -550, 0);
         }
     }
 
-    public void OpenGateNew(int number)
+    public void OpenGate()
     {
-        if (number >= CurrentGameDatas.maxMap-1)
-        {
-            return;
-        }
+        this.transform.position = this.transform.position + direction * distance;
+    }
+
+    public void OpenGateNew()
+    {
         door_is_Opening = true;
-        doorNumber = number;
     }
 }

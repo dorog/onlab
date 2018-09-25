@@ -19,6 +19,11 @@ public class Configuration {
     public static float laserGateEdgeGround = -90;
     public static float laserSwitchGround = -40;
 
+    //Configuration parameters
+    public static float TimeBetweenCmds = 0.5f;
+    public static float fallSpeed = 100;
+    public static float fallSpeedBoost = 2;
+
     //GameObjects
     public static string mapGeneratorName = "MapGeneratorGO";
     public static string actionMenuName= "ActionMenuGO";
@@ -30,6 +35,7 @@ public class Configuration {
     public static string loadSceneGOName = "LoadSceneGO";
     public static string finishedPanelName = "FinishedPanel";
     public static string startButton = "StartButton";
+    public static string stopButton = "StopButton";
     public static string fv1Name = "FV1";
     public static string fv2Name = "FV2";
 
@@ -75,7 +81,7 @@ public class Configuration {
     public static int bestScreenHeight = 1080;
 
     //Speed data
-    public static int speed = 1;
+    //public static int speed = 1;
     public static int minSpeed = 1;
     public static int maxSpeed = 4;
     public static int basicSpeed = 1;

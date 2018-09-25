@@ -6,6 +6,7 @@ public class MapCollection {
 
     public static Map ReadMap(int number)
     {
+        //Original
         switch (number)
         {
             case 1:
@@ -25,12 +26,21 @@ public class MapCollection {
             case 8:
                 return InitMap8();
             case 9:
-                //return InitMap9();
-                return Izi();
+                return InitMap9();
             default:
                 return InitMap1();
                 //break;
         }
+
+        //For test
+        /*switch (number)
+        {
+            case 9:
+                return IziMapWithGem();
+            default:
+                return IziMapWithKey();
+                //break;
+        }*/
     }
 
     private static Map InitMap1()
@@ -95,8 +105,8 @@ public class MapCollection {
                                       {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};
         map3.boxNumber = 3;
         map3.boxLocations = new Vector3[3] {new Vector3(325, 30, 425), new Vector3(375, 30, 425), new Vector3(475, 30, 325) };
-        map3.Scarab3PartNumber = 40;
-        map3.Scarab2PartNumber = 45;
+        map3.Scarab3PartNumber = 37;
+        map3.Scarab2PartNumber = 40;
         map3.itemType = 1;
         return map3;
     }
@@ -119,8 +129,8 @@ public class MapCollection {
                                       {1, 1, 1, 0, -2, 0, 1, 1, -3, 1},
                                       {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};
         map4.boxNumber = 0;
-        map4.Scarab3PartNumber = 62;
-        map4.Scarab2PartNumber = 65;
+        map4.Scarab3PartNumber = 44;
+        map4.Scarab2PartNumber = 50;
         map4.itemType = 1;
         return map4;
     }
@@ -146,7 +156,7 @@ public class MapCollection {
         map5.boxNumber = 4;
         map5.boxLocations = new Vector3[4] { new Vector3(325, 30, 325), new Vector3(375, 30, 325), new Vector3(375, 30, 275), new Vector3(375, 30, 375)};
         map5.Scarab3PartNumber = 69;
-        map5.Scarab2PartNumber = 80;
+        map5.Scarab2PartNumber = 75;
         map5.itemType = 1;
         return map5;
     }
@@ -167,8 +177,8 @@ public class MapCollection {
                                       {1, 1, 1, 3, 0, 0, 1, 0, 0, 0, 1},
                                       {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};
         map6.boxNumber = 0;
-        map6.Scarab3PartNumber = 62;
-        map6.Scarab2PartNumber = 65;
+        map6.Scarab3PartNumber = 34;
+        map6.Scarab2PartNumber = 40;
         map6.itemType = 1;
         return map6;
     }
@@ -191,7 +201,7 @@ public class MapCollection {
                                       {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};
         map7.boxNumber = 5;
         map7.boxLocations = new Vector3[5] { new Vector3(275, 30, 375), new Vector3(275, 30, 425), new Vector3(275, 30, 325), new Vector3(525, 30, 375), new Vector3(575, 30, 375)};
-        map7.Scarab3PartNumber = 31;
+        map7.Scarab3PartNumber = 30;
         map7.Scarab2PartNumber = 32;
         map7.itemType = 1;
         return map7;
@@ -253,7 +263,7 @@ public class MapCollection {
         return map9;
     }
 
-    private static Map Izi()
+    private static Map IziMapWithGem()
     {
         Map map9 = new Map();
         map9.charPosition = new Vector3(275, 26, 375);
@@ -262,6 +272,20 @@ public class MapCollection {
         map9.width = 3;
         map9.mapMatrix = new int[,] { { 0, -2, -1 } };
         map9.boxNumber = 0;
+        map9.itemType = 2;
+        return map9;
+    }
+
+    private static Map IziMapWithKey()
+    {
+        Map map9 = new Map();
+        map9.charPosition = new Vector3(275, 26, 375);
+        map9.startPosition = new Vector3(275, 0, 375);
+        map9.heigth = 1;
+        map9.width = 3;
+        map9.mapMatrix = new int[,] { { 0, -2, -1 } };
+        map9.boxNumber = 0;
+        map9.itemType = 1;
         return map9;
     }
 }

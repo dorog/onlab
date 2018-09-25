@@ -144,13 +144,13 @@ public class UI_Map_Scene_Set : MonoBehaviour {
 
 
     #if UNITY_STANDALONE_WIN
-        uniqueUIForWindows();
+        UniqueUIForWindows();
     #else
-        uniqueUIForAndroid();
+        UniqueUIForAndroid();
     #endif
     }
 
-    private void uniqueUIForWindows()
+    private void UniqueUIForWindows()
     {
         GameObject mapGuide = deviceUI.transform.GetChild(1).GetChild(0).GetChild(0).gameObject;
         RectTransform mapGuideRt = mapGuide.GetComponent<RectTransform>();
@@ -160,7 +160,7 @@ public class UI_Map_Scene_Set : MonoBehaviour {
         mapGuideText.fontSize = mapGuideText.fontSize * Screen.height / Configuration.bestScreenHeight;
     }
 
-    private void uniqueUIForAndroid()
+    private void UniqueUIForAndroid()
     {
         GameObject Icons = deviceUI.transform.GetChild(1).gameObject;
         for(int i=0; i<Icons.transform.childCount; i++)

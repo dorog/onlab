@@ -28,18 +28,6 @@ public class MapGenerator : MonoBehaviour
 
     public GameObject boxModel;     // 
 
-
-    /*private int DoorID = -1;
-    private int BrickID = 0;
-    private int EdgeID = 1;
-    private int TrapID = 2;
-    private int ButtonID = 3;
-    private int HoleID = 4;
-    private int BridgeElementID = 6;
-    private int BridgeMakeID = 5;
-    private int KeyID = -2;
-    private int DoorID = -1;*/
-
     private int BoxID = 10;
 
     private Vector3 joePosition;
@@ -67,6 +55,7 @@ public class MapGenerator : MonoBehaviour
     private List<int> notStaticElementsID = new List<int>();
     private List<Vector3> notStaticElementsPosition = new List<Vector3>();
     private List<LaserGate> laserGates = new List<LaserGate>();
+    private List<RiseElement> bridgeElements = new List<RiseElement>();
 
     private Vector3 startPosition;
 
@@ -166,6 +155,7 @@ public class MapGenerator : MonoBehaviour
                             notStaticElementsID.Add(6);
                             notStaticElementsPosition.Add(placePosition + new Vector3(0, Configuration.bridgeElementGround, -25));
                             notStaticElements.Add(BridgeElement);
+                            bridgeElements.Add(BridgeElement.GetComponent<RiseElement>());
                             break;
                         case 7:
                             GameObject laserGate = Instantiate(laserGateModel, placePosition + new Vector3(0, Configuration.laserGateGround, 0), Quaternion.AngleAxis(0, Vector3.right), parent.transform.GetChild(LaserGateChild)) as GameObject;
@@ -256,6 +246,8 @@ public class MapGenerator : MonoBehaviour
 
     public void restartMap(int number)
     {
+        bridgeElements.Clear();
+
         for (int i = 0; i < laserGates.Count; i++)
         {
             laserGates[i].GetComponent<LaserGate>().resetLaserGate();
@@ -318,6 +310,7 @@ public class MapGenerator : MonoBehaviour
                     GameObject BridgeElement = Instantiate(BridgeElementModel, notStaticElementsPosition[i], Quaternion.AngleAxis(0, Vector3.right), parent.transform.GetChild(BridgeChild));
                     notStaticElements.Add(BridgeElement);
                     objectMap[(int)(startPosition.z - notStaticElementsPosition[i].z) / Configuration.unit, (int)(notStaticElementsPosition[i].x - startPosition.x) / Configuration.unit] = BridgeElement;
+                    bridgeElements.Add(BridgeElement.GetComponent<RiseElement>());
                     break;
                 case 9:
                     GameObject laserSwitch = Instantiate(laserSwitchModel, notStaticElementsPosition[i], Quaternion.AngleAxis(-90, Vector3.right), parent.transform.GetChild(LaserSwitchChild));
@@ -338,6 +331,7 @@ public class MapGenerator : MonoBehaviour
 
     public void RiseBridgeElements()
     {
+        RiseElements();
         for (int i = 0; i < this.transform.GetChild(BridgeChild).childCount; i++)
         {
             this.transform.GetChild(BridgeChild).transform.GetChild(i).GetComponent<HighData>().baseHigh++;
@@ -375,6 +369,8 @@ public class MapGenerator : MonoBehaviour
         }
         if (objectMap[z, x].GetComponent<HighData>().HeightCalculate() - objectMap[charMatrixPositionZ, charMatrixPositionX].GetComponent<HighData>().HeightCalculate() <= 0)
         {
+            int diff = objectMap[z, x].GetComponent<HighData>().HeightCalculate() - objectMap[charMatrixPositionZ, charMatrixPositionX].GetComponent<HighData>().HeightCalculate();
+            Configuration.fallSpeed = -diff * Configuration.unit * Configuration.fallSpeedBoost;
             Joe.GetComponent<JoeCommandControl>().GoForward();
             charMatrixPositionX = x;
             charMatrixPositionZ = z;
@@ -455,5 +451,13 @@ public class MapGenerator : MonoBehaviour
         CurrentGameDatas.Scarab2PartCmd = map.Scarab2PartNumber;
         CurrentGameDatas.solvedMap.itemType = map.itemType;
         return map;
+    }
+
+    public void RiseElements()
+    {
+        for(int i=0; i< bridgeElements.Count; i++)
+        {
+            bridgeElements[i].Rise();
+        }
     }
 }

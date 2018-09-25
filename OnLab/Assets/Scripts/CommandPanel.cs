@@ -28,7 +28,7 @@ public class CommandPanel : MonoBehaviour {
 
     void Start()
     {
-        speedText.text = Configuration.speedTextText + Configuration.speed;
+        speedText.text = Configuration.speedTextText + CurrentGameDatas.speed;
         commandPanelBorder = GameObject.Find(Configuration.cmdPanelBorderName);
         slotPanel = commandPanelBorder.transform.Find(Configuration.cmdPanelName).gameObject;
 
@@ -128,16 +128,16 @@ public class CommandPanel : MonoBehaviour {
 
     public void ChangeSpeed()
     {
-        if(Configuration.speed == Configuration.maxSpeed)
+        if(CurrentGameDatas.speed == Configuration.maxSpeed)
         {
             Time.timeScale = Configuration.minSpeed;
-            Configuration.speed = Configuration.minSpeed;
-            speedText.text = Configuration.speedTextText + Configuration.speed;
+            CurrentGameDatas.speed = Configuration.minSpeed;
+            speedText.text = Configuration.speedTextText + CurrentGameDatas.speed;
             return;
         }
-        Time.timeScale = Configuration.speed + 1;
-        Configuration.speed++;
-        speedText.text = Configuration.speedTextText + Configuration.speed;
+        Time.timeScale = CurrentGameDatas.speed + 1;
+        CurrentGameDatas.speed++;
+        speedText.text = Configuration.speedTextText + CurrentGameDatas.speed;
     }
 
     public List<Command> getRealCommands(List<Command> fv1, List<Command> fv2)

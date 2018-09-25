@@ -11,12 +11,8 @@ public class BoxController : MonoBehaviour {
 
     //public bool fall = false;
     public float left_time = 1;
-    public float gravityForce = 240;
 
     private Vector3 aimPosition;
-
-    public int x = 0;
-    public int z = 0;
 
     // Use this for initialization
     void Start()

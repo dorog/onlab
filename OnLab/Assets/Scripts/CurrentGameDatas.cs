@@ -4,7 +4,7 @@ public static class CurrentGameDatas
 {
 
 
-    static public int mapNumber = 2;
+    static public int mapNumber = 9;
     static public int maxMap = 1;
     static public int Scarab3PartCmd;
     static public int Scarab2PartCmd;
@@ -13,11 +13,14 @@ public static class CurrentGameDatas
     static public bool HawNewItem = false;
     static public int ItemCount = 0;
     static public string slotName;
+    static public int savedSpeed = 1;
+    static public int speed = 1;
 
     static public MapDatas solvedMap = new MapDatas();
 
     static public void CopyTheDatas(GameDatas data, string filename)
     {
+        HawNewItem = false;
         slotName = filename;
         mapDatas.Clear();
         maxMap = data.maxMap;

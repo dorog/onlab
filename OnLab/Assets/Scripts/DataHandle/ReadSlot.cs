@@ -17,6 +17,8 @@ public class ReadSlot : MonoBehaviour
     public int fontSize = 20;
     public int padding = 160;
 
+    private int savedSpeed = 1;
+
     void Start()
     {
         ReadBasedOnPlatform();
@@ -24,6 +26,8 @@ public class ReadSlot : MonoBehaviour
 
     void ChangeSceneLoadBasedOnPlatform()
     {
+        CurrentGameDatas.savedSpeed = savedSpeed;
+        CurrentGameDatas.speed = savedSpeed;
         CurrentGameDatas.ItemCount = summKeys;
         CurrentGameDatas.CopyTheDatas(gmdata, Application.persistentDataPath + "/" + fileName);
         SceneManager.LoadScene(Configuration.mapGuideScene);
@@ -45,6 +49,7 @@ public class ReadSlot : MonoBehaviour
         {
             data.mapResults[i] = new MapResult();
         }
+        data.speed = 1;
         FileStream fileForSave = File.Create(fileName);
         bf.Serialize(fileForSave, data);
         fileForSave.Close();
@@ -54,7 +59,8 @@ public class ReadSlot : MonoBehaviour
         {
             gmdata.AddMapData(new MapDatas());
         }
-
+        CurrentGameDatas.savedSpeed = 1;
+        CurrentGameDatas.speed = 1;
         CurrentGameDatas.CopyTheDatas(gmdata, fileName);
         SceneManager.LoadScene(Configuration.mapGuideScene);
     }
@@ -99,6 +105,7 @@ public class ReadSlot : MonoBehaviour
             ps = data;
         }
 
+        savedSpeed = ps.speed;
         CurrentGameDatas.maxMap = maxMap;
         gmdata = new GameDatas(maxMap);
 

@@ -6,6 +6,7 @@ public class PlayerSlotData {
 
     public int slotType;
     public int maxMap;
+    public int speed;
     public MapResult[] mapResults;
 }
 

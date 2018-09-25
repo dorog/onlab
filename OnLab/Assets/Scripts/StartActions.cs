@@ -5,7 +5,6 @@ using UnityEngine.UI;
 public class StartActions : MonoBehaviour
 {
     public float EndWait = 2;
-    public float TimeBeetweenCommands;
     CommandPanel cmdPanel;
     private GameObject commandPanelGO;
     private GameObject fv1GO;
@@ -33,6 +32,7 @@ public class StartActions : MonoBehaviour
 
 
     private Button actionBtn;
+    private Button stopBtn;
     private Vector3 characterPosition;
     private Vector3 characterForward;
     MapGenerator mapGen;
@@ -48,6 +48,10 @@ public class StartActions : MonoBehaviour
         characterForward = new Vector3(character.transform.forward.x, character.transform.forward.y, character.transform.forward.z);
         mapGen = GameObject.Find(Configuration.mapGeneratorName).GetComponent<MapGenerator>();
         actionBtn = GameObject.Find(Configuration.startButton).GetComponent<Button>();
+        stopBtn = GameObject.Find(Configuration.stopButton).GetComponent<Button>();
+
+        actionBtn.interactable = true;
+        stopBtn.interactable = false;
     }
 
     public void ExecuteCommands()
@@ -66,50 +70,12 @@ public class StartActions : MonoBehaviour
         character.GetComponent<JoeCommandControl>().stopped = false;
         aimnumber = 0;
         executedCommands = 0;
-        actionBtn.enabled = false;
+        actionBtn.interactable = false;
+        stopBtn.interactable = true;
         //Debug.Log(commandsForExecute.Count);
         lastSwitchedOff = null;
+        LockUI(false);
         Invoke("ExecuteCmd", 0);
-    }
-
-    private void Update()
-    {
-
-        /*//Debug.Log(TimeBeetweenCommands/Configuration.speed);
-        if (start)
-        {
-            if (((System.DateTime.Now - lastTime).Seconds >= TimeBeetweenCommands/Configuration.speed) && (commandsForExecute.Count > aimnumber))
-            {
-                commandsForExecute[aimnumber].Effect();
-                //Debug.Log("aimnumber: " + aimnumber);
-                aimnumber++;
-
-                lastTime = System.DateTime.Now;
-                executedCommands++;
-                //Debug.Log(fv1_aimnumber + " " + System.DateTime.Now);
-
-            }
-            else if (commandsForExecute.Count <= aimnumber && (System.DateTime.Now - lastTime).Seconds >= TimeBeetweenCommands/Configuration.speed * EndWait/Configuration.speed)
-            {
-
-                start = false;
-                aimnumber = 0;
-
-                character.transform.position = characterPosition;
-                character.transform.forward = characterForward;
-                Invoke("NotStaticBack", 0.1f); //Black Magic: joe is still here, so we need time
-                actionBtn.enabled = true;
-            }
-
-        }
-        if (die && ((resetTime - Time.deltaTime) <= 0))
-        {
-            EndCommands();
-        }
-        else if (die)
-        {
-            resetTime -= Time.deltaTime;
-        }*/
     }
 
     public void ObjectHit(float rTime)
@@ -118,6 +84,12 @@ public class StartActions : MonoBehaviour
         die = true;
         //resetTime = rTime;
         Invoke("EndCommands", rTime);
+    }
+
+    public void StopButtonOnClick()
+    {
+        stopBtn.interactable = false;
+        aimnumber = commandsForExecute.Count;
     }
 
     public void EndCommands()
@@ -133,7 +105,8 @@ public class StartActions : MonoBehaviour
         character.transform.forward = characterForward;
         mapGen.restartMap(CurrentGameDatas.mapNumber);
         die = false;
-        actionBtn.enabled = true;
+        actionBtn.interactable = true;
+        stopBtn.interactable = false;
     }
 
     public void fvStart(int fvNumber)
@@ -206,6 +179,7 @@ public class StartActions : MonoBehaviour
         if (die)
         {
             SwitchOffLastLightedUp(null);
+            LockUI(true);
             return;
         }
         if(commandsForExecute.Count > aimnumber)
@@ -214,7 +188,7 @@ public class StartActions : MonoBehaviour
             commandsForExecute[aimnumber].Effect();
             aimnumber++;
             executedCommands++;
-            Invoke("ExecuteCmd", TimeBeetweenCommands + effectTime);
+            Invoke("ExecuteCmd", Configuration.TimeBetweenCmds + effectTime);
         }
         else
         {
@@ -229,8 +203,10 @@ public class StartActions : MonoBehaviour
         aimnumber = 0;
         character.transform.position = characterPosition;
         character.transform.forward = characterForward;
-        Invoke("NotStaticBack", 0.1f); //Black Magic: joe is still here, so we need time
-        actionBtn.enabled = true;
+        Invoke("NotStaticBack", 0.5f); //Black Magic: joe is still here, so we need time
+        actionBtn.interactable = true;
+        stopBtn.interactable = false;
+        LockUI(true);
     }
 
     private void LightUp()
@@ -265,5 +241,37 @@ public class StartActions : MonoBehaviour
             lastSwitchedOff.GetComponent<Image>().color = Color.white;
         }
         lastSwitchedOff = newLastSwitchedOff;
+    }
+
+    public void EdgeHit()
+    {
+        aimnumber = commandsForExecute.Count;
+    }
+
+    private void LockUI(bool lockBool)
+    {
+        //Command ui lock
+        for(int i = 0; i < commandPanelGO.transform.childCount; i++)
+        {
+            GameObject child = commandPanelGO.transform.GetChild(i).gameObject;
+            if (child.transform.childCount > 0)
+            {
+                Image childImage = child.transform.GetChild(0).GetComponent<Image>();
+                childImage.raycastTarget = lockBool;
+            }
+        }
+
+        //Factory ui lock
+        GameObject cmdFactory = GameObject.Find(Configuration.cmdFactoryName);
+        if(cmdFactory == null)
+        {
+            return;
+        }
+        for(int i=0; i<cmdFactory.transform.childCount; i++)
+        {
+            GameObject child = cmdFactory.transform.GetChild(i).gameObject;
+            Image childImage = child.transform.GetChild(0).GetComponent<Image>();
+            childImage.raycastTarget = lockBool;
+        }
     }
 }

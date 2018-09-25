@@ -86,19 +86,24 @@ public class GuideMake : MonoBehaviour {
 
     void OpenGate(int i)
     {
-        if (CurrentGameDatas.HawNewItem)
+        if (Gate.transform.childCount-1 < i)
         {
-            Gate.GetComponent<OpenGates>().OpenGateNew(CurrentGameDatas.mapNumber - 1);
+            return;
         }
-        else if (i != CurrentGameDatas.maxMap - 1)
+        if((i == CurrentGameDatas.mapNumber - 1) && (CurrentGameDatas.HawNewItem))
         {
-            Gate.GetComponent<OpenGates>().OpenGate(i);
+            Gate.transform.GetChild(i).GetComponent<OpenGates>().OpenGateNew();
+        }
+        else
+        {
+            //Gate.transform.GetChild(i).GetComponent<OpenGates>().OpenGateNew();
+            Gate.transform.GetChild(i).GetComponent<OpenGates>().OpenGate();
         }
     }
 
     void EndCheck()
     {
-        if(CurrentGameDatas.HawNewItem && CurrentGameDatas.ItemCount == CurrentGameDatas.mapNumber)
+        if(CurrentGameDatas.HawNewItem && CurrentGameDatas.ItemCount == CurrentGameDatas.maxMap)
         {
             castList.gameObject.SetActive(true);
         }

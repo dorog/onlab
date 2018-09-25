@@ -38,7 +38,6 @@ public class TrapActive : MonoBehaviour {
         else if (highData.boxes.Count == 0)
         {
             Collider[] colliders = Physics.OverlapBox(this.transform.position, new Vector3(25, 150, 25));
-            //Debug.Log(colliders.Length);
             float joeTime = 0;
             for (int i = 0; i < colliders.Length; i++)
             {

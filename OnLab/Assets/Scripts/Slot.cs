@@ -25,7 +25,6 @@ public class Slot : MonoBehaviour, IDropHandler
         }
         else if (droppedCommand.slot != id)
         {
-            
             Transform commandplace = this.transform.GetChild(0);
             //Debug.Log("A radobott: " + droppedCommand.slot);
             commandplace.GetComponent<CommandData>().slot = droppedCommand.slot;

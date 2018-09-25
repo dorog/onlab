@@ -7,7 +7,7 @@ public class FinishMap : MonoBehaviour {
 
     public int maxPoint = 999;
     public int maxScarabNumber = 3;
-    public int missingScarabWeight = 100;
+    public int missingScarabWeight = 500;
     public int moreCmdWeight = 10;
 
     // Use this for initialization
@@ -48,8 +48,9 @@ public class FinishMap : MonoBehaviour {
         {
             scarabNumber = 1;
         }
- 
-        int thisGameScore = maxPoint - (maxScarabNumber - scarabNumber) * missingScarabWeight - (CurrentGameDatas.Scarab3PartCmd - realCommandsNumber) * moreCmdWeight; 
+
+        int cmdNumber = (CurrentGameDatas.Scarab3PartCmd - realCommandsNumber) >= 0 ? 0 : CurrentGameDatas.Scarab3PartCmd - realCommandsNumber;
+        int thisGameScore = maxPoint - (maxScarabNumber - scarabNumber) * missingScarabWeight - cmdNumber * moreCmdWeight; 
 
         if (CurrentGameDatas.mapDatas[CurrentGameDatas.mapNumber - 1].scarab < scarabNumber)
         {
@@ -90,6 +91,8 @@ public class FinishMap : MonoBehaviour {
         data.mapResults[CurrentGameDatas.mapNumber - 1].ScarabNumber = CurrentGameDatas.mapDatas[CurrentGameDatas.mapNumber - 1].scarab;
         data.mapResults[CurrentGameDatas.mapNumber - 1].Item = (CurrentGameDatas.mapDatas[CurrentGameDatas.mapNumber - 1].item) || CurrentGameDatas.HaveItem ? 1 : 0;
         data.mapResults[CurrentGameDatas.mapNumber - 1].ItemType = CurrentGameDatas.solvedMap.itemType;
+        data.speed = CurrentGameDatas.speed;
+        CurrentGameDatas.savedSpeed = CurrentGameDatas.speed;
         FileStream fileForSave = File.Create(CurrentGameDatas.slotName);
         bf.Serialize(fileForSave, data);
         fileForSave.Close();

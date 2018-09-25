@@ -38,7 +38,8 @@ public class LavaTouch : MonoBehaviour {
             }
             anim.SetBool("lava", true);                
             anim.SetBool("start", false);*/
-            sa.ObjectHit(0.5f);
+            Debug.Log("Lava");
+            sa.ObjectHit(0.5f/Time.timeScale);
 
             //TODO: kulcsot nem tudja felvenni, animacio nem jatszodik le
         }

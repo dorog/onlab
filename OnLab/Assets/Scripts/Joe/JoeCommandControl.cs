@@ -20,10 +20,12 @@ public class JoeCommandControl : MonoBehaviour {
 
     public float left_time = 0;
     public bool stopped = false;
-    public float gravity = 10;
+    //public float gravity = 10;
     public bool gravityOff = false;
 
     private Vector3 aimPosition;
+
+    public float isGrounded = 0;
 
     //private bool push_box = false;
 
@@ -109,9 +111,10 @@ public class JoeCommandControl : MonoBehaviour {
                 }
             }
         }
-        if (!this.GetComponent<CharacterController>().isGrounded && !gravityOff)
+        if (!gravityOff)
         {
-            this.GetComponent<CharacterController>().Move(new Vector3(0, Time.deltaTime*gravity*-1, 0));
+            isGrounded = Configuration.fallSpeed;
+            this.GetComponent<CharacterController>().Move(new Vector3(0, Time.timeScale*Time.deltaTime*Configuration.fallSpeed*-1, 0));
         }
        
 	}
@@ -145,9 +148,9 @@ public class JoeCommandControl : MonoBehaviour {
         fall = false;
     }
 
-    public void fallALevel(int amount)
+    /*public void fallALevel(int amount)
     {
         fall = true;
         left_time = 0.5f;
-    }
+    }*/
 }

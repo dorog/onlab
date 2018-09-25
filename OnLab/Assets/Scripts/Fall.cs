@@ -26,7 +26,7 @@ public class Fall : MonoBehaviour {
                 continue;
             }
             //Debug.Log("here");
-            joeController.fallALevel(1);
+            //joeController.fallALevel(1);
             /*joeController.fall = true;
             joeController.left_time = 0.5f;*/
             //joeTime = joeController.LavaFallAnimationTime;

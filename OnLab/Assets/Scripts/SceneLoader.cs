@@ -1,7 +1,27 @@
-﻿using UnityEngine;
+﻿using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour {
+
+    public void LoadSceneAndSaveSpeed(string sceneName)
+    {
+        if(CurrentGameDatas.savedSpeed != CurrentGameDatas.speed)
+        {
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream file = File.Open(CurrentGameDatas.slotName, FileMode.Open);
+            PlayerSlotData data = (PlayerSlotData)bf.Deserialize(file);
+            file.Close();
+
+            data.speed = CurrentGameDatas.speed;
+            FileStream fileForSave = File.Create(CurrentGameDatas.slotName);
+            bf.Serialize(fileForSave, data);
+            fileForSave.Close();
+            CurrentGameDatas.savedSpeed = CurrentGameDatas.speed;
+        }
+        LoadScene(sceneName);
+    }
 
 	public void LoadScene(string sceneName)
     {
@@ -10,7 +30,7 @@ public class SceneLoader : MonoBehaviour {
 
     public void LoadSceneAndTimeScaleUsedGame(string sceneName)
     {
-        Time.timeScale = Configuration.speed;
+        Time.timeScale = CurrentGameDatas.speed;
         SceneManager.LoadScene(sceneName);
     }
 

@@ -13,12 +13,14 @@ public class ChangeBetweenFvAndMain : MonoBehaviour {
 
     private void Start()
     {
-        
+        txt = this.transform.GetChild(0).GetComponent<Text>();
+        txt.text = FvString;
     }
 
     public void Change()
     {
         bool change = Main.GetComponent<Image>().enabled;
+        txt.text = change ? MainString : FvString;
         //Main
         Main.GetComponent<Image>().enabled = !change;
         Main.GetComponent<Image>().raycastTarget = change;
