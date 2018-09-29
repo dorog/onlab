@@ -38,6 +38,7 @@ GameObject:
   - component: {fileID: 4124376335885862}
   - component: {fileID: 114926309079899428}
   - component: {fileID: 111191147916779780}
+  - component: {fileID: 114974409925815216}
   m_Layer: 0
   m_Name: door_final
   m_TagString: Untagged
@@ -444,3 +445,16 @@ MonoBehaviour:
   baseHigh: 5
   openedHeight: 2
   opened: 0
+--- !u!114 &114974409925815216
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1728136284082794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc406773393b12c499d0ff1767cf2914, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  doorOpenSpeed: 2
+  doorAnimName: OpenWalledDoor

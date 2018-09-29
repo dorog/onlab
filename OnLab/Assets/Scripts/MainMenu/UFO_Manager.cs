@@ -12,11 +12,6 @@ public class UFO_Manager : MonoBehaviour {
         float rand = Random.Range(minWait, maxWait);
         Invoke("Fly_Away", rand);
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
     public void Fly_Away()
     {

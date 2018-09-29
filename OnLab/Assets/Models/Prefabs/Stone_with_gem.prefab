@@ -42,8 +42,8 @@ GameObject:
   - component: {fileID: 33228923428227106}
   - component: {fileID: 23215154880781040}
   - component: {fileID: 95832241427012984}
-  - component: {fileID: 114185379781525474}
   - component: {fileID: 65712822120878280}
+  - component: {fileID: 114715178146828198}
   m_Layer: 0
   m_Name: gemstone
   m_TagString: Untagged
@@ -220,7 +220,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114185379781525474
+--- !u!114 &114715178146828198
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -228,7 +228,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1525875807570890}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da534f28a639de7449eb6e68ffcad303, type: 3}
+  m_Script: {fileID: 11500000, guid: fef0f3eb7fd9aa043a60841aa688ee0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114760603771877266

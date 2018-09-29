@@ -3,37 +3,31 @@
 public class JoeCommandControl : MonoBehaviour {
 
     public float rotate = 90;
-    public float time = 1;
     private float originTime=1;
+    private float time;
     private Animator joeAnim;
-    private CharacterController joeControll;
+    public CharacterController joeControll;
 
     private bool forward = false;
     private bool leftturn = false;
     private bool rightturn = false;
 
     public bool fall_trap = false;
-    public bool fall = false;
     public float gravityForce = 20;
-    public float fallAnimationTime = 1.2f;
-    public float LavaFallAnimationTime = 0.5f;
 
-    public float left_time = 0;
     public bool stopped = false;
-    //public float gravity = 10;
     public bool gravityOff = false;
 
     private Vector3 aimPosition;
+    public float fallSpeedCheck;
 
-    public float isGrounded = 0;
-
-    //private bool push_box = false;
+    //public Vector3 joeForward = new Vector3(1, 0, 0);
 
     // Use this for initialization
     void Start () {
-        originTime = time;
+        originTime = Configuration.timeForAnimation;
+        time = Configuration.timeForAnimation;
         joeAnim = this.transform.GetComponent<Animator>();
-        joeControll = this.transform.GetComponent<CharacterController>();
     }
 	
 	// Update is called once per frame
@@ -41,45 +35,26 @@ public class JoeCommandControl : MonoBehaviour {
 
         if (!stopped)
         {
-            if (fall_trap && (left_time - Time.deltaTime <= 0))
+            if (fall_trap)
             {
                 joeControll.Move(Vector3.down * Time.deltaTime * gravityForce);
-
-            }
-
-            if (fall && (left_time - Time.deltaTime <= 0))
-            {
-                joeControll.Move(Vector3.down * Time.deltaTime * Configuration.unit*2);
-            }
-
-            if (fall_trap || fall)
-            {
-                left_time -= Time.deltaTime;
             }
 
             if (forward)
             {
-                if (time - Time.deltaTime <= 0)
+                if (time - Time.deltaTime > 0)
                 {
-                    forward = false;
-                    //this.transform.GetComponent<CharacterController>().Move(this.transform.forward * Configuration.unit * time);
-                    this.transform.position = aimPosition;
-
-                    /*if(Mathf.Pow(Mathf.Pow(this.transform.position.x-aimPosition.x, 2)+ Mathf.Pow(this.transform.position.z - aimPosition.z, 2), 0.5f) < Configuration.unit/2){
-                        this.transform.position = aimPosition;
-                    }
-                    else
-                    {
-                        this.transform.position = aimPosition - Configuration.unit * this.transform.forward;
-                    }*/
-                    time = originTime;
-                    joeAnim.SetBool(Configuration.forwardAnimation, false);
-                    joeAnim.SetBool(Configuration.idleAnimation, true);
+                    //joeControll.Move(this.transform.forward * Configuration.unit * Time.deltaTime);
+                    this.transform.position += this.transform.forward * Configuration.unit * Time.deltaTime;
+                    time -= Time.deltaTime;
                 }
                 else
                 {
-                    this.transform.GetComponent<CharacterController>().Move(this.transform.forward * Configuration.unit * Time.deltaTime);
-                    time -= Time.deltaTime;
+                    forward = false;
+                    this.transform.position = new Vector3(aimPosition.x, this.transform.position.y, aimPosition.z);
+                    time = originTime;
+                    joeAnim.SetBool(Configuration.forwardAnimation, false);
+                    joeAnim.SetBool(Configuration.idleAnimation, true);
                 }
             }
             else if (leftturn)
@@ -113,19 +88,21 @@ public class JoeCommandControl : MonoBehaviour {
         }
         if (!gravityOff)
         {
-            isGrounded = Configuration.fallSpeed;
-            this.GetComponent<CharacterController>().Move(new Vector3(0, Time.timeScale*Time.deltaTime*Configuration.fallSpeed*-1, 0));
+            fallSpeedCheck = Configuration.fallSpeed;
+            joeControll.Move(new Vector3(0, Time.timeScale*Time.deltaTime*Configuration.fallSpeed*-1, 0));
         }
        
 	}
 
     public void TurnRight()
     {
+        //joeForward = Quaternion.Euler(0, rotate, 0) * joeForward;
         rightturn = true;
     }
 
     public void TurnLeft()
     {
+        //joeForward = Quaternion.Euler(0, -rotate, 0) * joeForward;
         leftturn = true;
     }
 
@@ -138,19 +115,21 @@ public class JoeCommandControl : MonoBehaviour {
 
     }
 
-    public void ResetActions()
+    public void HitTrap(float timeInTheAir)
     {
-        joeAnim.SetBool(Configuration.idleAnimation, true);
-        joeAnim.SetBool(Configuration.trapAnimation, false);
-        joeAnim.SetBool(Configuration.fallAnimation, false);
-        joeAnim.SetBool(Configuration.forwardAnimation, false);
-        fall_trap = false;
-        fall = false;
+        gravityOff = true;
+        Invoke("CanFallNow", timeInTheAir);
+        Animator anim = this.transform.GetComponent<Animator>();
+        if (!anim)
+        {
+            return;
+        }
+        anim.SetBool(Configuration.idleAnimation, false);
+        anim.SetBool(Configuration.trapAnimation, true);
     }
 
-    /*public void fallALevel(int amount)
+    private void CanFallNow()
     {
-        fall = true;
-        left_time = 0.5f;
-    }*/
+        fall_trap = true;
+    }
 }

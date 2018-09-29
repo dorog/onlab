@@ -6539,6 +6539,36 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114365452997809114, guid: fa37255f280a5c644a52a3665d121215,
+        type: 2}
+      propertyPath: footChance
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114365452997809114, guid: fa37255f280a5c644a52a3665d121215,
+        type: 2}
+      propertyPath: lookAroundChance
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114365452997809114, guid: fa37255f280a5c644a52a3665d121215,
+        type: 2}
+      propertyPath: welcomeChance
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114365452997809114, guid: fa37255f280a5c644a52a3665d121215,
+        type: 2}
+      propertyPath: footAnimTime
+      value: 3.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114365452997809114, guid: fa37255f280a5c644a52a3665d121215,
+        type: 2}
+      propertyPath: lookAroundAnimTime
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 114365452997809114, guid: fa37255f280a5c644a52a3665d121215,
+        type: 2}
+      propertyPath: welcomeAnimTime
+      value: 3.4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fa37255f280a5c644a52a3665d121215, type: 2}
   m_IsPrefabParent: 0
@@ -8017,7 +8047,6 @@ GameObject:
   - component: {fileID: 1246826616}
   - component: {fileID: 1246826615}
   - component: {fileID: 1246826614}
-  - component: {fileID: 1246826618}
   m_Layer: 0
   m_Name: BirdSpam
   m_TagString: MainCamera
@@ -8045,7 +8074,7 @@ Camera:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1246826613}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_ClearFlags: 1
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
@@ -8088,17 +8117,6 @@ Transform:
   m_Father: {fileID: 2021706385}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: -9.3, y: 0.47300002, z: -0.147}
---- !u!114 &1246826618
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1246826613}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3105a9d669d668541bc53d7e0600eda4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1247091661 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4368459477609604, guid: 6c78eb3cc378fca4089f0762079f94c1,

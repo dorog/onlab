@@ -253,6 +253,8 @@ MonoBehaviour:
   img: {fileID: 21300000, guid: 668dd72a8d5c6a241ad502c89c3d08af, type: 3}
   fontSize: 20
   padding: 160
+  SlotPanel: {fileID: 253748844}
+  SlotText: {fileID: 1574373711}
 --- !u!114 &147194134
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -392,6 +394,8 @@ MonoBehaviour:
   img: {fileID: 21300000, guid: 668dd72a8d5c6a241ad502c89c3d08af, type: 3}
   fontSize: 40
   padding: 130
+  SlotPanel: {fileID: 1310571190}
+  SlotText: {fileID: 401304192}
 --- !u!114 &153834305
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1627,6 +1631,8 @@ MonoBehaviour:
   img: {fileID: 21300000, guid: 668dd72a8d5c6a241ad502c89c3d08af, type: 3}
   fontSize: 40
   padding: 130
+  SlotPanel: {fileID: 712013831}
+  SlotText: {fileID: 974488439}
 --- !u!114 &988242214
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2171,6 +2177,8 @@ MonoBehaviour:
   img: {fileID: 21300000, guid: 668dd72a8d5c6a241ad502c89c3d08af, type: 3}
   fontSize: 20
   padding: 160
+  SlotPanel: {fileID: 441644422}
+  SlotText: {fileID: 1170699813}
 --- !u!114 &1331176556
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3038,6 +3046,8 @@ MonoBehaviour:
   img: {fileID: 21300000, guid: 668dd72a8d5c6a241ad502c89c3d08af, type: 3}
   fontSize: 20
   padding: 160
+  SlotPanel: {fileID: 1606418762}
+  SlotText: {fileID: 790412867}
 --- !u!114 &1740004667
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3299,6 +3309,8 @@ MonoBehaviour:
   img: {fileID: 21300000, guid: 668dd72a8d5c6a241ad502c89c3d08af, type: 3}
   fontSize: 40
   padding: 130
+  SlotPanel: {fileID: 302396469}
+  SlotText: {fileID: 1009277339}
 --- !u!114 &1854336858
 MonoBehaviour:
   m_ObjectHideFlags: 0

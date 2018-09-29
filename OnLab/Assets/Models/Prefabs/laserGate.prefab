@@ -11,6 +11,21 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1863361770462010}
   m_IsPrefabParent: 1
+--- !u!1 &1295883199300254
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4892802314215616}
+  m_Layer: 0
+  m_Name: Lasers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1380390386807870
 GameObject:
   m_ObjectHideFlags: 0
@@ -107,6 +122,7 @@ Transform:
   - {fileID: 4461306261677382}
   - {fileID: 4438934040495218}
   - {fileID: 4196296915954308}
+  - {fileID: 4892802314215616}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -135,6 +151,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4404325183253436}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4892802314215616
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1295883199300254}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4404325183253436}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &23105267767338938
 MeshRenderer:
@@ -313,7 +342,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51b519c34e49299449b47432685abe66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  setted: 0
+  activeSwitches: 1
   laserModel: {fileID: 1530159437466892, guid: 38798223af756474cb7185278fbb2424, type: 2}
   middleColumn: 190
   laserPlaceInterval: 150
+  columnDisctanceFromPosition: 50
+  parent: {fileID: 4892802314215616}

@@ -23,8 +23,8 @@ GameObject:
   - component: {fileID: 23012296683324074}
   - component: {fileID: 95584782788531560}
   - component: {fileID: 65833736957441762}
-  - component: {fileID: 114446954833990506}
   - component: {fileID: 114970294567450988}
+  - component: {fileID: 114186336563697360}
   m_Layer: 0
   m_Name: buttonstone_collidered
   m_TagString: Untagged
@@ -218,7 +218,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114446954833990506
+--- !u!114 &114186336563697360
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -226,7 +226,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1662418838933890}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f330ca331db08f34aa2c6fb40e91bcaf, type: 3}
+  m_Script: {fileID: 11500000, guid: 0a7c5f1f0a5c7f24b82ea49a1bd42a16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   usedMat: {fileID: 2100000, guid: 33284ec2d6dc6534abe2410ffdbdd8e6, type: 2}
