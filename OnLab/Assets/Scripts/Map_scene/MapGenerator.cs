@@ -71,12 +71,13 @@ public class MapGenerator : MonoBehaviour
     private List<GameObject> notStaticElements = new List<GameObject>();
     private List<int> notStaticElementsID = new List<int>();
     private List<Vector3> notStaticElementsPosition = new List<Vector3>();
-    public List<BoxCollider> boxesCollider = new List<BoxCollider>();
+    private List<BoxCollider> boxesCollider = new List<BoxCollider>();
 
     private List<LaserGate> laserGates = new List<LaserGate>();
     private List<RiseElement> RisingStones = new List<RiseElement>();
     private List<Door> doors = new List<Door>();
 
+    public bool RiseGecc = false;
 
     // Use this for initialization
     void Start()
@@ -85,6 +86,15 @@ public class MapGenerator : MonoBehaviour
         mapNumber = CurrentGameDatas.mapNumber;
         summSwitches = 0;
         CreateMap(mapNumber);
+    }
+
+    private void Update()
+    {
+        if (RiseGecc)
+        {
+            RiseGecc = false;
+            RiseRisingStones();
+        }
     }
 
     public void CreateMap(int number)
@@ -176,7 +186,7 @@ public class MapGenerator : MonoBehaviour
             }
         }
 
-        for(int i=0; i<doors.Count; i++)
+        for (int i = 0; i < doors.Count; i++)
         {
             doors[i].SetCount(buttonCount);
         }
@@ -186,7 +196,14 @@ public class MapGenerator : MonoBehaviour
         {
             Vector3 position = map.boxLocations[i];
             GameObject box = Instantiate(boxModel, position, Quaternion.AngleAxis(0, Vector3.right), mapGeneratorGO.transform.GetChild(BoxChild)) as GameObject;
-            objectMap[(int)(startPosition.z - position.z) / Configuration.unit, (int)(position.x - startPosition.x) / Configuration.unit].GetComponent<HighData>().boxes.Add(box);
+            objectMap[(int)(startPosition.z - position.z) / Configuration.unit, (int)(position.x - startPosition.x) / Configuration.unit].GetComponent<HighData>().AddBox(box);
+
+            //New try
+            Transform onIt =  objectMap[(int)(startPosition.z - position.z) / Configuration.unit, (int)(position.x - startPosition.x) / Configuration.unit].transform;
+            int onItNumber = objectMap[(int)(startPosition.z - position.z) / Configuration.unit, (int)(position.x - startPosition.x) / Configuration.unit].GetComponent<HighData>().GetBoxCount();
+            box.GetComponent<BoxController>().InitOnIt(onIt, onItNumber);
+            //--
+
             boxesCollider.Add(box.GetComponent<BoxCollider>());
             AddToNotStaticElements(box, position, BoxID);
         }
@@ -198,8 +215,9 @@ public class MapGenerator : MonoBehaviour
 
     public void RestartMap(int number)
     {
-        Joe.GetComponent<CharacterController>().enabled = false;
-        Joe.GetComponent<JoeCommandControl>().gravityOff = true;
+        Configuration.fallDistance = Configuration.unit * 2;
+        //Joe.GetComponent<CharacterController>().enabled = false;
+        //Joe.GetComponent<JoeCommandControl>().gravityOff = true;
         Joe.transform.position = joePosition;
         Joe.transform.forward = joeForward;
         charMatrixPositionX = originMatrixPositionX;
@@ -217,7 +235,7 @@ public class MapGenerator : MonoBehaviour
         {
             for (int j = 0; j < objectMap.GetLength(1); j++)
             {
-                objectMap[i, j].GetComponent<HighData>().boxes.Clear();
+                objectMap[i, j].GetComponent<HighData>().RemoveAllBox();
             }
         }
 
@@ -236,13 +254,18 @@ public class MapGenerator : MonoBehaviour
                     objectMap[(int)(startPosition.z - notStaticElementsPosition[i].z) / Configuration.unit, (int)(notStaticElementsPosition[i].x - startPosition.x) / Configuration.unit] = trap;
                     break;
                 case ButtonID:
-                    GameObject doorButton = Instantiate(buttonModel, notStaticElementsPosition[i], Quaternion.AngleAxis(-90, Vector3.right), mapGeneratorGO.transform.GetChild(ButtonChild)) as GameObject;
-                    notStaticElements.Add(doorButton);
-                    objectMap[(int)(startPosition.z - notStaticElementsPosition[i].z) / Configuration.unit, (int)(notStaticElementsPosition[i].x - startPosition.x) / Configuration.unit] = doorButton;
+                    GameObject Button = Instantiate(buttonModel, notStaticElementsPosition[i], Quaternion.AngleAxis(-90, Vector3.right), mapGeneratorGO.transform.GetChild(ButtonChild)) as GameObject;
+                    notStaticElements.Add(Button);
+                    objectMap[(int)(startPosition.z - notStaticElementsPosition[i].z) / Configuration.unit, (int)(notStaticElementsPosition[i].x - startPosition.x) / Configuration.unit] = Button;
                     break;
                 case BoxID:
                     GameObject box = Instantiate(boxModel, notStaticElementsPosition[i], Quaternion.AngleAxis(0, Vector3.right), mapGeneratorGO.transform.GetChild(BoxChild)) as GameObject;
-                    objectMap[(int)(startPosition.z - notStaticElementsPosition[i].z) / Configuration.unit, (int)(notStaticElementsPosition[i].x - startPosition.x) / Configuration.unit].GetComponent<HighData>().boxes.Add(box);
+                    objectMap[(int)(startPosition.z - notStaticElementsPosition[i].z) / Configuration.unit, (int)(notStaticElementsPosition[i].x - startPosition.x) / Configuration.unit].GetComponent<HighData>().AddBox(box);
+                    //New
+                    Transform onIt = objectMap[(int)(startPosition.z - notStaticElementsPosition[i].z) / Configuration.unit, (int)(notStaticElementsPosition[i].x - startPosition.x) / Configuration.unit].GetComponent<HighData>().transform;
+                    int onItNumber = objectMap[(int)(startPosition.z - notStaticElementsPosition[i].z) / Configuration.unit, (int)(notStaticElementsPosition[i].x - startPosition.x) / Configuration.unit].GetComponent<HighData>().GetBoxCount();
+                    box.GetComponent<BoxController>().InitOnIt(onIt, onItNumber);
+                    //--
                     notStaticElements.Add(box);
                     break;
                 case KeyID:
@@ -251,15 +274,15 @@ public class MapGenerator : MonoBehaviour
                     objectMap[(int)(startPosition.z - notStaticElementsPosition[i].z) / Configuration.unit, (int)(notStaticElementsPosition[i].x - startPosition.x) / Configuration.unit] = Key;
                     break;
                 case StoneLifterID:
-                    GameObject BridgeMaker = Instantiate(stoneLifterModel, notStaticElementsPosition[i], Quaternion.AngleAxis(0, Vector3.right), mapGeneratorGO.transform) as GameObject;
-                    notStaticElements.Add(BridgeMaker);
-                    objectMap[(int)(startPosition.z - notStaticElementsPosition[i].z) / Configuration.unit, (int)(notStaticElementsPosition[i].x - startPosition.x) / Configuration.unit] = BridgeMaker;
+                    GameObject StoneLifter = Instantiate(stoneLifterModel, notStaticElementsPosition[i], Quaternion.AngleAxis(0, Vector3.right), mapGeneratorGO.transform.GetChild(RisingStoneChild)) as GameObject;
+                    notStaticElements.Add(StoneLifter);
+                    objectMap[(int)(startPosition.z - notStaticElementsPosition[i].z) / Configuration.unit, (int)(notStaticElementsPosition[i].x - startPosition.x) / Configuration.unit] = StoneLifter;
                     break;
                 case RisingStoneID:
-                    GameObject BridgeElement = Instantiate(risingStoneModel, notStaticElementsPosition[i], Quaternion.AngleAxis(0, Vector3.right), mapGeneratorGO.transform.GetChild(RisingStoneChild));
-                    notStaticElements.Add(BridgeElement);
-                    objectMap[(int)(startPosition.z - notStaticElementsPosition[i].z) / Configuration.unit, (int)(notStaticElementsPosition[i].x - startPosition.x) / Configuration.unit] = BridgeElement;
-                    RisingStones.Add(BridgeElement.GetComponent<RiseElement>());
+                    GameObject RisingStone = Instantiate(risingStoneModel, notStaticElementsPosition[i], Quaternion.AngleAxis(0, Vector3.right), mapGeneratorGO.transform.GetChild(RisingStoneChild));
+                    notStaticElements.Add(RisingStone);
+                    objectMap[(int)(startPosition.z - notStaticElementsPosition[i].z) / Configuration.unit, (int)(notStaticElementsPosition[i].x - startPosition.x) / Configuration.unit] = RisingStone;
+                    RisingStones.Add(RisingStone.GetComponent<RiseElement>());
                     break;
                 case LaserSwitchID:
                     GameObject laserSwitch = Instantiate(laserSwitchModel, notStaticElementsPosition[i], Quaternion.AngleAxis(-90, Vector3.right), mapGeneratorGO.transform.GetChild(LaserSwitchChild));
@@ -272,7 +295,7 @@ public class MapGenerator : MonoBehaviour
                     objectMap[(int)(startPosition.z - notStaticElementsPosition[i].z) / Configuration.unit, (int)(notStaticElementsPosition[i].x - startPosition.x) / Configuration.unit] = Gem;
                     break;
                 case DoorID:
-                    GameObject door = Instantiate(doorModel, notStaticElementsPosition[i], Quaternion.AngleAxis(-90, Vector3.right), mapGeneratorGO.transform) as GameObject;
+                    GameObject door = Instantiate(doorModel, notStaticElementsPosition[i], Quaternion.AngleAxis(-90, Vector3.right), mapGeneratorGO.transform.GetChild(DoorChild)) as GameObject;
                     objectMap[(int)(startPosition.z - notStaticElementsPosition[i].z) / Configuration.unit, (int)(notStaticElementsPosition[i].x - startPosition.x) / Configuration.unit] = door;
                     notStaticElements.Add(door);
                     doors.Add(door.GetComponent<Door>());
@@ -287,8 +310,8 @@ public class MapGenerator : MonoBehaviour
             doors[i].SetCount(buttonCount);
         }
         CurrentGameDatas.HaveItem = false;
-        Joe.GetComponent<CharacterController>().enabled = true;
-        Joe.GetComponent<JoeCommandControl>().gravityOff = false;
+        //Joe.GetComponent<CharacterController>().enabled = true;
+        //Joe.GetComponent<JoeCommandControl>().gravityOff = false;
     }
 
     public void RiseRisingStones()
@@ -313,7 +336,7 @@ public class MapGenerator : MonoBehaviour
         z += reCalc[1];*/
         if (Joe.transform.forward == Vector3.left)
         {
-            x--;    
+            x--;
             reCalc[0] = -1;
             reCalc[1] = 0;
         }
@@ -335,39 +358,40 @@ public class MapGenerator : MonoBehaviour
             reCalc[0] = 0;
             reCalc[1] = -1;
         }
-        if (objectMap[z, x].GetComponent<HighData>().HeightCalculateTo() - objectMap[charMatrixPositionZ, charMatrixPositionX].GetComponent<HighData>().HeighCalculateFrom() <= 0)
+        int fromHeight = objectMap[charMatrixPositionZ, charMatrixPositionX].GetComponent<HighData>().HeighCalculateFrom();
+        Configuration.CanGoForward result = objectMap[z, x].GetComponent<HighData>().HeightCalculateTo(fromHeight);
+        if (result == Configuration.CanGoForward.Go)
         {
-            int diff = objectMap[z, x].GetComponent<HighData>().RealHeight() - objectMap[charMatrixPositionZ, charMatrixPositionX].GetComponent<HighData>().RealHeight();
-            Configuration.fallSpeed = -diff * Configuration.unit * Configuration.fallSpeedBoost;
             Joe.GetComponent<JoeCommandControl>().GoForward();
             charMatrixPositionX = x;
             charMatrixPositionZ = z;
         }
-        else if (objectMap[z, x].GetComponent<HighData>().HeightCalculateTo() - objectMap[charMatrixPositionZ, charMatrixPositionX].GetComponent<HighData>().HeighCalculateFrom() == 1)
+        else if (result == Configuration.CanGoForward.OneDiff)
         {
-            if (objectMap[z, x].GetComponent<HighData>().GetBoxCount() > 0)
+            //there is a box, and he can push it
+            int fromHeightBox = objectMap[z, x].GetComponent<HighData>().HeighCalculateFrom();
+            bool boxPushResult = objectMap[z + reCalc[1], x + reCalc[0]].GetComponent<HighData>().HeightCalculateToBox(fromHeightBox-1);
+            if (boxPushResult)
             {
-                //there is a box, and he can push it
-                if (objectMap[z + reCalc[1], x + reCalc[0]].GetComponent<HighData>().HeightCalculateTo() - objectMap[z, x].GetComponent<HighData>().HeighCalculateFrom() < 0)
-                {
-                    objectMap[z, x].GetComponent<HighData>().boxes[objectMap[z, x].GetComponent<HighData>().boxes.Count - 1].GetComponent<BoxController>().MoveToThere(Joe.transform.forward);
-                    objectMap[z + reCalc[1], x + reCalc[0]].GetComponent<HighData>().boxes.Add(objectMap[z, x].GetComponent<HighData>().boxes[objectMap[z, x].GetComponent<HighData>().boxes.Count - 1]);
-                    objectMap[z, x].GetComponent<HighData>().boxes.RemoveAt(objectMap[z, x].GetComponent<HighData>().boxes.Count - 1);
-                    Joe.GetComponent<JoeCommandControl>().GoForward();
-                    charMatrixPositionX = x;
-                    charMatrixPositionZ = z;
-                }
-                //there is a box, but next element as high as it, or higher
-                else
-                {
-                    return; //TODO: animation
-                }
+                objectMap[z, x].GetComponent<HighData>().GetTopBox().GetComponent<BoxController>().MoveToThere(Joe.transform.forward);
+                objectMap[z + reCalc[1], x + reCalc[0]].GetComponent<HighData>().AddBox(objectMap[z, x].GetComponent<HighData>().GetTopBox());
 
+                //New:
+                Transform onIt = objectMap[z + reCalc[1], x + reCalc[0]].GetComponent<HighData>().transform;
+                int onItNumber = objectMap[z + reCalc[1], x + reCalc[0]].GetComponent<HighData>().GetBoxCount();
+                objectMap[z, x].GetComponent<HighData>().GetTopBox().GetComponent<BoxController>().InitOnIt(onIt, onItNumber);
+
+                objectMap[z, x].GetComponent<HighData>().RemoveTopBox();
+                Joe.GetComponent<JoeCommandControl>().GoForward();
+                charMatrixPositionX = x;
+                charMatrixPositionZ = z;
             }
+            //there is a box, but next element as high as it, or higher
             else
             {
-                return; //TODO: animation: no box
+                return; //TODO: animation
             }
+
         }
         else
         {
@@ -426,7 +450,7 @@ public class MapGenerator : MonoBehaviour
 
     public void ButtonActivated()
     {
-        for(int i=0; i < doors.Count; i++)
+        for (int i = 0; i < doors.Count; i++)
         {
             doors[i].LessCount();
         }

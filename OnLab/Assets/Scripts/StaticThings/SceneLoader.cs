@@ -1,26 +1,15 @@
-﻿using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour {
 
-    public void LoadSceneAndSaveSpeed(string sceneName)
+    public void LoadSceneAndSaveSpeed()
     {
         if(CurrentGameDatas.savedSpeed != CurrentGameDatas.speed)
         {
-            BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Open(CurrentGameDatas.slotName, FileMode.Open);
-            PlayerSlotData data = (PlayerSlotData)bf.Deserialize(file);
-            file.Close();
-
-            data.speed = CurrentGameDatas.speed;
-            FileStream fileForSave = File.Create(CurrentGameDatas.slotName);
-            bf.Serialize(fileForSave, data);
-            fileForSave.Close();
-            CurrentGameDatas.savedSpeed = CurrentGameDatas.speed;
+            CurrentGameDatas.SaveSpeed();
         }
-        LoadScene(sceneName);
+        SceneManager.LoadScene(Configuration.GetLevelName());
     }
 
 	public void LoadScene(string sceneName)
@@ -34,16 +23,10 @@ public class SceneLoader : MonoBehaviour {
         SceneManager.LoadScene(sceneName);
     }
 
-    public void LoadMap(int mapNumber)
-    {
-        CurrentGameDatas.mapNumber = mapNumber;
-        SceneManager.LoadScene(Configuration.mapScene);
-    }
-
     public void LoadMapTimeScaleUsed(int mapNumber)
     {
         CurrentGameDatas.mapNumber = mapNumber;
-        LoadSceneAndTimeScaleUsedGame(Configuration.mapScene);
+        LoadSceneAndTimeScaleUsedGame(Configuration.mapName);
     }
 
     public void Quit()
@@ -54,5 +37,10 @@ public class SceneLoader : MonoBehaviour {
     public void SetIsLoad(bool isLoad)
     {
         Configuration.isLoad = isLoad;
+    }
+
+    public void LoadActualMap()
+    {
+        LoadScene(Configuration.GetLevelName());
     }
 }

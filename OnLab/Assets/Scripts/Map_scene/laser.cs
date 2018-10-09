@@ -2,18 +2,13 @@
 
 public class laser : MonoBehaviour {
 
-    private LineRenderer lr;
+    public LineRenderer lr;
     public Vector3 start;
-    public Vector3 aim;
+    public Vector3 aim;	
 
-	// Use this for initialization
-	void Start () {
-        lr = GetComponent<LineRenderer>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    public void SwitchOn()
+    {
         lr.SetPosition(0, start);
         lr.SetPosition(1, aim);
-	}
+    }
 }

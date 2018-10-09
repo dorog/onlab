@@ -21,9 +21,9 @@ GameObject:
   - component: {fileID: 4634953014211618}
   - component: {fileID: 33784497298792928}
   - component: {fileID: 23640714426119346}
-  - component: {fileID: 54531346281159962}
-  - component: {fileID: 65012158342957270}
   - component: {fileID: 114789117683647106}
+  - component: {fileID: 54104791200026018}
+  - component: {fileID: 65092583705890874}
   m_Layer: 0
   m_Name: Box
   m_TagString: Untagged
@@ -85,7 +85,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1810559649718812}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!54 &54531346281159962
+--- !u!54 &54104791200026018
 Rigidbody:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -100,7 +100,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!65 &65012158342957270
+--- !u!65 &65092583705890874
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -123,8 +123,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce9ad53bb05766349a8f0bd6ce21521a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  time: 1.1
-  left_time: 1
-  gravityForce: 240
-  x: 0
-  z: 0
+  Rise: 0
+  onIt: {fileID: 0}

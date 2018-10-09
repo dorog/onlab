@@ -21,26 +21,27 @@ public class GuideMake : MonoBehaviour {
         Gate = GameObject.Find(Configuration.gatesStr);
         Keys = GameObject.Find(Configuration.keyStr);
 
-        gmdatas = new GameDatas(CurrentGameDatas.maxMap);
-        for(int i=0; i<gmdatas.maxMap; i++)
+        int mapsNumber = CurrentGameDatas.GetActualLevelMapNumber();
+        gmdatas = new GameDatas(mapsNumber);
+
+        int firstLevelNumber = CurrentGameDatas.GetActualLevelFirstMapNumber();
+        int j = 0;
+        for(int i= firstLevelNumber; i < firstLevelNumber + mapsNumber; i++)
         {
             gmdatas.AddMapData(new MapDatas(CurrentGameDatas.mapDatas[i].mapScore, CurrentGameDatas.mapDatas[i].scarab, CurrentGameDatas.mapDatas[i].item, CurrentGameDatas.mapDatas[i].itemType));
-        }
-
-        for(int i=0; i<gmdatas.maxMap; i++)
-        {
             if (CurrentGameDatas.mapDatas[i].item)
             {
                 if (CurrentGameDatas.mapDatas[i].itemType == Configuration.KeyType)
                 {
-                    KeySpam(i);
+                    KeySpam(j);
                 }
-                else if(CurrentGameDatas.mapDatas[i].itemType == Configuration.GemType)
+                else if (CurrentGameDatas.mapDatas[i].itemType == Configuration.GemType)
                 {
-                    GemSpam(i);
+                    GemSpam(j);
                 }
-                OpenGate(i);
+                OpenGate(j);
             }
+            j++;
         }
 
         ScoreMake();

@@ -42,7 +42,7 @@ public class MapCollection
             case 9:
                 return InitMap9();
             default:
-                return TestMap();
+                return IziMapWithGem();
                 //break;
         }
 
@@ -260,7 +260,7 @@ public class MapCollection
                                       {Edge,    Edge,   Edge,   Edge,   Edge,   Edge,   Column,  LSwitch,Column,  LSwitch,Column,  Edge,   Edge,   Edge,   Edge,   Edge},
                                       {Edge,    Edge,   Edge,   Edge,   Edge,   Edge,   LSwitch,Column,  Column,  Column,  LSwitch,Edge,   Edge,   Edge,   Edge,   Edge},
                                       {Edge,    Edge,   Edge,   Edge,   Edge,   Edge,   Column,  Column,  Column,  Column,  Column,  LGateE, Edge,   DoorE,  Edge,   Edge},
-                                      {Edge,    Edge,   Edge,   Edge,   Edge,   Edge,   Column,  Column,  Column,  Column,  Column,  LGate,  Gem,    Door,   Edge,   Edge},
+                                      {Edge,    Edge,   Edge,   Edge,   Edge,   Edge,   Column,  Column,  Column,  Column,  Button,  LGate,  Gem,    Door,   Edge,   Edge},
                                       {Edge,    Edge,   Edge,   Edge,   Edge,   Edge,   Column,  Column,  Column,  Column,  Column,  LGateE, Edge,   DoorE,  Edge,   Edge},
                                       {Edge,    Edge,   Edge,   Edge,   Edge,   Edge,   LSwitch,Column,  Column,  Column,  LSwitch,Edge,   Edge,   Edge,   Edge,   Edge},
                                       {Edge,    Edge,   Edge,   Edge,   Edge,   Edge,   Column,  LSwitch,Column,  LSwitch,Column,  Edge,   Edge,   Edge,   Edge,   Edge},
@@ -271,7 +271,7 @@ public class MapCollection
                                       {Edge,    Edge,   Edge,   Edge,   Edge,   Edge,   Edge,   Edge,   Edge,   Edge,   Edge,   Edge,   Edge,   Edge,   Edge,   Edge}};
         map9.boxNumber = 8;
         map9.boxLocations = new Vector3[8] { new Vector3(325, 0, 325), new Vector3(325, 0, 275), new Vector3(425, 0, 325), new Vector3(425, 0, 275), new Vector3(325, 0, 475), new Vector3(325, 0, 425), new Vector3(425, 0, 475), new Vector3(425, 0, 425) };
-        map9.Scarab3PartNumber = 88;
+        map9.Scarab3PartNumber = 89;
         map9.Scarab2PartNumber = 95;
         map9.itemType = Configuration.GemType;
         return map9;
@@ -306,15 +306,15 @@ public class MapCollection
     private static Map TestMap()
     {
         Map map = new Map();
-        map.charPosition = new Vector3(275, 26, 325);
-        map.startPosition = new Vector3(275, 0, 375);
+        map.charPosition = new Vector3(375, 100, 325);
+        map.startPosition = new Vector3(175, 0, 375);
         map.heigth = 3;
-        map.width = 4;
-        map.mapMatrix = new int[,] { { Edge, Edge, Edge, Edge },
-                                     { Column, Column, Trap, Door },
-                                     { Hole, Hole, Hole, Hole}};
-        map.boxNumber = 1;
-        map.boxLocations = new Vector3[1] { new Vector3(325, 0, 325)};
+        map.width = 7;
+        map.mapMatrix = new int[,] { { Column, Column, Column, Column, Column, LGateE, DoorE },
+                                     { Column, Column, Hole, RStone, RStone, RStone, Door },
+                                     { Column, Column, Column, Column, RStone, LGateE, DoorE}};
+        map.boxNumber = 2;
+        map.boxLocations = new Vector3[5] { new Vector3(325, 30, 325), new Vector3(225, 30, 325), new Vector3(475, 700, 325), new Vector3(375, 100, 325), new Vector3(375, 170, 325), };
         return map;
     }
 }

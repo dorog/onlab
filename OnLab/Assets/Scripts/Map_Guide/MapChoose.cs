@@ -11,6 +11,10 @@ public class MapChoose : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (PreparLevel.inAnimation)
+        {
+            return;
+        }
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);

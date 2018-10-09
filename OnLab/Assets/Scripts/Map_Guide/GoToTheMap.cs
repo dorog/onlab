@@ -12,11 +12,11 @@ public class GoToTheMap : MonoBehaviour {
 
     public void GoMyMap()
     {
-        if (mapNumber != CurrentGameDatas.maxMap)
+        if (mapNumber != CurrentGameDatas.GetActualLevelLastMapNumber())
         {
             scLoad.LoadMapTimeScaleUsed(mapNumber);
         }
-        else if (CurrentGameDatas.ItemCount >= CurrentGameDatas.maxMap - 1)
+        else if (CurrentGameDatas.ItemCount >= CurrentGameDatas.GetActualLevelLastMapNumber() - 1)
         {
             scLoad.LoadMapTimeScaleUsed(mapNumber);
         }  

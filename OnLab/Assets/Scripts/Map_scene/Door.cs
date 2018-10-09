@@ -1,21 +1,21 @@
 ﻿using UnityEngine;
 
-public class Door : MonoBehaviour {
+public class Door : MonoBehaviour
+{
 
     private int count = 1;
     private bool used = false;
-    public float doorOpenSpeed = 2f;
-    public string doorAnimName = "OpenWalledDoor";
-	
-	// Update is called once per frame
-	void Update () {
+    public string doorAnimName = "DoorWidth_last";
+
+    // Update is called once per frame
+    void Update()
+    {
         if (count == 0 && !used)
         {
             used = true;
             Animation anim = this.transform.GetComponent<Animation>();
-            anim[doorAnimName].speed = doorOpenSpeed;
+            anim[doorAnimName].speed = anim[doorAnimName].length / Configuration.timeForAnimation;
             anim.Play();
-            this.transform.GetChild(this.transform.childCount - 1).gameObject.SetActive(true);
             this.transform.GetComponent<DoorHighData>().opened = true;
         }
     }
@@ -26,10 +26,9 @@ public class Door : MonoBehaviour {
         {
             used = false;
             Animation anim = this.GetComponent<Animation>();
-            anim[doorAnimName].speed = -doorOpenSpeed;
+            anim[doorAnimName].speed = -anim[doorAnimName].length / Configuration.timeForAnimation; ;
             anim[doorAnimName].time = anim[doorAnimName].length;
             anim.Play(doorAnimName);
-            this.transform.GetChild(this.transform.childCount - 1).gameObject.SetActive(false);
             this.transform.GetComponent<DoorHighData>().opened = false;
         }
         count++;

@@ -52,6 +52,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a794f08352f8bbd48a9e3cf1c9759bac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lr: {fileID: 120288705377642716}
   start: {x: 0, y: 0, z: 0}
   aim: {x: 0, y: 0, z: 0}
 --- !u!120 &120288705377642716
@@ -68,7 +69,7 @@ LineRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0038ef4943b9a45428a619f0724da899, type: 2}
+  - {fileID: 2100000, guid: 1c5bdd13709c2ec499f66684bb76e662, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -93,7 +94,7 @@ LineRenderer:
   - {x: 0, y: 0, z: 1}
   m_Parameters:
     serializedVersion: 2
-    widthMultiplier: 10
+    widthMultiplier: 3
     widthCurve:
       serializedVersion: 2
       m_Curve:

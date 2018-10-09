@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class Configuration {
 
@@ -8,7 +9,7 @@ public class Configuration {
     public static float holeGround = -65;
     public static float risingStoneGround = -65;
     public static float stoneLifterGround = -65;
-    public static float doorGround = 0;
+    public static float doorGround = -90;
     public static float doorEdgeGround = -90;
     public static float keyGround = -90;
     public static float trapGround = -90;
@@ -17,11 +18,11 @@ public class Configuration {
     public static float boxGround = 40;
     public static float laserGateGround = -90;
     public static float laserGateEdgeGround = -90;
-    public static float laserSwitchGround = -40;
+    public static float laserSwitchGround = -90;
 
     //Configuration parameters
     public static float TimeBetweenCmds = 0.5f;
-    public static float fallSpeed = 100;
+    public static float fallDistance = 100;
     public static float fallSpeedBoost = 2;
     public static float timeForAnimation = 1f;
     public static float timeForBoxMove = 0.55f;
@@ -63,8 +64,11 @@ public class Configuration {
 
     //Scenes
     public static string resultScene = "FinishedMap";
-    public static string mapGuideScene = "Map_guide";
-    public static string mapScene = "Map_scene";
+    public static string levelOneName = "Level1";
+    public static string levelTwoName = "Level2";
+    public static string levelThreeName = "Level3";
+    public static string levelLast = "LevelLast";
+    public static string mapName = "Map_scene";
     public static bool isLoad = false;
 
     //Joe anims in menu
@@ -83,14 +87,13 @@ public class Configuration {
     public static int bestScreenHeight = 1080;
 
     //Speed data
-    //public static int speed = 1;
     public static int minSpeed = 1;
     public static int maxSpeed = 4;
     public static int basicSpeed = 1;
     public static string speedTextText = "Speed x";
 
     //New
-    public static int maxMap = 9;
+    public static int maxMap = 18;
 
     public static int emptySlot = 0;
     public static int notEmptySlot = 1;
@@ -107,8 +110,8 @@ public class Configuration {
     public const int DoorEdgeID = -3;
     public const int KeyID = -2;
     public const int DoorID = -1;
-    public const int ColumnID = 0;
-    public const int EdgeID = 1;
+    public const int ColumnID = 1;
+    public const int EdgeID = 0;
     public const int TrapID = 2;
     public const int ButtonID = 3;
     public const int HoleID = 4;
@@ -120,5 +123,31 @@ public class Configuration {
     public const int BoxID = 10;
 
 
-    public enum CommandType { GoForward, TurnRight, TurnLeft, Activate, FV1, FV2 }
+    public enum CommandType { GoForward, TurnRight, TurnLeft, Activate, FV1, FV2, Null }
+
+    public enum CanGoForward { OneDiff, CantGo, Go }
+
+    public static float  hight_0_Ground = -90;
+
+    public static CommandType chosenCommand = CommandType.Null;
+    public static Image chosenImage = null;
+
+    public static bool inStart = false;
+
+    public static string GetLevelName()
+    {
+        switch (CurrentGameDatas.onLevel)
+        {
+            case 1:
+                return levelOneName;
+            case 2:
+                return levelTwoName;
+            case 3:
+                return levelThreeName;
+            case 4:
+                return levelLast;
+            default:
+                return levelOneName;
+        }
+    }
 }

@@ -26,17 +26,22 @@ public class JOE_Anim_Manager : MonoBehaviour {
         float rand = Random.Range(minWait, maxWait);
         Invoke("ShowAnim", rand);
 
-        footChance = Mathf.Abs(footChance);
-        lookAroundChance = Mathf.Abs(lookAroundChance);
-        welcomeChance = Mathf.Abs(welcomeChance);
+        footChance = Mathf.Abs(footChance)/100;
+        lookAroundChance = Mathf.Abs(lookAroundChance)/100;
+        welcomeChance = Mathf.Abs(welcomeChance)/100;
     }
 
     public void ShowAnim()
     {
+        if (PreparLevel.inAnimation)
+        {
+            return;
+        }
+
         float invokeCallTime;
         float random = Random.value;
 
-        if(random <= footChance)
+        if (random <= footChance)
         {
             joeAnim.SetBool(Configuration.footAnimation, true);
             invokeCallTime = footAnimTime;
@@ -54,7 +59,6 @@ public class JOE_Anim_Manager : MonoBehaviour {
             invokeCallTime = welcomeAnimTime;
             lastAnimation = Configuration.welcomeAnimation;
         }
-
         Invoke("AnimEnd", invokeCallTime);
         Invoke("ShowAnim", invokeCallTime + Random.Range(minWait, maxWait));
     }

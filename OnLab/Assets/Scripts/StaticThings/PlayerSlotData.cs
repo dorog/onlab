@@ -7,7 +7,9 @@ public class PlayerSlotData {
     public int slotType;
     public int maxMap;
     public int speed;
+    public int onLevel;
     public MapResult[] mapResults;
+    public int[] levelMapsNumber;
 }
 
 [Serializable]

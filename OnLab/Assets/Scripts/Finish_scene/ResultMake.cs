@@ -7,6 +7,8 @@ public class ResultMake : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        Time.timeScale = Configuration.basicSpeed;
+
         GameObject finishPanel = GameObject.Find(Configuration.finishedPanelName);
         scLoader = GameObject.Find(Configuration.loadSceneGOName).GetComponent<SceneLoader>();
 
@@ -17,6 +19,6 @@ public class ResultMake : MonoBehaviour {
 
     public void LoadSameScene()
     {
-        scLoader.LoadMap(CurrentGameDatas.mapNumber);
+        scLoader.LoadMapTimeScaleUsed(CurrentGameDatas.mapNumber);
     }
 }

@@ -3,48 +3,34 @@
 public class JoeCommandControl : MonoBehaviour {
 
     public float rotate = 90;
-    private float originTime=1;
+    private float originTime = 1;
     private float time;
     private Animator joeAnim;
-    public CharacterController joeControll;
 
     private bool forward = false;
     private bool leftturn = false;
     private bool rightturn = false;
 
-    public bool fall_trap = false;
-    public float gravityForce = 20;
-
     public bool stopped = false;
-    public bool gravityOff = false;
 
     private Vector3 aimPosition;
-    public float fallSpeedCheck;
-
-    //public Vector3 joeForward = new Vector3(1, 0, 0);
 
     // Use this for initialization
-    void Start () {
+    void Start() {
         originTime = Configuration.timeForAnimation;
         time = Configuration.timeForAnimation;
         joeAnim = this.transform.GetComponent<Animator>();
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update() {
 
         if (!stopped)
         {
-            if (fall_trap)
-            {
-                joeControll.Move(Vector3.down * Time.deltaTime * gravityForce);
-            }
-
             if (forward)
             {
                 if (time - Time.deltaTime > 0)
                 {
-                    //joeControll.Move(this.transform.forward * Configuration.unit * Time.deltaTime);
                     this.transform.position += this.transform.forward * Configuration.unit * Time.deltaTime;
                     time -= Time.deltaTime;
                 }
@@ -86,23 +72,15 @@ public class JoeCommandControl : MonoBehaviour {
                 }
             }
         }
-        if (!gravityOff)
-        {
-            fallSpeedCheck = Configuration.fallSpeed;
-            joeControll.Move(new Vector3(0, Time.timeScale*Time.deltaTime*Configuration.fallSpeed*-1, 0));
-        }
-       
-	}
+    }
 
     public void TurnRight()
     {
-        //joeForward = Quaternion.Euler(0, rotate, 0) * joeForward;
         rightturn = true;
     }
 
     public void TurnLeft()
-    {
-        //joeForward = Quaternion.Euler(0, -rotate, 0) * joeForward;
+    { 
         leftturn = true;
     }
 
@@ -117,8 +95,6 @@ public class JoeCommandControl : MonoBehaviour {
 
     public void HitTrap(float timeInTheAir)
     {
-        gravityOff = true;
-        Invoke("CanFallNow", timeInTheAir);
         Animator anim = this.transform.GetComponent<Animator>();
         if (!anim)
         {
@@ -126,10 +102,5 @@ public class JoeCommandControl : MonoBehaviour {
         }
         anim.SetBool(Configuration.idleAnimation, false);
         anim.SetBool(Configuration.trapAnimation, true);
-    }
-
-    private void CanFallNow()
-    {
-        fall_trap = true;
     }
 }

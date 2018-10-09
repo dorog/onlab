@@ -84,6 +84,7 @@ GameObject:
   - component: {fileID: 4200386103527232}
   - component: {fileID: 33829941549398820}
   - component: {fileID: 23452517347674658}
+  - component: {fileID: 65050471546576524}
   m_Layer: 0
   m_Name: Box001
   m_TagString: Untagged
@@ -377,6 +378,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1432256513045978}
   m_Mesh: {fileID: 4300006, guid: ae84399df35fe4441b5724c97d3a5751, type: 3}
+--- !u!65 &65050471546576524
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1539142363137794}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 50, y: 50, z: 100}
+  m_Center: {x: 0, y: 25.05, z: 0}
 --- !u!65 &65384573936453318
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -415,7 +428,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 133cc05f3abc67444b1ccff8b31ab5e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeInTheAir: 4.7
   resetTime: 2
+  minNotKillHeigh: 1
+  boxCollider: {fileID: 65050471546576524}
 --- !u!114 &114938724029065022
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -429,6 +445,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   boxes: []
   baseHigh: 2
+  HeighCalculateFromNumber: -1
 --- !u!137 &137237547725859092
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

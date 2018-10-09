@@ -52,7 +52,7 @@ public class CreateNewElement : MonoBehaviour {
             #if UNITY_STANDALONE_WIN
                 rt.sizeDelta = new Vector2(rt.sizeDelta.x * Screen.width / Configuration.bestScreenWidth, rt.sizeDelta.y * Screen.height / Configuration.bestScreenHeight);
             #else
-                rt.sizeDelta = new Vector2(rt.sizeDelta.x * Screen.width / Configuration.bestScreenWidth * androidUISize, rt.sizeDelta.y * Screen.height / Configuration.bestScreenHeight * androidUISize);
+                rt.sizeDelta = new Vector2(rt.sizeDelta.x * Screen.width / Configuration.bestScreenWidth, rt.sizeDelta.y * Screen.height / Configuration.bestScreenHeight * androidUISize);
             #endif
 
             //last item must be a delete slot (slots + 1 (delete slot))

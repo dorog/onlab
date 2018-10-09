@@ -59,6 +59,8 @@ public class StartActions : MonoBehaviour
         character.GetComponent<JoeCommandControl>().stopped = false;
         aimnumber = 0;
         executedCommands = 0;
+        Configuration.fallDistance = 0;
+        Configuration.inStart = true;
         actionBtn.interactable = false;
         stopBtn.interactable = true;
         lastSwitchedOff = null;
@@ -140,7 +142,8 @@ public class StartActions : MonoBehaviour
             commandsForExecute[aimnumber].Effect();
             aimnumber++;
             executedCommands++;
-            Invoke("ExecuteCmd", Configuration.TimeBetweenCmds + effectTime);
+            float fallTime = Mathf.Pow((Configuration.fallDistance / 2 / -Physics.gravity.y), 0.5f);
+            Invoke("ExecuteCmd", Configuration.TimeBetweenCmds + effectTime + fallTime*Configuration.fallSpeedBoost);
         }
         else
         {
@@ -217,7 +220,18 @@ public class StartActions : MonoBehaviour
         }
 
         //Factory ui lock
-        GameObject cmdFactory = GameObject.Find(Configuration.cmdFactoryName);
+        Configuration.inStart = !lockBool;
+        if (!lockBool)
+        {
+            Configuration.chosenCommand = Configuration.CommandType.Null;
+            if (Configuration.chosenImage != null)
+            {
+                Configuration.chosenImage.color = Color.white;
+            }
+        }
+
+
+        /*GameObject cmdFactory = GameObject.Find(Configuration.cmdFactoryName);
         if(cmdFactory == null)
         {
             return;
@@ -227,7 +241,7 @@ public class StartActions : MonoBehaviour
             GameObject child = cmdFactory.transform.GetChild(i).gameObject;
             Image childImage = child.transform.GetChild(0).GetComponent<Image>();
             childImage.raycastTarget = lockBool;
-        }
+        }*/
 
         clearBtn.interactable = lockBool;
     }

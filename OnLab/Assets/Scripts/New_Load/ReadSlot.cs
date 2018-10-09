@@ -21,6 +21,9 @@ public class ReadSlot : MonoBehaviour
     private int solvedMap = 0;
     private int summKeys = 0;
 
+    private int onLevel;
+    private int[] levelMapsNumber;
+
     void Start()
     {
         ReadBasedOnPlatform();
@@ -32,7 +35,9 @@ public class ReadSlot : MonoBehaviour
         CurrentGameDatas.speed = savedSpeed;
         CurrentGameDatas.ItemCount = summKeys;
         CurrentGameDatas.CopyTheDatas(gmdata, Application.persistentDataPath + "/" + fileName);
-        SceneManager.LoadScene(Configuration.mapGuideScene);
+        CurrentGameDatas.onLevel = onLevel;
+        CurrentGameDatas.levelMapsNumber = levelMapsNumber;
+        SceneManager.LoadScene(Configuration.GetLevelName());
     }
 
     void ChangeSceneForNewBasedOnPlatform()
@@ -47,6 +52,8 @@ public class ReadSlot : MonoBehaviour
         data.slotType = Configuration.notEmptySlot;
         data.maxMap = Configuration.maxMap;
         data.mapResults = new MapResult[Configuration.maxMap];
+        data.onLevel = 1;
+        data.levelMapsNumber = new int[] { 9, 5, 3, 1 };
         for (int i = 0; i < data.mapResults.Length; i++)
         {
             data.mapResults[i] = new MapResult();
@@ -64,7 +71,7 @@ public class ReadSlot : MonoBehaviour
         CurrentGameDatas.savedSpeed = Configuration.basicSpeed;
         CurrentGameDatas.speed = Configuration.basicSpeed;
         CurrentGameDatas.CopyTheDatas(gmdata, fileName);
-        SceneManager.LoadScene(Configuration.mapGuideScene);
+        SceneManager.LoadScene(Configuration.levelOneName);
     }
 
     private void ReadBasedOnPlatform()
@@ -84,6 +91,8 @@ public class ReadSlot : MonoBehaviour
             slotState = psData.slotType;
             maxMap = psData.maxMap;
             ps = psData;
+            onLevel = psData.onLevel;
+            levelMapsNumber = psData.levelMapsNumber;
         }
         else
         {
@@ -93,6 +102,8 @@ public class ReadSlot : MonoBehaviour
             data.slotType = Configuration.emptySlot;
             data.maxMap = Configuration.maxMap;
             data.mapResults = new MapResult[Configuration.maxMap];
+            data.onLevel = 1;
+            data.levelMapsNumber = new int[] { 9, 5, 3, 1 };
             for (int i = 0; i < data.mapResults.Length; i++)
             {
                 data.mapResults[i] = new MapResult();
@@ -121,6 +132,7 @@ public class ReadSlot : MonoBehaviour
             Color tempColor = panelImg.color;
             tempColor.a = 0f;
             panelImg.color = tempColor;
+            SlotPanel.SetActive(false);
             if (Configuration.isLoad)
             {
                 myBtn.interactable = false;
@@ -133,6 +145,7 @@ public class ReadSlot : MonoBehaviour
                 ColorBlock highLited = myBtn.colors;
                 highLited.highlightedColor = Color.yellow;
                 myBtn.colors = highLited;
+                
             }
 
             for (int i = 0; i < maxMap; i++)

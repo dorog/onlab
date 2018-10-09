@@ -10,6 +10,8 @@ public class FinishMap : MonoBehaviour {
     public int missingScarabWeight = 100;
     public int moreCmdWeight = 10;
 
+    public DoorHighData doorHighData;
+
     // Use this for initialization
     void Start () {
         CurrentGameDatas.HawNewItem = false;
@@ -19,6 +21,11 @@ public class FinishMap : MonoBehaviour {
     { 
         if(other.gameObject.name != Configuration.characterName)
         {
+            BoxController bc = other.GetComponent<BoxController>();
+            if (bc != null)
+            {
+                doorHighData.RemoveTopBox();
+            }
             Destroy(other.gameObject);
             return;
         }

@@ -9,14 +9,15 @@ public class TrapActive : MonoBehaviour
     public float resetTime = 2;
     public int minNotKillHeigh = 1;
     private bool used = false;
-    private HighData highData;
+    private TrapHighData trapHighData;
+    public BoxCollider boxCollider;
 
     // Use this for initialization
     void Start()
     {
         trapAnim = this.transform.GetComponent<Animation>();
         sa = GameObject.Find(Configuration.actionMenuName).GetComponent<StartActions>();
-        highData = this.transform.GetComponent<HighData>();
+        trapHighData = this.transform.GetComponent<TrapHighData>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -30,24 +31,31 @@ public class TrapActive : MonoBehaviour
             trapAnim.Play();
             used = true;
         }
-        if (highData.boxes.Count >= minNotKillHeigh)
+        if (trapHighData.GetRealBoxCount() >= minNotKillHeigh)
         {
+            boxCollider.enabled = false;
             return;
         }
         else
         {
             JoeCommandControl joeController = other.GetComponent<JoeCommandControl>();
-            if (!joeController)
+            if (joeController==null)
             {
                 return;
             }
             if (joeController)
             {
                 joeController.HitTrap(timeInTheAir);
+                Invoke("CanFall", timeInTheAir);
                 trapAnim.Play();
                 sa.KilledByTrap(resetTime + timeInTheAir);
             }
 
         }
+    }
+
+    private void CanFall()
+    {
+        boxCollider.enabled = false;
     }
 }
