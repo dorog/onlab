@@ -2,16 +2,29 @@
 
 public class DeleteChilds : MonoBehaviour {
 
-	// Update is called once per frame
-	void Update () {
-        if (this.transform.childCount > 0)
-        {
-            Transform child = this.transform.GetChild(0);
-            int slotNumber = child.GetComponent<CommandData>().slot;
-            GameObject commandPanel = GameObject.Find(Configuration.cmdPanelManagerName);
-            commandPanel.GetComponent<CommandPanel>().DeleteCommandBySlot(slotNumber);
+    private CommandPanel commandPanel;
 
-            GameObject.Destroy(child.gameObject);
+    private void Start()
+    {
+        commandPanel = CommandPanel.GetCommandPanel();
+    }
+
+    void Update () {
+        if (transform.childCount > 0)
+        {
+            Transform child = transform.GetChild(0);
+
+            CommandData cmdData = child.GetComponent<CommandData>();
+            if (cmdData == null)
+            {
+                Debug.LogError("DeleteChilds: No commandData on the child!");
+                return;
+            }
+            int slotNumber = cmdData.Command.PanelSlot;
+            
+            commandPanel.DeleteCommandBySlot(slotNumber);
+
+            Destroy(child.gameObject);
         }
     }
 }

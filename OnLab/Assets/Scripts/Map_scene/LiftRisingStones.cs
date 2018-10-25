@@ -2,13 +2,16 @@
 
 public class LiftRisingStones : MonoBehaviour {
 
-    private GameObject mapGen;
+    private MapGenerator mapGen;
     private bool used = false;
 
-    // Use this for initialization
     void Start()
     {
-        mapGen = GameObject.Find(Configuration.mapGeneratorName);
+        mapGen = MapGenerator.GetMapGenerator();
+        if (mapGen == null)
+        {
+            Debug.LogError("LiftRisingStones: MapGenerator is null!");
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -18,7 +21,7 @@ public class LiftRisingStones : MonoBehaviour {
             if (mapGen == null)
                 return;
             used = true;
-            mapGen.GetComponent<MapGenerator>().RiseRisingStones();
+            mapGen.RiseRisingStones();
         }
     }
 }

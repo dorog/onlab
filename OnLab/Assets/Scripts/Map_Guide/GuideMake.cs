@@ -1,27 +1,45 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class GuideMake : MonoBehaviour {
 
-    GameDatas gmdatas;
-    GameObject Doors;
-    GameObject Gate;
-    GameObject Keys;
-    public GameObject KeyModel;
-    public GameObject GemModel;
-    private int scoreBoardPlace = 3;
-    public int itemAboveHolder = 50;
+    private GameDatas gmdatas;
+    private string GSB_part = "Map_guide/GSB_part";
+    private string numberIcon = "Map_guide/number";
 
-    public GameObject castList;
+    [Header("Map objects")]
+    [SerializeField]
+    private GameObject ScoreBoards;
+    [SerializeField]
+    private GameObject Gate;
+    [SerializeField]
+    private GameObject Keys;
+    [Header("Item setting")]
+    [SerializeField]
+    private GameObject KeyModel;
+    [SerializeField]
+    private GameObject GemModel;
+    [SerializeField]
+    private int itemAboveHolder = 50;
 
-    // Use this for initialization
+    [Header("Level up button")]
+    [SerializeField]
+    private Button levelUpButton;
+
+    [Header("CastList GameObject")]
+    [SerializeField]
+    private GameObject castList;
+
+    private readonly int mathNumber = 1;
+
     void Start () {
-        Time.timeScale = Configuration.basicSpeed;
+        Time.timeScale = SharedData.basicSpeed;
 
-        Doors = GameObject.Find(Configuration.doorStr);
-        Gate = GameObject.Find(Configuration.gatesStr);
-        Keys = GameObject.Find(Configuration.keyStr);
+        if (levelUpButton!=null && CurrentGameDatas.GetActualLevelLastMapNumber() <= CurrentGameDatas.ItemCount && CurrentGameDatas.onLevel != GameStructure.maxLevel) {
+            levelUpButton.interactable = true;
+        }
 
-        int mapsNumber = CurrentGameDatas.GetActualLevelMapNumber();
+        int mapsNumber = CurrentGameDatas.GetActualLevelMapCount();
         gmdatas = new GameDatas(mapsNumber);
 
         int firstLevelNumber = CurrentGameDatas.GetActualLevelFirstMapNumber();
@@ -31,11 +49,11 @@ public class GuideMake : MonoBehaviour {
             gmdatas.AddMapData(new MapDatas(CurrentGameDatas.mapDatas[i].mapScore, CurrentGameDatas.mapDatas[i].scarab, CurrentGameDatas.mapDatas[i].item, CurrentGameDatas.mapDatas[i].itemType));
             if (CurrentGameDatas.mapDatas[i].item)
             {
-                if (CurrentGameDatas.mapDatas[i].itemType == Configuration.KeyType)
+                if (CurrentGameDatas.mapDatas[i].itemType == SharedData.KeyType)
                 {
                     KeySpam(j);
                 }
-                else if (CurrentGameDatas.mapDatas[i].itemType == Configuration.GemType)
+                else if (CurrentGameDatas.mapDatas[i].itemType == SharedData.GemType)
                 {
                     GemSpam(j);
                 }
@@ -66,20 +84,31 @@ public class GuideMake : MonoBehaviour {
 
     void ScoreMake()
     {
-        int DoorsChild = Doors.transform.childCount;
-        for (int i = 0; i < gmdatas.maxMap && i < DoorsChild; i++)
+        int ScoreBoardChilds = ScoreBoards.transform.childCount;
+        for (int i = 0; i < gmdatas.maxMap && i < ScoreBoardChilds; i++)
         {
-            Material[] mats = Doors.transform.GetChild(i).transform.GetChild(scoreBoardPlace).GetChild(0).GetComponent<MeshRenderer>().materials;
-            mats[1] = Resources.Load<Material>(Configuration.GSB_part + gmdatas.mapDatas[i].scarab);
-            Doors.transform.GetChild(i).transform.GetChild(scoreBoardPlace).GetChild(0).GetComponent<MeshRenderer>().materials = mats;
+            Transform ScoreBoardChild = ScoreBoards.transform.GetChild(i);
+            Transform scarabChild = ScoreBoardChild.transform.GetChild(0);
+
+            MeshRenderer mr = scarabChild.GetComponent<MeshRenderer>();
+
+            Material[] mats = mr.materials;
+            mats[mathNumber] = Resources.Load<Material>(GSB_part + gmdatas.mapDatas[i].scarab);
+
+            mr.materials = mats;
+
             int[] numbs = { 100, 10, 1 };
             int score = gmdatas.mapDatas[i].mapScore;
-            for (int j = 1; j < Doors.transform.GetChild(i).transform.GetChild(scoreBoardPlace).childCount; j++)
+            for (int j = 1; j < ScoreBoardChild.childCount; j++)
             {
-                mats = Doors.transform.GetChild(i).transform.GetChild(scoreBoardPlace).GetChild(j).GetComponent<MeshRenderer>().materials;
-                mats[1] = Resources.Load<Material>(Configuration.numberIcon + score / numbs[j - 1]);
+                Transform scoreChild = ScoreBoardChild.GetChild(j);
+                MeshRenderer mrScore = scoreChild.GetComponent<MeshRenderer>();
+
+                mats = mrScore.materials;
+                mats[mathNumber] = Resources.Load<Material>(numberIcon + score / numbs[j - 1]);
+
+                mrScore.materials = mats;
                 score -= (score / numbs[j - 1]) * numbs[j - 1];
-                Doors.transform.GetChild(i).transform.GetChild(scoreBoardPlace).GetChild(j).GetComponent<MeshRenderer>().materials = mats;
             }
         }
     }
@@ -90,7 +119,7 @@ public class GuideMake : MonoBehaviour {
         {
             return;
         }
-        if((i == CurrentGameDatas.mapNumber - 1) && (CurrentGameDatas.HawNewItem))
+        if((i+CurrentGameDatas.GetActualLevelFirstMapNumber() == ActualMapData.mapNumber - 1) && (ActualMapData.HawNewItem))
         {
             Gate.transform.GetChild(i).GetComponent<OpenGate>().OpenGateNew();
         }
@@ -102,7 +131,7 @@ public class GuideMake : MonoBehaviour {
 
     void EndCheck()
     {
-        if(CurrentGameDatas.HawNewItem && CurrentGameDatas.ItemCount == CurrentGameDatas.maxMap)
+        if(ActualMapData.HawNewItem && CurrentGameDatas.ItemCount == GameStructure.maxMap)
         {
             castList.gameObject.SetActive(true);
         }

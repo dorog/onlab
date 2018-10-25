@@ -36,7 +36,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4497770357648116}
-  - component: {fileID: 114469339008660656}
   m_Layer: 0
   m_Name: Torch(sizex50)
   m_TagString: Untagged
@@ -302,24 +301,6 @@ Light:
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!114 &114469339008660656
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1287369496984260}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14e1ccb9bc5e66e46b9ebc20caf6db2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TorchLight: {fileID: 1741221190583356}
-  MainFlame: {fileID: 1141055003766826}
-  BaseFlame: {fileID: 1358352466502174}
-  Etincelles: {fileID: 1684272660741446}
-  Fumee: {fileID: 1541276653161366}
-  MaxLightIntensity: 3
-  IntensityLight: 1.5
 --- !u!198 &198350363286807190
 ParticleSystem:
   m_ObjectHideFlags: 1

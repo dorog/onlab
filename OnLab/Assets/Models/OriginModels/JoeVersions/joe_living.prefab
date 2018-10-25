@@ -21,6 +21,8 @@ GameObject:
   - component: {fileID: 4827456263235900}
   - component: {fileID: 95748040072786220}
   - component: {fileID: 114365452997809114}
+  - component: {fileID: 54522579347043266}
+  - component: {fileID: 136263967320956780}
   m_Layer: 0
   m_Name: joe_living
   m_TagString: Untagged
@@ -1009,15 +1011,15 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1072421645064952}
-  m_LocalRotation: {x: 0.0010725361, y: 0.99876344, z: -0.049545027, w: -0.0039757392}
-  m_LocalPosition: {x: 1303.7632, y: -4840.541, z: -4361.006}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0, y: 0.99904823, z: -0.043619223, w: 0}
+  m_LocalPosition: {x: 0.9, y: 49, z: -895.5}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 4072698655612244}
   - {fileID: 4054745783240628}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 365.679, y: -179.537, z: 0.14600001}
+  m_LocalEulerAnglesHint: {x: 365, y: -180, z: 0}
 --- !u!4 &4846784245114566
 Transform:
   m_ObjectHideFlags: 1
@@ -1115,6 +1117,21 @@ Transform:
   m_Father: {fileID: 4299120926530988}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &54522579347043266
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1072421645064952}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!95 &95748040072786220
 Animator:
   serializedVersion: 3
@@ -1144,12 +1161,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   joeAnim: {fileID: 95748040072786220}
-  AnimTimes:
-  - 3.4
-  - 6
-  - 3.4
   minWait: 3
   maxWait: 6
+  footChance: 0
+  lookAroundChance: 0
+  welcomeChance: 1
+  footAnimTime: 3.4
+  lookAroundAnimTime: 6
+  welcomeAnimTime: 3.4
+--- !u!136 &136263967320956780
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1072421645064952}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 40
+  m_Height: 1
+  m_Direction: 0
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!137 &137747709209148086
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
@@ -1171,9 +1203,9 @@ SkinnedMeshRenderer:
   - {fileID: 2100000, guid: 426d5817ad93f1f409746563112e28c2, type: 2}
   - {fileID: 2100000, guid: 22e3635899b5aa6489b7916bb639ec59, type: 2}
   - {fileID: 2100002, guid: f69f18c405e9e6343bcc272e4ea51bc0, type: 3}
-  - {fileID: 2100014, guid: c67e6d4655068264997f25a0eb896357, type: 3}
+  - {fileID: 2100014, guid: 2ee00f36581795e4fac92c763a8d4f72, type: 3}
   - {fileID: 2100000, guid: be4ea955ceac79c448bc9d6ffdb6cd02, type: 2}
-  - {fileID: 10756, guid: 0000000000000000e000000000000000, type: 0}
+  - {fileID: 2100018, guid: 67c39b33d069110409c4a2c20bb5b3b5, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

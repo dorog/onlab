@@ -105,7 +105,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4000378484991726}
   - component: {fileID: 95958336742242168}
-  - component: {fileID: 114533669059761388}
+  - component: {fileID: 114449131170542890}
   m_Layer: 0
   m_Name: RisingRound_with_ground
   m_TagString: Untagged
@@ -562,7 +562,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114533669059761388
+--- !u!114 &114449131170542890
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -570,20 +570,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1434012637497812}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7bc5566869ea0814a8afc8f6f24e7b87, type: 3}
+  m_Script: {fileID: 11500000, guid: ed8711733fe997c44a87420c5fb155f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  risingRound: {fileID: 1536866931398158}
+  risingRound: {fileID: 0}
   character: {fileID: 0}
   tunnelDoor: {fileID: 0}
-  switchLevelUp: {fileID: 0}
-  switchLevelDown: {fileID: 0}
-  risingAmount: 900
-  risingTime: 10
-  tunnelOpenStartTime: 5
-  fallingStartTime: 2
-  insideRisingTime: 4
-  fallingTime: 10
-  fallInsideTheGroundAmount: 150
-  fallInsideTheGroundTime: 4
-  cam: {fileID: 0}
+  risingAmount: 0
+  risingTime: 0
+  tunnelOpenStartTime: 0
+  fallingStartTime: 0
+  insideRisingTime: 0
+  fallingTime: 0
+  fallInsideTheGroundAmount: 0
+  fallInsideTheGroundTime: 0

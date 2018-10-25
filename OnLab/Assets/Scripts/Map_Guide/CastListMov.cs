@@ -1,16 +1,18 @@
 ﻿using UnityEngine;
 
+[RequireComponent(typeof(RectTransform))]
 public class CastListMov : MonoBehaviour {
 
     private RectTransform rt;
-    public int speed;
 
-	// Use this for initialization
+    [SerializeField]
+    private int speed;
+
 	void Start () {
-        rt = this.GetComponent<RectTransform>();
+        rt = GetComponent<RectTransform>();
+        rt.anchoredPosition = new Vector3(0, -Screen.height / 2 + -rt.sizeDelta[1]/2, 0);
 	}
 	
-	// Update is called once per frame
 	void Update () {
         if(rt.anchoredPosition.y < (Screen.height / 2 + rt.sizeDelta[1] / 2))
         {
@@ -18,7 +20,7 @@ public class CastListMov : MonoBehaviour {
         }
         else
         {
-            this.transform.parent.gameObject.SetActive(false);
+            transform.parent.gameObject.SetActive(false);
         }
 	}
 }

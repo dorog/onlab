@@ -3,22 +3,24 @@ using UnityEngine.UI;
 
 public class ResultMake : MonoBehaviour {
 
-    SceneLoader scLoader;
+    private string GSB_sprite = "Map_guide/GSB";
+
+    [Header("Result elements")]
+    [SerializeField]
+    private Image scarabImagePlace;
+    [SerializeField]
+    private Text scoreText;
 
     // Use this for initialization
     void Start () {
-        Time.timeScale = Configuration.basicSpeed;
+        Time.timeScale = SharedData.basicSpeed;
 
-        GameObject finishPanel = GameObject.Find(Configuration.finishedPanelName);
-        scLoader = GameObject.Find(Configuration.loadSceneGOName).GetComponent<SceneLoader>();
-
-        finishPanel.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>(Configuration.GSB_sprite + CurrentGameDatas.solvedMap.scarab);
-        finishPanel.transform.GetChild(1).GetComponent<Text>().text = "Score: "+ CurrentGameDatas.solvedMap.mapScore;
-        finishPanel.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(LoadSameScene);
+        scarabImagePlace.sprite = Resources.Load<Sprite>(GSB_sprite + ActualMapData.solvedMap.scarab);
+        scoreText.text = "Score: "+ ActualMapData.solvedMap.mapScore;
     }
 
     public void LoadSameScene()
     {
-        scLoader.LoadMapTimeScaleUsed(CurrentGameDatas.mapNumber);
+        SceneLoader.LoadMapTimeScaleUsed(ActualMapData.mapNumber);
     }
 }

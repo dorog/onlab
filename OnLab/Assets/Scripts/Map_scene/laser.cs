@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class laser : MonoBehaviour {
+public class Laser : MonoBehaviour {
 
     public LineRenderer lr;
     public Vector3 start;

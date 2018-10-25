@@ -22,7 +22,6 @@ GameObject:
   - component: {fileID: 222307761745639694}
   - component: {fileID: 114699387711594096}
   - component: {fileID: 114545602905967744}
-  - component: {fileID: 114380908428890626}
   m_Layer: 5
   m_Name: FactorySlot
   m_TagString: Untagged
@@ -30,21 +29,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &114380908428890626
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1499464774944166}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78ee7e77bae08bb4f8e6877b15e0a4b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  charName: 
-  id: 2
-  cmdpanelcmd: {fileID: 1424442445044072, guid: 976d9f0c5f8e7104484013964540fdb1,
-    type: 2}
 --- !u!114 &114545602905967744
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -56,7 +40,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2313b5e13f319ff468e712f031e29ef4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 0
 --- !u!114 &114699387711594096
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -1,26 +1,28 @@
 ﻿using UnityEngine;
 
-public class FV : Command {
+public class FV : Command
+{
 
-    private int fvNumber = 0;
+    private int FvNumber = 0;
     private StartActions sa;
 
-    public FV(int id, int fvNumber) : base(id)
+    public FV(int _PanelSlot, int fvNumber)
     {
-        
-        this.fvNumber = fvNumber;
+        ID = SharedData.realCommandID;
+        PanelSlot = _PanelSlot;
+        FvNumber = fvNumber;
         if(fvNumber == 1)
         {
-            this.sprite = Resources.Load<Sprite>(Configuration.fv1IconLocation);
+            Sprite = Resources.Load<Sprite>(SharedData.fv1Icon);
         }
         else {
-            this.sprite = Resources.Load<Sprite>(Configuration.fv2IconLocation);
+            Sprite = Resources.Load<Sprite>(SharedData.fv2Icon);
         }
-        sa = GameObject.Find(Configuration.actionMenuName).GetComponent<StartActions>();
+        sa = StartActions.GetStartActions();
     }
 
     public override void Effect()
     {
-        sa.FvStart(fvNumber);
+        sa.FvStart(FvNumber);
     }
 }

@@ -6,6 +6,8 @@ TagManager:
   tags:
   - lb_groundTarget
   - lb_perchTarget
+  - CommandPanelAndroid
+  - CommandPanelWindows
   layers:
   - Default
   - TransparentFX

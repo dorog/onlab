@@ -1,40 +1,41 @@
 ﻿using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class BoxController : MonoBehaviour
 {
-
     private Vector3 direction;
     private bool Move = false;
-    public bool Rise = false;
+    private bool Rise = false;
     private Rigidbody body;
-    private float time = 1.1f;
+    private float time;
     private float originTime;
 
     private Vector3 aimPosition;
-    public Transform onIt;
-
     private float plusHight;
-    // Use this for initialization
+
+    public Transform OnIt { get; set; }
+
+    private float timeForBoxMove = 0.55f;
+
     void Start()
     {
-        body = this.GetComponent<Rigidbody>();
-        originTime = Configuration.timeForBoxMove;
-        time = Configuration.timeForBoxMove;
+        body = GetComponent<Rigidbody>();
+        originTime = timeForBoxMove;
+        time = timeForBoxMove;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Move)
         {
             if (time - Time.deltaTime >= 0)
             {
-                body.MovePosition(this.transform.position + direction * Time.deltaTime * 100);
+                body.MovePosition(transform.position + direction * Time.deltaTime * 100);
                 time -= Time.deltaTime;
             }
             else if (time > 0)
             {
-                this.transform.position = aimPosition;
+                transform.position = aimPosition;
                 Move = false;
                 time = originTime;
             }
@@ -42,35 +43,35 @@ public class BoxController : MonoBehaviour
         }
         else if (Rise)
         {
-            this.transform.position = onIt.position + new Vector3(0, plusHight, 0);
+            transform.position = OnIt.position + new Vector3(0, plusHight, 0);
         }
     }
 
     public void MoveToThere(Vector3 forward)
     {
-        aimPosition = this.transform.position + forward * 50;
+        aimPosition = transform.position + forward * 50;
         Move = true;
         direction = forward;
         time = originTime;
     }
 
-    public void RiseBox(float time)
+    public void RiseBox()
     {
         Rise = true;
-        this.GetComponent<Rigidbody>().useGravity = false;
-        Invoke("EndRising", time);
+        body.useGravity = false;
+        Invoke("EndRising", SharedData.timeForAnimation);
     }
 
     private void EndRising()
     {
         Rise = false;
-        this.GetComponent<Rigidbody>().useGravity = true;
-        this.transform.position = onIt.position + new Vector3(0, plusHight, 0);
+        body.useGravity = true;
+        transform.position = OnIt.position + new Vector3(0, plusHight, 0);
     }
 
     public void InitOnIt(Transform onIt, int onItNumber)
     {
-        this.onIt = onIt;
-        plusHight = Configuration.unit * onItNumber;
+        OnIt = onIt;
+        plusHight = SharedData.unit * onItNumber;
     }
 }

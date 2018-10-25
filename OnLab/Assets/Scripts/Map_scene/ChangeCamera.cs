@@ -1,11 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ChangeCamera : MonoBehaviour {
 
-    public GameObject androidCameras;
+    [Header("Cameras in Android")]
+    [SerializeField]
+    private GameObject androidCameras;
+    [Header("Cameras in Windows")]
+    [SerializeField]
     public GameObject windowsCameras;
+
     private Camera[] cameras;
     private int activeCamera = 0;
 
@@ -28,7 +31,6 @@ public class ChangeCamera : MonoBehaviour {
         }
     }
 
-    // Update is called once per frame
     void Update () {
         if (Input.GetKeyDown(KeyCode.V))
         {

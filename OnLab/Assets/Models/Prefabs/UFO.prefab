@@ -36,13 +36,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1546727955441960}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1142, y: -740, z: -322}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalRotation: {x: -0.5868449, y: -0.0018539643, z: 0.007141404, w: -0.8096657}
+  m_LocalPosition: {x: 3288.734, y: 10236.495, z: -988.21014}
+  m_LocalScale: {x: 0.4999999, y: 0.5000005, z: 0.5000004}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!23 &23413929433866026
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -57,7 +57,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: bc185652d9453ae4d8835c36a9fd230e, type: 2}
+  - {fileID: 2100016, guid: 67c39b33d069110409c4a2c20bb5b3b5, type: 3}
   - {fileID: 2100004, guid: ca1298942ad8ce34ca3843d25043df41, type: 3}
   - {fileID: 2100000, guid: 19efd758ea7a93140a636a254a5153c3, type: 2}
   m_StaticBatchInfo:
@@ -114,11 +114,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdab3dc581125db40b06c5ac7ef41b74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  door: {fileID: 0}
   rising_time: 3
-  rising_speed: 20
-  distance_jump: 0
-  jumpYPower: 3
-  jumpXpower: 3
-  waitBeforeJump: 3
+  rising_speed: 40
+  flying_time: 3
+  jumpUpPower: 1200
+  jumpXpower: 1200
+  waitBeforeJump: 1
   place_door_open_time: 3
-  animation_start: 0
+  return_time: 3
+  jumpDownPower: 1200
+  jumpBackPower: 1200
+  waitBeforaLanding: 1
+  landing_time: 4
+  landing_speed: 40

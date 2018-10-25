@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
 
 public class GameDatas{
 
@@ -8,12 +7,12 @@ public class GameDatas{
 
     public GameDatas(int lastMap)
     {
-        this.maxMap = lastMap;
+        maxMap = lastMap;
     }
 
     public GameDatas()
     {
-        this.maxMap = 1;
+        maxMap = 1;
     }
 
     public void AddMapData(MapDatas newMapData)

@@ -2,65 +2,77 @@
 using System.Collections.Generic;
 
 public class LaserGateHighData : HighData {
-
-    public int offedHigh = 2;
-    public List<GameObject> boxesOnRoof = new List<GameObject>();
+    
+    [SerializeField]
+    private int offedHigh = 2;
+    private List<GameObject> boxesOnRoof = new List<GameObject>();
 
     private GameObject character;
 
     private void Start()
     {
-        character = GameObject.Find(Configuration.characterName);
+        GameObject[] gameobjectsWithPlayerTag = GameObject.FindGameObjectsWithTag(SharedData.playerTag);
+        if (gameobjectsWithPlayerTag.Length > 1)
+        {
+            Debug.LogWarning("LaserGateHighData: There are more than one GameObject with " + SharedData.playerTag + " tag, it may won't work fine");
+        }
+        else if (gameobjectsWithPlayerTag.Length == 0)
+        {
+            Debug.LogError("LaserGateHighData: There is no GameObject with " + SharedData.playerTag + " tag!");
+        }
+
+        if (gameobjectsWithPlayerTag.Length >= 1)
+        {
+            character = gameobjectsWithPlayerTag[0];
+        }
     }
 
-    public override Configuration.CanGoForward HeightCalculateTo(int fromHeight)
+    public override CanGoForward HeightCalculateTo(int fromHeight)
     {
-        int activeSwitches = transform.GetComponent<LaserGate>().activeSwitches;
+        int activeSwitches = transform.GetComponent<LaserGate>().ActiveSwitches;
         if (activeSwitches == 0)
         {
             if(fromHeight == offedHigh || fromHeight == offedHigh+1)
             {
-                Configuration.fallDistance = (fromHeight - offedHigh) * Configuration.unit;
-                return Configuration.CanGoForward.Go;
+                SharedData.fallDistance = (fromHeight - offedHigh) * SharedData.unit;
+                return CanGoForward.Go;
             }
-            else if (fromHeight >= baseHigh + boxesOnRoof.Count){
-                Configuration.fallDistance = (fromHeight - (baseHigh + boxesOnRoof.Count)) * Configuration.unit;
-                return Configuration.CanGoForward.Go;
+            else if (fromHeight >= BaseHigh + boxesOnRoof.Count){
+                SharedData.fallDistance = (fromHeight - (BaseHigh + boxesOnRoof.Count)) * SharedData.unit;
+                return CanGoForward.Go;
             }
-            else if (fromHeight >= baseHigh + boxesOnRoof.Count-1 && boxesOnRoof.Count > 0)
+            else if (fromHeight >= BaseHigh + boxesOnRoof.Count-1 && boxesOnRoof.Count > 0)
             {
-                Configuration.fallDistance = 0;
-                return Configuration.CanGoForward.OneDiff;
+                SharedData.fallDistance = 0;
+                return CanGoForward.OneDiff;
             }
             else
             {
-                Configuration.fallDistance = 0;
-                return Configuration.CanGoForward.CantGo;
+                SharedData.fallDistance = 0;
+                return CanGoForward.CantGo;
             }
         }
         else
         {
-            if(boxesOnRoof.Count + baseHigh <= fromHeight)
+            if(boxesOnRoof.Count + BaseHigh <= fromHeight)
             {
-                Configuration.fallDistance = (fromHeight - (boxesOnRoof.Count + baseHigh)) * Configuration.unit;
-                return Configuration.CanGoForward.Go;
+                SharedData.fallDistance = (fromHeight - (boxesOnRoof.Count + BaseHigh)) * SharedData.unit;
+                return CanGoForward.Go;
             }
-            else if(boxesOnRoof.Count-1 + baseHigh <= fromHeight && boxesOnRoof.Count > 0)
+            else if(boxesOnRoof.Count-1 + BaseHigh <= fromHeight && boxesOnRoof.Count > 0)
             {
-                Configuration.fallDistance = 0;
-                return Configuration.CanGoForward.OneDiff;
+                SharedData.fallDistance = 0;
+                return CanGoForward.OneDiff;
             }
-            Configuration.fallDistance = 0;
-            return Configuration.CanGoForward.CantGo;
+            SharedData.fallDistance = 0;
+            return CanGoForward.CantGo;
         }
     }
 
     public override bool HeightCalculateToBox(int fromHeight)
     {
-        float originFallSpeed = Configuration.fallDistance;
-        Configuration.CanGoForward result = HeightCalculateTo(fromHeight);
-        Configuration.fallDistance = originFallSpeed;
-        if (result == Configuration.CanGoForward.Go)
+        CanGoForward result = HeightCalculateTo(fromHeight);
+        if (result == CanGoForward.Go)
         {
             return true;
         }
@@ -69,24 +81,24 @@ public class LaserGateHighData : HighData {
 
     public override int HeighCalculateFrom()
     {
-        int activeSwitches = transform.GetComponent<LaserGate>().activeSwitches;
+        int activeSwitches = transform.GetComponent<LaserGate>().ActiveSwitches;
         if (activeSwitches == 0)
         {
-            if (character.transform.position.y > Configuration.hight_0_Ground + Configuration.unit * baseHigh)
+            if (character.transform.position.y > SharedData.hight_0_Ground + SharedData.unit * BaseHigh)
             {
-                return baseHigh + boxesOnRoof.Count;
+                return BaseHigh + boxesOnRoof.Count;
             }
             return offedHigh + boxes.Count;
         }
         else
         {
-            return (baseHigh + boxesOnRoof.Count);
+            return (BaseHigh + boxesOnRoof.Count);
         }
     }
 
     public override void AddBox(GameObject box)
     {
-        if (box.transform.position.y > Configuration.hight_0_Ground + Configuration.unit * baseHigh)
+        if (box.transform.position.y > SharedData.hight_0_Ground + SharedData.unit * BaseHigh)
         {
             boxesOnRoof.Add(box);
             return;
@@ -96,7 +108,7 @@ public class LaserGateHighData : HighData {
 
     public override GameObject GetTopBox()
     {
-        if (character.transform.position.y > Configuration.hight_0_Ground + Configuration.unit * baseHigh)
+        if (character.transform.position.y > SharedData.hight_0_Ground + SharedData.unit * BaseHigh)
         {
             return boxesOnRoof[boxesOnRoof.Count-1];
         }
@@ -105,7 +117,7 @@ public class LaserGateHighData : HighData {
 
     public override void RemoveTopBox()
     {
-        if (character.transform.position.y > Configuration.hight_0_Ground + Configuration.unit * baseHigh)
+        if (character.transform.position.y > SharedData.hight_0_Ground + SharedData.unit * BaseHigh)
         {
            boxesOnRoof.RemoveAt(boxesOnRoof.Count - 1);
         }

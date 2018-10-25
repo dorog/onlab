@@ -4,43 +4,75 @@ using UnityEngine.UI;
 
 public class StartActions : MonoBehaviour
 {
-    public float EndWait = 2;
-    CommandPanel cmdPanel;
+    private static StartActions instance = null;
+    private string speedTextText = "Speed x";
+
+    public static bool inStart = false;
+
+    [Header("Command holders")]
+    [SerializeField]
     private GameObject commandPanelGO;
+    [SerializeField]
     private GameObject fv1GO;
+    [SerializeField]
     private GameObject fv2GO;
-    static int aimnumber = 0;
+
+    private List<Command> commandsForExecute = new List<Command>();
+    private List<Command> fv1 = new List<Command>();
+    private List<Command> fv2 = new List<Command>();
+
+    [Header("Using")]
+    [SerializeField]
+    private CommandPanel cmdPanel;
+    [SerializeField]
+    private GameObject character;
+    [SerializeField]
+    private MapGenerator mapGen;
+
+    private int aimnumber = 0;
     private Transform lastSwitchedOff;
 
-    public bool start = false;
-    List<Command> commandsForExecute = new List<Command>();
-
-    List<Command> fv1 = new List<Command>();
-
-    List<Command> fv2 = new List<Command>();
-
-    GameObject character;
     private bool die = false;
 
-    private float effectTime = Configuration.timeForAnimation;
-
-
+    private readonly float effectTime = SharedData.timeForAnimation;
     private int executedCommands = 0;
 
+    [Header("Settings")]
+    [SerializeField]
+    private float EndWait = 2;
+    [SerializeField]
+    private float TimeBetweenCmds = 0.5f;
+    [SerializeField]
+    public float fallSpeedBoost = 2;
 
-    public Button actionBtn;
-    public Button stopBtn;
-    public Button clearBtn;
-    MapGenerator mapGen;
+    [Header("Buttons")]
+    [SerializeField]
+    private Button actionBtn;
+    [SerializeField]
+    private Button stopBtn;
+    [SerializeField]
+    private Button clearBtn;
+    [Header("Speed Text")]
+    [SerializeField]
+    private Text speedText;
+
+    void Awake()
+    {
+        if (instance == null)
+            instance = this;
+
+        else if (instance != this)
+            Destroy(gameObject);
+    }
+
+    public static StartActions GetStartActions()
+    {
+        return instance;
+    }
 
     void Start()
     {
-        fv1GO = GameObject.Find(Configuration.fv1Name);
-        fv2GO = GameObject.Find(Configuration.fv2Name);
-        commandPanelGO = GameObject.Find(Configuration.cmdPanelName);
-        cmdPanel = GameObject.Find(Configuration.cmdPanelManagerName).GetComponent<CommandPanel>();
-        character = GameObject.Find(Configuration.characterName);
-        mapGen = GameObject.Find(Configuration.mapGeneratorName).GetComponent<MapGenerator>();
+        speedText.text = speedTextText + CurrentGameDatas.speed;
 
         actionBtn.interactable = true;
         stopBtn.interactable = false;
@@ -49,26 +81,31 @@ public class StartActions : MonoBehaviour
 
     public void ExecuteCommands()
     {
-        start = true;
-        die = false;
         commandsForExecute.Clear();
         fv1.Clear();
         fv2.Clear();
-        commandsForExecute = cmdPanel.getRealCommands(fv1, fv2);
 
-        character.GetComponent<JoeCommandControl>().stopped = false;
+        commandsForExecute = cmdPanel.GetRealCommands(fv1, fv2);
+
         aimnumber = 0;
         executedCommands = 0;
-        Configuration.fallDistance = 0;
-        Configuration.inStart = true;
-        actionBtn.interactable = false;
-        stopBtn.interactable = true;
+        SharedData.fallDistance = 0;
+
         lastSwitchedOff = null;
         LockUI(false);
+
+        character.GetComponent<JoeCommandControl>().stopped = false;
+        inStart = true;
+
+        actionBtn.interactable = false;
+        stopBtn.interactable = true;
+
+        die = false;
+
         Invoke("ExecuteCmd", 0);
     }
 
-    public void KilledByTrap(float rTime)
+    public void KilledBySomething(float rTime)
     {
         die = true;
         Invoke("WaitBeforeEnd", rTime);
@@ -125,7 +162,7 @@ public class StartActions : MonoBehaviour
 
     private void NotStaticBack()
     {
-        mapGen.RestartMap(CurrentGameDatas.mapNumber);
+        mapGen.RestartMap(ActualMapData.mapNumber);
     }
 
     private void ExecuteCmd()
@@ -142,8 +179,8 @@ public class StartActions : MonoBehaviour
             commandsForExecute[aimnumber].Effect();
             aimnumber++;
             executedCommands++;
-            float fallTime = Mathf.Pow((Configuration.fallDistance / 2 / -Physics.gravity.y), 0.5f);
-            Invoke("ExecuteCmd", Configuration.TimeBetweenCmds + effectTime + fallTime*Configuration.fallSpeedBoost);
+            float fallTime = Mathf.Pow((SharedData.fallDistance / 2 / -Physics.gravity.y), 0.5f);
+            Invoke("ExecuteCmd", TimeBetweenCmds + effectTime + fallTime*fallSpeedBoost);
         }
         else
         {
@@ -155,9 +192,11 @@ public class StartActions : MonoBehaviour
     {
         SwitchOffLastLightedUp(null);
 
-        //If trap kill it this code reset the animation
+        // reset the animations
         Animator anim = character.GetComponent<Animator>();
-        anim.SetBool(Configuration.trapAnimation, false);
+        anim.SetBool(JoeCommandControl.trapAnimation, false);
+        anim.SetBool(JoeCommandControl.forwardAnimation, false);
+
         character.GetComponent<JoeCommandControl>().stopped = true;
 
         aimnumber = 0;
@@ -177,7 +216,7 @@ public class StartActions : MonoBehaviour
             SwitchOffLastLightedUp(forExecute);
         }
         //Fv1
-        else if(commandsForExecute[aimnumber].PanelSlot < commandPanelGO.transform.childCount + cmdPanel.fv1_Counts)
+        else if(commandsForExecute[aimnumber].PanelSlot < commandPanelGO.transform.childCount + fv1GO.transform.childCount)
         {
             Transform forExecuteF1= fv1GO.transform.GetChild(commandsForExecute[aimnumber].PanelSlot - commandPanelGO.transform.childCount).transform.GetChild(0);
             forExecuteF1.GetComponent<Image>().color = Color.red;
@@ -201,11 +240,6 @@ public class StartActions : MonoBehaviour
         lastSwitchedOff = newLastSwitchedOff;
     }
 
-    public void EdgeHit()
-    {
-        aimnumber = commandsForExecute.Count;
-    }
-
     private void LockUI(bool lockBool)
     {
         //Command ui lock
@@ -220,29 +254,30 @@ public class StartActions : MonoBehaviour
         }
 
         //Factory ui lock
-        Configuration.inStart = !lockBool;
+        inStart = !lockBool;
         if (!lockBool)
         {
-            Configuration.chosenCommand = Configuration.CommandType.Null;
-            if (Configuration.chosenImage != null)
+            ActualMapData.chosenCommand = CommandType.Null;
+            if (ActualMapData.chosenImage != null)
             {
-                Configuration.chosenImage.color = Color.white;
+                ActualMapData.chosenImage.color = Color.white;
             }
         }
 
+        clearBtn.interactable = lockBool;
+    }
 
-        /*GameObject cmdFactory = GameObject.Find(Configuration.cmdFactoryName);
-        if(cmdFactory == null)
+    public void ChangeSpeed()
+    {
+        if (CurrentGameDatas.speed == SharedData.maxSpeed)
         {
+            Time.timeScale = SharedData.minSpeed;
+            CurrentGameDatas.speed = SharedData.minSpeed;
+            speedText.text = speedTextText + CurrentGameDatas.speed;
             return;
         }
-        for(int i=0; i<cmdFactory.transform.childCount; i++)
-        {
-            GameObject child = cmdFactory.transform.GetChild(i).gameObject;
-            Image childImage = child.transform.GetChild(0).GetComponent<Image>();
-            childImage.raycastTarget = lockBool;
-        }*/
-
-        clearBtn.interactable = lockBool;
+        Time.timeScale = CurrentGameDatas.speed + 1;
+        CurrentGameDatas.speed++;
+        speedText.text = speedTextText + CurrentGameDatas.speed;
     }
 }

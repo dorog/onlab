@@ -1,22 +1,32 @@
 ﻿using UnityEngine;
 
+[RequireComponent(typeof(Animation))]
+[RequireComponent(typeof(DoorHighData))]
 public class Door : MonoBehaviour
 {
-
     private int count = 1;
     private bool used = false;
-    public string doorAnimName = "DoorWidth_last";
 
-    // Update is called once per frame
+    [SerializeField]
+    private string doorAnimName = "DoorWidth_last";
+
+    private DoorHighData doorHighData;
+    private Animation anim;
+
+    private void Start()
+    {
+        doorHighData = transform.GetComponent<DoorHighData>();
+        anim = transform.GetComponent<Animation>();
+    }
+
     void Update()
     {
         if (count == 0 && !used)
         {
             used = true;
-            Animation anim = this.transform.GetComponent<Animation>();
-            anim[doorAnimName].speed = anim[doorAnimName].length / Configuration.timeForAnimation;
+            anim[doorAnimName].speed = anim[doorAnimName].length / SharedData.timeForAnimation;
             anim.Play();
-            this.transform.GetComponent<DoorHighData>().opened = true;
+            doorHighData.Opened = true;
         }
     }
 
@@ -25,11 +35,10 @@ public class Door : MonoBehaviour
         if (count == 0)
         {
             used = false;
-            Animation anim = this.GetComponent<Animation>();
-            anim[doorAnimName].speed = -anim[doorAnimName].length / Configuration.timeForAnimation; ;
+            anim[doorAnimName].speed = -anim[doorAnimName].length / SharedData.timeForAnimation; ;
             anim[doorAnimName].time = anim[doorAnimName].length;
             anim.Play(doorAnimName);
-            this.transform.GetComponent<DoorHighData>().opened = false;
+            doorHighData.Opened = false;
         }
         count++;
     }

@@ -1,18 +1,13 @@
 ﻿using UnityEngine;
 
-public class TurnLeftCmd : Command
+public class TurnLeftCmd : CharacterMovingCommand
 {
     public TurnLeftCmd(int id) : base(id) {
-        this.sprite = Resources.Load<Sprite>(Configuration.leftIcon);
+        Sprite = Resources.Load<Sprite>(SharedData.leftIcon);
     }
 
     public override void Effect()
     {
-        //Debug.Log("left" + System.DateTime.Now);
-        character.GetComponent<JoeCommandControl>().TurnLeft();   
-    }
-    public override void Identity(int i, int aimnumber)
-    {
-        Debug.Log("left " +i+" "+aimnumber);
+        mapGen.CharacterTurnLeft();
     }
 }

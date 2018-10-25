@@ -3,58 +3,72 @@ using System.Collections.Generic;
 
 public class DoorHighData : HighData {
 
-    public int openedHeight = 2;
-    public bool opened = false;
-    public List<GameObject> boxesOnRoof = new List<GameObject>();
+    [SerializeField]
+    private int openedHeight = 2;
+
+    private List<GameObject> boxesOnRoof = new List<GameObject>();
 
     private GameObject character;
 
+    public bool Opened { get; set; }
+
     private void Start()
     {
-        character = GameObject.Find(Configuration.characterName);
+        GameObject[] gameobjectsWithPlayerTag = GameObject.FindGameObjectsWithTag(SharedData.playerTag);
+        if(gameobjectsWithPlayerTag.Length > 1)
+        {
+            Debug.LogWarning("DoorHighData: There are more than one GameObject with " + SharedData.playerTag + " tag, it may won't work fine");
+        }
+        else if(gameobjectsWithPlayerTag.Length == 0)
+        {
+            Debug.LogError("DoorHighData: There is no GameObject with " + SharedData.playerTag + " tag!");
+        }
+
+        if(gameobjectsWithPlayerTag.Length >= 1)
+        {
+            character = gameobjectsWithPlayerTag[0];
+        }
     }
 
-    public override Configuration.CanGoForward HeightCalculateTo(int fromHeight)
+    public override CanGoForward HeightCalculateTo(int fromHeight)
     {
-        if (opened)
+        if (Opened)
         {
-            if ((fromHeight >= baseHigh + boxesOnRoof.Count))
+            if ((fromHeight >= BaseHigh + boxesOnRoof.Count))
             {
-                Configuration.fallDistance = (fromHeight - (baseHigh + boxesOnRoof.Count)) * Configuration.unit;
-                return Configuration.CanGoForward.Go;
+                SharedData.fallDistance = (fromHeight - (BaseHigh + boxesOnRoof.Count)) * SharedData.unit;
+                return CanGoForward.Go;
             }
             else if ((fromHeight == openedHeight || fromHeight == openedHeight + 1)) {
-                Configuration.fallDistance = (fromHeight - openedHeight) * Configuration.unit;
-                return Configuration.CanGoForward.Go;
+                SharedData.fallDistance = (fromHeight - openedHeight) * SharedData.unit;
+                return CanGoForward.Go;
             }
-            else if ((fromHeight >= baseHigh + boxesOnRoof.Count - 1) && boxesOnRoof.Count > 0)
+            else if ((fromHeight >= BaseHigh + boxesOnRoof.Count - 1) && boxesOnRoof.Count > 0)
             {
-                Configuration.fallDistance = 0;
-                return Configuration.CanGoForward.OneDiff;
+                SharedData.fallDistance = 0;
+                return CanGoForward.OneDiff;
             }
-            Configuration.fallDistance = 0;
-            return Configuration.CanGoForward.CantGo;
+            SharedData.fallDistance = 0;
+            return CanGoForward.CantGo;
         }
-        else if(fromHeight >= baseHigh + boxesOnRoof.Count)
+        else if(fromHeight >= BaseHigh + boxesOnRoof.Count)
         {
-            Configuration.fallDistance = (fromHeight - (baseHigh + boxesOnRoof.Count)) * Configuration.unit;
-            return Configuration.CanGoForward.Go;
+            SharedData.fallDistance = (fromHeight - (BaseHigh + boxesOnRoof.Count)) * SharedData.unit;
+            return CanGoForward.Go;
         }
-        else if(fromHeight >= (baseHigh + boxesOnRoof.Count - 1) && boxesOnRoof.Count > 0)
+        else if(fromHeight >= (BaseHigh + boxesOnRoof.Count - 1) && boxesOnRoof.Count > 0)
         {
-            Configuration.fallDistance = 0;
-            return Configuration.CanGoForward.OneDiff;
+            SharedData.fallDistance = 0;
+            return CanGoForward.OneDiff;
         }
-        Configuration.fallDistance = 0;
-        return  Configuration.CanGoForward.CantGo;
+        SharedData.fallDistance = 0;
+        return  CanGoForward.CantGo;
     }
 
     public override bool HeightCalculateToBox(int fromHeight)
     {
-        float originFallSpeed = Configuration.fallDistance;
-        Configuration.CanGoForward result = HeightCalculateTo(fromHeight);
-        Configuration.fallDistance = originFallSpeed;
-        if (result == Configuration.CanGoForward.Go)
+        CanGoForward result = HeightCalculateTo(fromHeight);
+        if (result == CanGoForward.Go)
         {
             return true;
         }
@@ -63,7 +77,7 @@ public class DoorHighData : HighData {
 
     public override void AddBox(GameObject box)
     {
-        if(box.transform.position.y > Configuration.hight_0_Ground + Configuration.unit * baseHigh)
+        if(box.transform.position.y > SharedData.hight_0_Ground + SharedData.unit * BaseHigh)
         {
             boxesOnRoof.Add(box);
             return;
@@ -73,7 +87,7 @@ public class DoorHighData : HighData {
 
     public override GameObject GetTopBox()
     {
-        if (character.transform.position.y > Configuration.hight_0_Ground + Configuration.unit * baseHigh)
+        if (character.transform.position.y > SharedData.hight_0_Ground + SharedData.unit * BaseHigh)
         {
             return boxesOnRoof[boxesOnRoof.Count - 1];
         }
@@ -87,7 +101,7 @@ public class DoorHighData : HighData {
 
     public override void RemoveTopBox()
     {
-        if (character.transform.position.y > Configuration.hight_0_Ground + Configuration.unit * baseHigh)
+        if (character.transform.position.y > SharedData.hight_0_Ground + SharedData.unit * BaseHigh)
         {
             boxesOnRoof.RemoveAt(boxesOnRoof.Count - 1);
         }
@@ -96,6 +110,6 @@ public class DoorHighData : HighData {
 
     public override int HeighCalculateFrom()
     {
-        return (baseHigh + boxesOnRoof.Count);
+        return (BaseHigh + boxesOnRoof.Count);
     }
 }

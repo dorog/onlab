@@ -2,58 +2,77 @@
 
 public class UFO_Move : MonoBehaviour {
 
-    public GameObject door;
+    [Header("UFO door")]
+    [SerializeField]
+    private GameObject door;
 
-    public float rising_time = 3;
+    [Header("Rising settings")]
+    [SerializeField]
+    private float rising_time = 3;
     private float originRisingTime;
-    public float rising_speed = 5;
+    [SerializeField]
+    private float rising_speed = 5;
     private float originRisingSpeed;
 
-    public float flying_time = 3;
+    [Header("Flying settings")]
+    [SerializeField]
+    private float flying_time = 3;
     private float originDistanceJump;
-    public float jumpUpPower = 3;
+    [SerializeField]
+    private float jumpUpPower = 3;
     private float originJumpUp;
-    public float jumpXpower = 3;
+    [SerializeField]
+    private float jumpXpower = 3;
     private float originJumpX;
 
-    public float waitBeforeJump = 3;
+    [Header("Flying away settings")]
+    [SerializeField]
+    private float waitBeforeJump = 3;
     private float originWaitBeforeJump;
+    [SerializeField]
     public float place_door_open_time = 3;
     private float originDoorOpenTime;
-    public bool animation_start = false;
+
+    private bool animation_start = false;
     private bool doorIsOpen = false;
 
-    //return
-    public float return_time = 3;
+    [Header("Flying back settings")]
+    [SerializeField]
+    private float return_time = 3;
     private float originReturnTime;
-    public float jumpDownPower = 3;
+    [SerializeField]
+    private float jumpDownPower = 3;
     private float originJumpDown;
-    public float jumpBackPower = 3;
+    [SerializeField]
+    private float jumpBackPower = 3;
     private float originJumpBack;
 
-    public float waitBeforaLanding = 3;
+    [Header("Hover settings")]
+    [SerializeField]
+    private float waitBeforaLanding = 3;
     private float originWaitBeforeLanding;
 
-    public float landing_time = 3;
+    [Header("Landing time")]
+    [SerializeField]
+    private float landing_time = 3;
     private float originLandingTime;
-    public float landing_speed = 5;
+    [SerializeField]
+    private float landing_speed = 5;
     private float originLandingSpeed;
 
     private bool firstHere = true;
     private bool animation_back = false;
 
-    //AimPositions
     private Vector3 risedAimPosition;
     private Vector3 flyAwayPosition;
 
     private Vector3 originPosition;
 
-	// Use this for initialization
 	void Start () {
 
-        originPosition = this.transform.position;
+        originPosition = transform.position;
 
-        //fly away
+        // Save Fly away setting
         originRisingTime = rising_time;
         originRisingSpeed = rising_speed;
         originDistanceJump = flying_time;
@@ -62,7 +81,7 @@ public class UFO_Move : MonoBehaviour {
         originWaitBeforeJump = waitBeforeJump;
         originDoorOpenTime = place_door_open_time;
 
-        //return
+        // Save Return settings
         originReturnTime = return_time;
         originJumpDown = jumpDownPower;
         originJumpBack = jumpBackPower;
@@ -71,38 +90,33 @@ public class UFO_Move : MonoBehaviour {
         originLandingTime = landing_time;
     }
 	
-	// Update is called once per frame
 	void Update () {
 
-        //rising
+        // Rising
         if (animation_start && doorIsOpen)
         {
             if(rising_time - Time.deltaTime > 0)
             {
-                this.transform.position += new Vector3(0, 1, 0) * Time.deltaTime * rising_speed;
+                transform.position += new Vector3(0, 1, 0) * Time.deltaTime * rising_speed;
                 rising_time -= Time.deltaTime;
             }
-            //it must do no mistake
             else if(rising_time >= 0)
             {
-                //this.transform.position += new Vector3(0, 1, 0) * rising_time * rising_speed;
-                this.transform.position = risedAimPosition;
+                transform.position = risedAimPosition;
                 rising_time = -1;
             }
-            //no problem if it wait a little less
             else if(waitBeforeJump - Time.deltaTime >= 0)
             {
                 waitBeforeJump -= Time.deltaTime;
             }
             else if(flying_time - Time.deltaTime > 0)
             {
-                this.transform.position += new Vector3(Time.deltaTime*jumpXpower, Time.deltaTime * jumpUpPower, 0);
+                transform.position += new Vector3(Time.deltaTime*jumpXpower, Time.deltaTime * jumpUpPower, 0);
                 flying_time -= Time.deltaTime;
             }
             else if(flying_time >= 0)
             {
-                //this.transform.position += new Vector3(Time.deltaTime * jumpXpower, Time.deltaTime * jumpUpPower, 0);
-                this.transform.position = flyAwayPosition;
+                transform.position = flyAwayPosition;
                 flying_time = -1;
             }
             else
@@ -122,7 +136,6 @@ public class UFO_Move : MonoBehaviour {
         }
         else if(animation_start)
         {
-            // it can wait a little more
             place_door_open_time -= Time.deltaTime;
             if(place_door_open_time <= 0)
             {
@@ -130,7 +143,7 @@ public class UFO_Move : MonoBehaviour {
             }
         }
 
-        // come back
+        // Come back
         if (animation_back)
         {
             if (return_time - Time.deltaTime > 0)
@@ -140,28 +153,26 @@ public class UFO_Move : MonoBehaviour {
                     door.GetComponent<Animation>().Play();
                     firstHere = false;
                 }
-                this.transform.position -= new Vector3(Time.deltaTime * jumpBackPower, Time.deltaTime * jumpDownPower, 0);
+                transform.position -= new Vector3(Time.deltaTime * jumpBackPower, Time.deltaTime * jumpDownPower, 0);
                 return_time -= Time.deltaTime;
             }
             else if (return_time >= 0)
             {
-                this.transform.position = risedAimPosition;
+                transform.position = risedAimPosition;
                 return_time = -1;
             }
-            // it can wait a little more
             else if(waitBeforaLanding - Time.deltaTime >= 0)
             {
                 waitBeforaLanding -= Time.deltaTime;
             }
             else if(landing_time - Time.deltaTime >= 0)
             {
-                this.transform.position -= new Vector3(0, 1, 0) * Time.deltaTime * landing_speed;
+                transform.position -= new Vector3(0, 1, 0) * Time.deltaTime * landing_speed;
                 landing_time -= Time.deltaTime;
             }
-            //it must be 100% correct
             else if(landing_time >= 0)
             {
-                this.transform.position -= new Vector3(0, 1, 0) * Time.deltaTime * landing_speed;
+                transform.position -= new Vector3(0, 1, 0) * Time.deltaTime * landing_speed;
                 landing_time = -1;
             }
             else
@@ -177,10 +188,9 @@ public class UFO_Move : MonoBehaviour {
                 landing_time = originLandingTime;
 
                 //in order to be the same location
-                this.transform.position = originPosition;
+                transform.position = originPosition;
             }
         }
-
 	}
 
     public void Start_animation()

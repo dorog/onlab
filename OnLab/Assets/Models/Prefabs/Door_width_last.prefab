@@ -397,7 +397,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8f05e0c4de7adc479d217d5845e978b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseHigh: 0
+  baseHigh: 5
   openedHeight: 2
   opened: 0
   boxesOnRoof: []

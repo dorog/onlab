@@ -4,44 +4,31 @@ using UnityEngine.EventSystems;
 public class Slot : MonoBehaviour, IDropHandler
 {
     private CommandPanel cmdpanelmanager;
-    public int id;
+
+    public int Id { get; set; }
 
     void Start()
     {
-        cmdpanelmanager = GameObject.Find(Configuration.cmdPanelManagerName).GetComponent<CommandPanel>();
+        cmdpanelmanager = CommandPanel.GetCommandPanel();
     }
 
     public void OnDrop(PointerEventData eventData)
     {
-        CommandData droppedCommand = eventData.pointerDrag.GetComponent<CommandData>();
-        if (cmdpanelmanager.commands[id].ID == -1)
+        Transform droppedTransform = eventData.pointerDrag.GetComponent<Transform>();
+
+        if(cmdpanelmanager.GetCommandID(Id) == SharedData.emptyCommandID)
         {
-            cmdpanelmanager.commands[droppedCommand.slot] = new Command();
-            cmdpanelmanager.commands[id] = droppedCommand.command;
-            droppedCommand.slot = id;
-            droppedCommand.command.PanelSlot = id;
+            cmdpanelmanager.ReplaceCommand(Id, droppedTransform);
         }
-        else if (droppedCommand.slot != id)
+        else
         {
-            Transform commandplace = this.transform.GetChild(0);
-            commandplace.GetComponent<CommandData>().slot = droppedCommand.slot;
- 
-            commandplace.SetParent(cmdpanelmanager.slots[droppedCommand.slot].transform);
-            commandplace.transform.position = cmdpanelmanager.slots[droppedCommand.slot].transform.position;
+            CommandData droppedCommand = eventData.pointerDrag.GetComponent<CommandData>();
+            if (droppedCommand.Command.PanelSlot == Id){
+                return;
+            }
+            Transform commandplace = transform.GetChild(0);
 
-            cmdpanelmanager.commands[droppedCommand.slot] = commandplace.GetComponent<CommandData>().command;
-
-            int forChange = commandplace.GetComponent<CommandData>().command.PanelSlot;
-
-            commandplace.GetComponent<CommandData>().command.PanelSlot = droppedCommand.slot;
-
-            droppedCommand.command.PanelSlot = forChange;
-
-            droppedCommand.slot = id;
-            droppedCommand.transform.SetParent(this.transform);
-            droppedCommand.transform.position = this.transform.position;
-            
-            cmdpanelmanager.commands[id] = droppedCommand.command;
+            cmdpanelmanager.ExchangeCommands(droppedTransform, commandplace);
         }
     }
 }

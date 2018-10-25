@@ -1,19 +1,14 @@
 ﻿using UnityEngine;
 
-public class ActivateCmd : Command {
-
+public class ActivateCmd : CharacterMovingCommand
+{
     public ActivateCmd(int id) : base(id)
     {
-        this.sprite = Resources.Load<Sprite>(Configuration.activateIcon);
+        Sprite = Resources.Load<Sprite>(SharedData.activateIcon);
     }
 
     public override void Effect()
     {
-        GameObject.Find(Configuration.mapGeneratorName).GetComponent<MapGenerator>().Activate();
-    }
-
-    public override void Identity(int i, int aimnumber)
-    {
-        Debug.Log("activate " + i + " " + aimnumber);
+        mapGen.Activate();
     }
 }

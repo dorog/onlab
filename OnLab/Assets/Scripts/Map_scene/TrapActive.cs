@@ -1,54 +1,59 @@
 ﻿using UnityEngine;
 
+[RequireComponent(typeof(Animation))]
+[RequireComponent(typeof(TrapHighData))]
 public class TrapActive : MonoBehaviour
 {
 
-    Animation trapAnim;
-    StartActions sa;
-    public float timeInTheAir = 4.7f;
-    public float resetTime = 2;
-    public int minNotKillHeigh = 1;
+    private Animation trapAnim;
+    private StartActions sa;
     private bool used = false;
     private TrapHighData trapHighData;
-    public BoxCollider boxCollider;
+
+    [SerializeField]
+    private float timeInTheAir = 4.7f;
+    [SerializeField]
+    private float resetTime = 2;
+    [SerializeField]
+    private int minNotKillHeigh = 1;
+    [SerializeField]
+    private BoxCollider trapSurface;
+    [SerializeField]
+    private string AnimName = "OpenTrap";
 
     // Use this for initialization
     void Start()
     {
-        trapAnim = this.transform.GetComponent<Animation>();
-        sa = GameObject.Find(Configuration.actionMenuName).GetComponent<StartActions>();
-        trapHighData = this.transform.GetComponent<TrapHighData>();
+        trapAnim = transform.GetComponent<Animation>();
+        sa = StartActions.GetStartActions();
+        if (sa == null)
+        {
+            Debug.LogError("SwitchLaser: StartActions is null!");
+        }
+        trapHighData = transform.GetComponent<TrapHighData>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (!used)
         {
-            if (trapAnim == null)
-            {
-                return;
-            }
-            trapAnim.Play();
+            trapAnim.Play(AnimName);
             used = true;
         }
         if (trapHighData.GetRealBoxCount() >= minNotKillHeigh)
         {
-            boxCollider.enabled = false;
+            trapSurface.enabled = false;
             return;
         }
         else
         {
             JoeCommandControl joeController = other.GetComponent<JoeCommandControl>();
-            if (joeController==null)
-            {
-                return;
-            }
             if (joeController)
             {
                 joeController.HitTrap(timeInTheAir);
                 Invoke("CanFall", timeInTheAir);
                 trapAnim.Play();
-                sa.KilledByTrap(resetTime + timeInTheAir);
+                sa.KilledBySomething(resetTime + timeInTheAir);
             }
 
         }
@@ -56,6 +61,6 @@ public class TrapActive : MonoBehaviour
 
     private void CanFall()
     {
-        boxCollider.enabled = false;
+        trapSurface.enabled = false;
     }
 }

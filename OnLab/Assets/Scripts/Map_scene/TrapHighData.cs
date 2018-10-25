@@ -2,49 +2,48 @@
 
 public class TrapHighData : HighData
 {
-    public int HeighCalculateFromNumber = -1;
+    [SerializeField]
+    private int HeighCalculateFromNumber = -1;
 
-    public override Configuration.CanGoForward HeightCalculateTo(int fromHeight)
+    public override CanGoForward HeightCalculateTo(int fromHeight)
     {
-        if (boxes.Count < baseHigh)
+        if (boxes.Count < BaseHigh)
         {
-            if(baseHigh <= fromHeight)
+            if(BaseHigh <= fromHeight)
             {
-                Configuration.fallDistance = (fromHeight - boxes.Count) * Configuration.unit;
-                return Configuration.CanGoForward.Go;
+                SharedData.fallDistance = (fromHeight - boxes.Count) * SharedData.unit;
+                return CanGoForward.Go;
             }
             else
             {
-                Configuration.fallDistance = 0;
-                return Configuration.CanGoForward.CantGo;
+                SharedData.fallDistance = 0;
+                return CanGoForward.CantGo;
             }
         }
         else
         {
             if(boxes.Count <= fromHeight)
             {
-                Configuration.fallDistance = (fromHeight - boxes.Count) * Configuration.unit;
-                return Configuration.CanGoForward.Go;
+                SharedData.fallDistance = (fromHeight - boxes.Count) * SharedData.unit;
+                return CanGoForward.Go;
             }
             else if(boxes.Count-1 <= fromHeight && boxes.Count > 0)
             {
-                Configuration.fallDistance = 0;
-                return Configuration.CanGoForward.OneDiff;
+                SharedData.fallDistance = 0;
+                return CanGoForward.OneDiff;
             }
             else
             {
-                Configuration.fallDistance = 0;
-                return Configuration.CanGoForward.CantGo;
+                SharedData.fallDistance = 0;
+                return CanGoForward.CantGo;
             }
         }
     }
 
     public override bool HeightCalculateToBox(int fromHeight)
     {
-        float originFallSpeed = Configuration.fallDistance;
-        Configuration.CanGoForward result = HeightCalculateTo(fromHeight);
-        Configuration.fallDistance = originFallSpeed;
-        if (result == Configuration.CanGoForward.Go)
+        CanGoForward result = HeightCalculateTo(fromHeight);
+        if (result == CanGoForward.Go)
         {
             return true;
         }
@@ -53,7 +52,7 @@ public class TrapHighData : HighData
 
     public override int HeighCalculateFrom()
     {
-        if(boxes.Count < baseHigh)
+        if(boxes.Count < BaseHigh)
         {
             return HeighCalculateFromNumber;
         }
@@ -62,11 +61,11 @@ public class TrapHighData : HighData
 
     public override int GetBoxCount()
     {
-        if(boxes.Count <= baseHigh)
+        if(boxes.Count <= BaseHigh)
         {
             return 0;
         }
-        return boxes.Count - baseHigh;
+        return boxes.Count - BaseHigh;
     }
 
     public int GetRealBoxCount()

@@ -1,40 +1,41 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
+[RequireComponent(typeof(HighData))]
 public class RiseElement : MonoBehaviour {
 
     private bool rising = false;
     private float rising_time = 0.5f;
     private float originRisingTime;
 
-    public GameObject underThis;
+    [SerializeField]
+    [Tooltip ("GameObject what the RiseElement generate under itself")]
+    private GameObject underThis;
     private int rised = 1;
 
     private float speed;
 
-    private Vector3 aimPosition; 
+    private Vector3 aimPosition;
 
-    public List<GameObject> boxes = new List<GameObject>();
+    private HighData myData;
 
     void Start()
     {
-        speed = Configuration.unit / Configuration.timeForAnimation;
-        originRisingTime = Configuration.timeForAnimation;
+        speed = SharedData.unit / SharedData.timeForAnimation;
+        originRisingTime = SharedData.timeForAnimation;
+        myData = GetComponent<HighData>();
     }
 	
-	// Update is called once per frame
 	void Update () {
         if (rising)
         {
-            if (rising_time - Time.deltaTime >= 0)
+            if (rising_time - Time.deltaTime > 0)
             {
-                this.transform.position += new Vector3(0, speed * Time.deltaTime, 0);
+                transform.position += new Vector3(0, speed * Time.deltaTime, 0);
                 rising_time -= Time.deltaTime;
             }
-            else if (rising_time > 0)
+            else
             {
-                this.transform.position = aimPosition;
-                rising_time = 0;
+                transform.position = aimPosition;
                 rising = false;
             }
         }
@@ -42,15 +43,14 @@ public class RiseElement : MonoBehaviour {
 
     public void Rise()
     {
-        Instantiate(underThis, this.transform.position + Vector3.down * Configuration.unit * rised, this.transform.rotation, this.transform);
-        aimPosition = this.transform.position + new Vector3(0, Configuration.unit, 0);
+        Instantiate(underThis, transform.position + Vector3.down * SharedData.unit * rised, transform.rotation, transform);
+        aimPosition = transform.position + new Vector3(0, SharedData.unit, 0);
         rised++;
         rising_time = originRisingTime;
-        HighData myData = this.GetComponent<HighData>();
-        myData.baseHigh++;
+        myData.BaseHigh++;
         for(int i=0; i<myData.GetBoxCount(); i++)
         {
-            myData.GetBox(myData.GetBoxCount()-i-1).GetComponent<BoxController>().RiseBox(Configuration.timeForAnimation);
+            myData.GetBox(myData.GetBoxCount()-i-1).GetComponent<BoxController>().RiseBox();
         }
         rising = true;
     }

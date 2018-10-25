@@ -1,16 +1,17 @@
 ﻿using UnityEngine;
 
+[RequireComponent(typeof(HighData))]
 public class EdgeTrigger : MonoBehaviour
 {
-
     private StartActions sa;
     private HighData highData;
+    [SerializeField]
+    private float resetTime = 1.5f;
 
-    // Use this for initialization
     void Start()
     {
-        sa = GameObject.Find(Configuration.actionMenuName).GetComponent<StartActions>();
-        highData = this.transform.GetComponent<HighData>();
+        sa = StartActions.GetStartActions();
+        highData = transform.GetComponent<HighData>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -24,7 +25,6 @@ public class EdgeTrigger : MonoBehaviour
         {
             return;
         }
-        sa.EdgeHit();
-
+        sa.KilledBySomething(resetTime);
     }
 }

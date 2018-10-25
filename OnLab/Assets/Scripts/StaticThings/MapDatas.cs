@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-
+﻿
 public class MapDatas{
 
     public int mapScore { get; set; }
@@ -15,11 +14,11 @@ public class MapDatas{
         item = false;
     }
 
-    public MapDatas(int mapScr, int bug, bool key, int itemType)
+    public MapDatas(int mapScr, int bug, bool _item, int _itemType)
     {
         mapScore = mapScr;
         scarab = bug;
-        this.item = key;
-        this.itemType = itemType;
+        item = _item;
+        itemType = _itemType;
     }
 }

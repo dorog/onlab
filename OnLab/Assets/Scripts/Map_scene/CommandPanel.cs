@@ -4,78 +4,109 @@ using UnityEngine.UI;
 
 public class CommandPanel : MonoBehaviour {
 
-    GameObject commandPanelBorder;
-    GameObject slotPanel;
-    public GameObject cmdSlot;
-    public GameObject deleteSlot;
-    public GameObject cmdpanelcmd;
-    public GameObject factoryElement;
+    private static CommandPanel instance = null;
 
-    public int slotAmount = 48;
-    public List<Command> commands = new List<Command>();
-    public List<GameObject> slots = new List<GameObject>();
-    public int fv1_Counts = 10;
-    public int fv2_Counts = 10;
+    [Header("GameObjects for slots")]
+    [SerializeField]
+    private GameObject commandPanel;
+    [SerializeField]
+    private GameObject cmdSlot;
+    [SerializeField]
+    private GameObject deleteSlot;
+    [SerializeField]
+    private GameObject cmdpanelcmd;
+    [SerializeField]
+    private GameObject factoryElement;
 
-    public int summSlots = 0;
+    [Header("Slots' count")]
+    [SerializeField]
+    [Tooltip("Main function's count")]
+    private int mainCount = 48;
+    private List<Command> commands = new List<Command>();
+    private List<GameObject> slots = new List<GameObject>();
+    [SerializeField]
+    private int fv1Count = 10;
+    [SerializeField]
+    private int fv2Count = 10;
 
-    public GameObject deleteGO;
-    public GameObject fv1GO;
-    public GameObject fv2GO;
+    private int summSlots = 0;
 
-    public Text speedText;
+    [Header("GameObject for Instantiate")]
+    [SerializeField]
+    private GameObject deleteGO;
+    [SerializeField]
+    private GameObject fv1GO;
+    [SerializeField]
+    private GameObject fv2GO;
+
+    void Awake()
+    {
+        if (instance == null)
+            instance = this;
+
+        else if (instance != this)
+            Destroy(gameObject);
+
+        summSlots = fv1Count + fv2Count + mainCount;
+        CmdLoad();
+    }
+
+    public static CommandPanel GetCommandPanel()
+    {
+        return instance;
+    }
 
     void Start()
     {
-        speedText.text = Configuration.speedTextText + CurrentGameDatas.speed;
-        commandPanelBorder = GameObject.Find(Configuration.cmdPanelBorderName);
-        slotPanel = commandPanelBorder.transform.Find(Configuration.cmdPanelName).gameObject;
-
-        summSlots = fv1_Counts + fv2_Counts + slotAmount;
-        CmdLoad();
     }
 
     void CmdLoad()
     {
-        for (int i = 0; i < slotAmount; i++)
+        for (int i = 0; i < mainCount; i++)
         {
             commands.Add(new Command());
             slots.Add(Instantiate(cmdSlot));
-            slots[i].transform.SetParent(slotPanel.transform);
-            slots[i].GetComponent<Slot>().id = i;
+            slots[i].transform.SetParent(commandPanel.transform);
+            slots[i].GetComponent<Slot>().Id = i;
         }
 
-        //New, check it
-
-
-        for (int i=slotAmount; i<slotAmount+fv1_Counts; i++)
+        for (int i=mainCount; i<mainCount+fv1Count; i++)
         {
             commands.Add(new Command());
             slots.Add(Instantiate(cmdSlot));
             slots[i].transform.SetParent(fv1GO.transform);
-            slots[i].GetComponent<Slot>().id = i;
+            slots[i].GetComponent<Slot>().Id = i;
             #if UNITY_ANDROID
                 slots[i].GetComponent<Image>().enabled = false;
             #endif
         }
 
-        for (int i=slotAmount+fv1_Counts; i<slotAmount+fv1_Counts+fv2_Counts; i++)
+        for (int i=mainCount+fv1Count; i<mainCount+fv1Count+fv2Count; i++)
         {
             commands.Add(new Command());
             slots.Add(Instantiate(cmdSlot));
             slots[i].transform.SetParent(fv2GO.transform);
-            slots[i].GetComponent<Slot>().id = i;
+            slots[i].GetComponent<Slot>().Id = i;
             #if UNITY_ANDROID
                 slots[i].GetComponent<Image>().enabled = false;
             #endif
         }
 
+        for(int i=0; i<slots.Count; i++)
+        {
+            slots[i].transform.localScale = new Vector3(1, 1, 1);
+        }
+
         //delete slot
+        if(deleteGO.transform.childCount > 0)
+        {
+            return;
+        }
         commands.Add(new Command());
-        slots.Add(Instantiate(deleteSlot));
+
+        slots.Add(Instantiate(deleteSlot, deleteGO.transform));
         
-        slots[summSlots].transform.SetParent(deleteGO.transform);
-        slots[summSlots].GetComponent<Slot>().id = summSlots;
+        slots[summSlots].GetComponent<Slot>().Id = summSlots;
     }
 
     public void Clear()
@@ -83,31 +114,31 @@ public class CommandPanel : MonoBehaviour {
         
         commands.Clear();
         slots.Clear();
-        for(int i=0; i< slotPanel.transform.childCount; i++)
+        for(int i=0; i< commandPanel.transform.childCount; i++)
         {
-            if (slotPanel.transform.GetChild(i).childCount > 0)
+            if (commandPanel.transform.GetChild(i).childCount > 0)
             {
-                GameObject.Destroy(slotPanel.transform.GetChild(i).GetChild(0).gameObject);
+                Destroy(commandPanel.transform.GetChild(i).GetChild(0).gameObject);
             }
-            GameObject.Destroy(slotPanel.transform.GetChild(i).gameObject);
+            Destroy(commandPanel.transform.GetChild(i).gameObject);
         }
 
         for(int i=0; i< fv1GO.transform.childCount; i++)
         {
             if (fv1GO.transform.GetChild(i).childCount>0)
             {
-                GameObject.Destroy(fv1GO.transform.GetChild(i).GetChild(0).gameObject);
+                Destroy(fv1GO.transform.GetChild(i).GetChild(0).gameObject);
             }
-            GameObject.Destroy(fv1GO.transform.GetChild(i).gameObject);
+            Destroy(fv1GO.transform.GetChild(i).gameObject);
         }
 
         for (int i = 0; i < fv2GO.transform.childCount; i++)
         {
             if (fv2GO.transform.GetChild(i).childCount > 0)
             {
-                GameObject.Destroy(fv2GO.transform.GetChild(i).GetChild(0).gameObject);
+                Destroy(fv2GO.transform.GetChild(i).GetChild(0).gameObject);
             }
-            GameObject.Destroy(fv2GO.transform.GetChild(i).gameObject);
+            Destroy(fv2GO.transform.GetChild(i).gameObject);
         }
 
         CmdLoad();
@@ -119,24 +150,10 @@ public class CommandPanel : MonoBehaviour {
         commands.Add(new Command());
     }
 
-    public void ChangeSpeed()
-    {
-        if(CurrentGameDatas.speed == Configuration.maxSpeed)
-        {
-            Time.timeScale = Configuration.minSpeed;
-            CurrentGameDatas.speed = Configuration.minSpeed;
-            speedText.text = Configuration.speedTextText + CurrentGameDatas.speed;
-            return;
-        }
-        Time.timeScale = CurrentGameDatas.speed + 1;
-        CurrentGameDatas.speed++;
-        speedText.text = Configuration.speedTextText + CurrentGameDatas.speed;
-    }
-
-    public List<Command> getRealCommands(List<Command> fv1, List<Command> fv2)
+    public List<Command> GetRealCommands(List<Command> fv1, List<Command> fv2)
     {
         List<Command> RealCmds = new List<Command>();
-        for(int i=0; i<slotAmount; i++)
+        for(int i=0; i<mainCount; i++)
         {
             if (commands[i].ID != -1)
             {
@@ -145,7 +162,7 @@ public class CommandPanel : MonoBehaviour {
             }
         }
 
-        for(int i=slotAmount; i<slotAmount+fv1_Counts; i++)
+        for(int i=mainCount; i<mainCount+fv1Count; i++)
         {
             if (commands[i].ID != -1)
             {
@@ -153,7 +170,7 @@ public class CommandPanel : MonoBehaviour {
             }
         }
 
-        for (int i = slotAmount+fv1_Counts; i < slotAmount + fv1_Counts+fv2_Counts; i++)
+        for (int i = mainCount+fv1Count; i < mainCount + fv1Count+fv2Count; i++)
         {
             if (commands[i].ID != -1)
             {
@@ -177,5 +194,50 @@ public class CommandPanel : MonoBehaviour {
         return db;
     }
 
+    public int GetCommandID(int id)
+    {
+        return commands[id].ID;
+    }
 
+    public void ReplaceCommand(int id, Transform droppedCommandTransform)
+    {
+        CommandData droppedCommandData = droppedCommandTransform.GetComponent<CommandData>();
+
+        commands[droppedCommandData.Command.PanelSlot] = new Command();
+        commands[id] = droppedCommandData.Command;
+        droppedCommandData.Command.PanelSlot = id;
+
+        droppedCommandTransform.SetParent(slots[droppedCommandData.Command.PanelSlot].transform);
+        droppedCommandTransform.position = slots[droppedCommandData.Command.PanelSlot].transform.position;
+    }
+
+    public void ExchangeCommands(Transform droppedTransform, Transform wasThereTransform)
+    {
+        CommandData dropped = droppedTransform.GetComponent<CommandData>();
+        CommandData wasThere = wasThereTransform.GetComponent<CommandData>();
+        int forChange = wasThere.Command.PanelSlot;
+
+        wasThere.Command.PanelSlot = dropped.Command.PanelSlot;
+        wasThereTransform.SetParent(slots[dropped.Command.PanelSlot].transform);
+        wasThereTransform.transform.position = slots[dropped.Command.PanelSlot].transform.position;
+
+        dropped.Command.PanelSlot = forChange;
+
+        commands[wasThere.Command.PanelSlot] = wasThere.Command;
+        commands[forChange] = dropped.Command;
+
+        droppedTransform.SetParent(slots[dropped.Command.PanelSlot].transform);
+        droppedTransform.position = slots[dropped.Command.PanelSlot].transform.position;
+    }
+
+    public void LastCommandDataPositioning(Transform trans, int slotNumber)
+    {
+        trans.SetParent(slots[slotNumber].transform);
+        trans.position = slots[slotNumber].transform.position;
+    }
+
+    public void AddCommand(int panelSlot, Command element)
+    {
+        commands[panelSlot] = element;
+    }
 }

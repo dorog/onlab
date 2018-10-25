@@ -1,10 +1,15 @@
 ﻿using UnityEngine;
 
+[RequireComponent(typeof(Animator))]
 public class JoeCommandControl : MonoBehaviour {
 
-    public float rotate = 90;
+    [SerializeField]
+    [Range (0.0f, 360.0f)]
+    private const float rotate = 90;
+    [SerializeField]
     private float originTime = 1;
     private float time;
+
     private Animator joeAnim;
 
     private bool forward = false;
@@ -15,14 +20,16 @@ public class JoeCommandControl : MonoBehaviour {
 
     private Vector3 aimPosition;
 
-    // Use this for initialization
+    public static string forwardAnimation = "forward";
+    public static string idleAnimation = "start";
+    public static string trapAnimation = "trap";
+
     void Start() {
-        originTime = Configuration.timeForAnimation;
-        time = Configuration.timeForAnimation;
-        joeAnim = this.transform.GetComponent<Animator>();
+        originTime = SharedData.timeForAnimation;
+        time = SharedData.timeForAnimation;
+        joeAnim = transform.GetComponent<Animator>();
     }
 
-    // Update is called once per frame
     void Update() {
 
         if (!stopped)
@@ -31,16 +38,16 @@ public class JoeCommandControl : MonoBehaviour {
             {
                 if (time - Time.deltaTime > 0)
                 {
-                    this.transform.position += this.transform.forward * Configuration.unit * Time.deltaTime;
+                    transform.position += transform.forward * SharedData.unit * Time.deltaTime;
                     time -= Time.deltaTime;
                 }
                 else
                 {
                     forward = false;
-                    this.transform.position = new Vector3(aimPosition.x, this.transform.position.y, aimPosition.z);
+                    transform.position = new Vector3(aimPosition.x, transform.position.y, aimPosition.z);
                     time = originTime;
-                    joeAnim.SetBool(Configuration.forwardAnimation, false);
-                    joeAnim.SetBool(Configuration.idleAnimation, true);
+                    joeAnim.SetBool(forwardAnimation, false);
+                    joeAnim.SetBool(idleAnimation, true);
                 }
             }
             else if (leftturn)
@@ -48,12 +55,12 @@ public class JoeCommandControl : MonoBehaviour {
                 if (time - Time.deltaTime <= 0)
                 {
                     leftturn = false;
-                    this.transform.Rotate(0, rotate * time * -1, 0);
+                    transform.Rotate(0, rotate * time * -1, 0);
                     time = originTime;
                 }
                 else
                 {
-                    this.transform.Rotate(0, rotate * Time.deltaTime * -1, 0);
+                    transform.Rotate(0, rotate * Time.deltaTime * -1, 0);
                     time -= Time.deltaTime;
                 }
             }
@@ -62,12 +69,12 @@ public class JoeCommandControl : MonoBehaviour {
                 if (time - Time.deltaTime <= 0)
                 {
                     rightturn = false;
-                    this.transform.Rotate(0, rotate * time, 0);
+                    transform.Rotate(0, rotate * time, 0);
                     time = originTime;
                 }
                 else
                 {
-                    this.transform.Rotate(0, rotate * Time.deltaTime, 0);
+                    transform.Rotate(0, rotate * Time.deltaTime, 0);
                     time -= Time.deltaTime;
                 }
             }
@@ -86,21 +93,15 @@ public class JoeCommandControl : MonoBehaviour {
 
     public void GoForward()
     {
-        aimPosition = this.transform.position + this.transform.forward * Configuration.unit;
+        aimPosition = transform.position + transform.forward * SharedData.unit;
         forward = true;
-        joeAnim.SetBool(Configuration.idleAnimation, false);
-        joeAnim.SetBool(Configuration.forwardAnimation, forward);
-
+        joeAnim.SetBool(idleAnimation, false);
+        joeAnim.SetBool(forwardAnimation, forward);
     }
 
     public void HitTrap(float timeInTheAir)
     {
-        Animator anim = this.transform.GetComponent<Animator>();
-        if (!anim)
-        {
-            return;
-        }
-        anim.SetBool(Configuration.idleAnimation, false);
-        anim.SetBool(Configuration.trapAnimation, true);
+        joeAnim.SetBool(idleAnimation, false);
+        joeAnim.SetBool(trapAnimation, true);
     }
 }

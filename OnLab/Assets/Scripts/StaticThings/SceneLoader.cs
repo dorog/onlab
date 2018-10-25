@@ -9,38 +9,43 @@ public class SceneLoader : MonoBehaviour {
         {
             CurrentGameDatas.SaveSpeed();
         }
-        SceneManager.LoadScene(Configuration.GetLevelName());
+        SceneManager.LoadScene(GameStructure.GetLevelName());
     }
 
-	public void LoadScene(string sceneName)
+    public void LoadScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
     }
 
-    public void LoadSceneAndTimeScaleUsedGame(string sceneName)
+	public static void LoadSceneStatic(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
+    }
+
+    public static void LoadSceneAndTimeScaleUsedGame(string sceneName)
     {
         Time.timeScale = CurrentGameDatas.speed;
         SceneManager.LoadScene(sceneName);
     }
 
-    public void LoadMapTimeScaleUsed(int mapNumber)
+    public static void LoadMapTimeScaleUsed(int mapNumber)
     {
-        CurrentGameDatas.mapNumber = mapNumber;
-        LoadSceneAndTimeScaleUsedGame(Configuration.mapName);
+        ActualMapData.mapNumber = mapNumber;
+        LoadSceneAndTimeScaleUsedGame(GameStructure.mapName);
     }
 
-    public void Quit()
+    public static void Quit()
     {
         Application.Quit();
     }
 
     public void SetIsLoad(bool isLoad)
     {
-        Configuration.isLoad = isLoad;
+        ReadSlot.isLoad = isLoad;
     }
 
     public void LoadActualMap()
     {
-        LoadScene(Configuration.GetLevelName());
+        LoadSceneStatic(GameStructure.GetLevelName());
     }
 }

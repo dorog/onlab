@@ -4,10 +4,10 @@ public class ItemEffect : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.name == Configuration.characterName)
+        if (other.gameObject.tag == SharedData.playerTag)
         {
-            CurrentGameDatas.HaveItem = true;
+            ActualMapData.HaveItem = true;
         }
-        Destroy(this.transform.gameObject);
+        Destroy(transform.gameObject);
     }
 }

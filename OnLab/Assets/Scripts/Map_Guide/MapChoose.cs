@@ -4,14 +4,16 @@ public class MapChoose : MonoBehaviour {
 
     private Camera cam;
 
-	// Use this for initialization
 	void Start () {
         cam = Camera.main;
+        if(cam == null)
+        {
+            Debug.LogError("MapChoose: No main camera, need one!");
+        }
 	}
 	
-	// Update is called once per frame
 	void Update () {
-        if (PreparLevel.inAnimation)
+        if (PreparLevel.InAnimation)
         {
             return;
         }

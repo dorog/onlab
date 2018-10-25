@@ -7,18 +7,17 @@ public class SwitchLaser : MonoBehaviour {
 
     private void Start()
     {
-        mapGenerator = GameObject.Find(Configuration.mapGeneratorName).transform.GetComponent<MapGenerator>();
+        mapGenerator = MapGenerator.GetMapGenerator();
+        if (mapGenerator == null)
+        {
+            Debug.LogError("SwitchLaser: MapGenerator is null!");
+        }
     }
 
     public void OnTriggerEnter(Collider other)
     {
         if(objectOnIt == 0)
         {
-            //Laser switch off
-            if (mapGenerator == null)
-            {
-                return;
-            }
             mapGenerator.LaserSwitchOff();
         }
         objectOnIt++;
@@ -28,7 +27,6 @@ public class SwitchLaser : MonoBehaviour {
     {
         if(objectOnIt == 1)
         {
-            //Laser switch on
             mapGenerator.LaserSwitchOn();
         }
         objectOnIt--;

@@ -1,39 +1,53 @@
 ﻿using UnityEngine;
 
-
 public class JOE_Anim_Manager : MonoBehaviour {
 
     [Header("Base Settings")]
-    public Animator joeAnim;
-    public float minWait = 3;
-    public float maxWait = 6;
+    [SerializeField]
+    private Animator joeAnim;
+    [SerializeField]
+    private float minWait = 3;
+    [SerializeField]
+    private float maxWait = 6;
 
     [Header("Animation Chance Settings")]
-    public float footChance;
-    public float lookAroundChance;
-    public float welcomeChance;
+    [SerializeField]
+    [Range(0.0f, 1.0f)]
+    private float footChance = 0.3f;
+    [SerializeField]
+    [Range(0.0f, 1.0f)]
+    private float lookAroundChance = 0.3f;
+    [SerializeField]
+    [Range(0.0f, 1.0f)]
+    private float welcomeChance = 0.4f;
 
     [Header("Animation Time Settings")]
-    public float footAnimTime;
-    public float lookAroundAnimTime;
-    public float welcomeAnimTime;
+    [SerializeField]
+    private float footAnimTime;
+    [SerializeField]
+    private float lookAroundAnimTime;
+    [SerializeField]
+    private float welcomeAnimTime;
 
-    private string lastAnimation;
+    private string lastAnimation = null;
 
-    // Use this for initialization
+    private float summChance;
+
+    private readonly string footAnimation = "foot";
+    private readonly string lookAroundAnimation = "around";
+    private readonly string welcomeAnimation = "hi";
+
     void Start () {
+
+        summChance = footChance + lookAroundChance + welcomeChance;
 
         float rand = Random.Range(minWait, maxWait);
         Invoke("ShowAnim", rand);
-
-        footChance = Mathf.Abs(footChance)/100;
-        lookAroundChance = Mathf.Abs(lookAroundChance)/100;
-        welcomeChance = Mathf.Abs(welcomeChance)/100;
     }
 
     public void ShowAnim()
     {
-        if (PreparLevel.inAnimation)
+        if (PreparLevel.InAnimation)
         {
             return;
         }
@@ -41,23 +55,23 @@ public class JOE_Anim_Manager : MonoBehaviour {
         float invokeCallTime;
         float random = Random.value;
 
-        if (random <= footChance)
+        if (random <= footChance / summChance)
         {
-            joeAnim.SetBool(Configuration.footAnimation, true);
+            joeAnim.SetBool(footAnimation, true);
             invokeCallTime = footAnimTime;
-            lastAnimation = Configuration.footAnimation;
+            lastAnimation = footAnimation;
         }
-        else if(random <= footChance + lookAroundChance)
+        else if(random <= (footChance + lookAroundChance) / summChance)
         {
-            joeAnim.SetBool(Configuration.lookAroundAnimation, true);
+            joeAnim.SetBool(lookAroundAnimation, true);
             invokeCallTime = lookAroundAnimTime;
-            lastAnimation = Configuration.lookAroundAnimation;
+            lastAnimation = lookAroundAnimation;
         }
         else
         {
-            joeAnim.SetBool(Configuration.welcomeAnimation, true);
+            joeAnim.SetBool(welcomeAnimation, true);
             invokeCallTime = welcomeAnimTime;
-            lastAnimation = Configuration.welcomeAnimation;
+            lastAnimation = welcomeAnimation;
         }
         Invoke("AnimEnd", invokeCallTime);
         Invoke("ShowAnim", invokeCallTime + Random.Range(minWait, maxWait));
@@ -65,6 +79,10 @@ public class JOE_Anim_Manager : MonoBehaviour {
 
     public void AnimEnd()
     {
+        if(lastAnimation == null)
+        {
+            return;
+        }
         joeAnim.SetBool(lastAnimation, false);
     }
 }

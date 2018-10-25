@@ -1,43 +1,73 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
+[RequireComponent(typeof(CanvasGroup))]
 public class CommandData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-
-    public Command command;
-    public int slot;
-
-    private CommandPanel cmdpanelmanager;
     private GameObject cmdpanel;
+    private CanvasGroup canvasGroup;
+
+    public Command Command { get; set; }
+    public int CmdPanelSlot { get; set; }
+
+    private readonly string cmdPanelAndroidStr = "CommandPanelAndroid";
+    private readonly string cmdPanelWindowsStr = "CommandPanelWindows";
+
+    private CommandPanel cmdPanel;
 
     void Start()
     {
-        cmdpanelmanager = GameObject.Find(Configuration.cmdPanelManagerName).GetComponent<CommandPanel>();
-        cmdpanel = GameObject.Find(Configuration.cmdPanelName);
+        cmdPanel = CommandPanel.GetCommandPanel();
+
+        #if UNITY_ANDROID
+            GameObject[] cmdpanels = GameObject.FindGameObjectsWithTag(cmdPanelAndroidStr);
+        #else
+            GameObject[] cmdpanels = GameObject.FindGameObjectsWithTag(cmdPanelWindowsStr);
+        #endif
+
+        if (cmdpanels.Length > 1)
+        {
+        #if UNITY_ANDROID
+            Debug.LogWarning("CommandData: There are more than one CommandPanel with " + cmdPanelAndroidStr + " tag, functions may won't work fine!");
+        #else
+             Debug.LogWarning("CommandData: There are more than one CommandPanel with " + cmdPanelWindowsStr + " tag, functions may won't work fine!");
+        #endif
+        }
+        else if (cmdpanels.Length == 0)
+        {
+            Debug.LogError("CommandData: There are no CommandPanel");
+        }
+
+        if (cmdpanels.Length > 0)
+        {
+            cmdpanel = cmdpanels[0];
+        }
+
+        CmdPanelSlot = Command.PanelSlot;
+        canvasGroup = GetComponent<CanvasGroup>();
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (command != null)
+        if (Command != null)
         {   
-            this.transform.SetParent(cmdpanel.transform.parent.transform);
-            this.transform.position = eventData.position;
-            GetComponent<CanvasGroup>().blocksRaycasts = false;
+            transform.SetParent(cmdpanel.transform.parent.transform);
+            transform.position = eventData.position;
+            canvasGroup.blocksRaycasts = false;
         }
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (command != null)
+        if (Command != null)
         {
-            this.transform.position = eventData.position;
+            transform.position = eventData.position;
         }
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        this.transform.SetParent(cmdpanelmanager.slots[slot].transform);
-        this.transform.position = cmdpanelmanager.slots[slot].transform.position;
-        GetComponent<CanvasGroup>().blocksRaycasts = true;
+        cmdPanel.LastCommandDataPositioning(transform, Command.PanelSlot);
+        canvasGroup.blocksRaycasts = true;
     }
 }

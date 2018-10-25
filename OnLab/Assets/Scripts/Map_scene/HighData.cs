@@ -4,33 +4,46 @@ using UnityEngine;
 public class HighData : MonoBehaviour {
 
     protected List<GameObject> boxes = new List<GameObject>();
-    public int baseHigh;
 
-    public virtual Configuration.CanGoForward HeightCalculateTo(int fromHeight)
+    [SerializeField]
+    private int baseHigh;
+
+    public int BaseHigh
     {
-        if((baseHigh + boxes.Count) <= fromHeight)
+        get
         {
-            Configuration.fallDistance = (fromHeight - (baseHigh + boxes.Count)) * Configuration.unit;
-            return Configuration.CanGoForward.Go;
+            return baseHigh;
         }
-        else if((baseHigh + boxes.Count)-1 == fromHeight && boxes.Count > 0)
+
+        set
         {
-            Configuration.fallDistance = 0;
-            return Configuration.CanGoForward.OneDiff;
+            baseHigh = value;
+        }
+    }
+
+    public virtual CanGoForward HeightCalculateTo(int fromHeight)
+    {
+        if((BaseHigh + boxes.Count) <= fromHeight)
+        {
+            SharedData.fallDistance = (fromHeight - (BaseHigh + boxes.Count)) * SharedData.unit;
+            return CanGoForward.Go;
+        }
+        else if((BaseHigh + boxes.Count)-1 == fromHeight && boxes.Count > 0)
+        {
+            SharedData.fallDistance = 0;
+            return CanGoForward.OneDiff;
         }
         else
         {
-            Configuration.fallDistance = 0;
-            return Configuration.CanGoForward.CantGo;
+            SharedData.fallDistance = 0;
+            return CanGoForward.CantGo;
         }
     }
 
     public virtual bool HeightCalculateToBox(int fromHeight)
     {
-        float originFallSpeed = Configuration.fallDistance;
-        Configuration.CanGoForward result = HeightCalculateTo(fromHeight);
-        Configuration.fallDistance = originFallSpeed;
-        if(result == Configuration.CanGoForward.Go)
+        CanGoForward result = HeightCalculateTo(fromHeight);
+        if(result == CanGoForward.Go)
         {
             return true;
         }
@@ -39,7 +52,7 @@ public class HighData : MonoBehaviour {
 
     public virtual int HeighCalculateFrom()
     {
-        return baseHigh + boxes.Count;
+        return BaseHigh + boxes.Count;
     }
 
     public virtual int GetBoxCount()

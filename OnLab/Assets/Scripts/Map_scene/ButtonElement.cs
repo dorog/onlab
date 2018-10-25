@@ -3,16 +3,21 @@
 public class ButtonElement : MonoBehaviour {
 
     private bool used;
-    MapGenerator mapGenerator;
-    public Material usedMat;
+    private MapGenerator mapGenerator;
+    [Tooltip("Material for change colour when the character activate it")]
+    [SerializeField]
+    private Material usedMat;
     private Material originalMat;
 
-    // Use this for initialization
     void Start()
     {
-        mapGenerator = GameObject.Find(Configuration.mapGeneratorName).GetComponent<MapGenerator>();
+        mapGenerator = MapGenerator.GetMapGenerator();
+        if (mapGenerator == null)
+        {
+            Debug.LogError("ButtonElement: MapGenerator is null!");
+        }
         used = false;
-        originalMat = this.transform.GetComponent<MeshRenderer>().material;
+        originalMat = transform.GetComponent<MeshRenderer>().material;
     }
 
     public void ActivateButton()
@@ -21,14 +26,15 @@ public class ButtonElement : MonoBehaviour {
         {
             mapGenerator.ButtonActivated();
             used = true;
+
             //light up
-            this.transform.GetComponent<MeshRenderer>().material = usedMat;
+            transform.GetComponent<MeshRenderer>().material = usedMat;
         }
         else
         {
             used = false;
             mapGenerator.ButtonDeactivated();
-            this.transform.GetComponent<MeshRenderer>().material = originalMat;
+            transform.GetComponent<MeshRenderer>().material = originalMat;
         }
     }
 }

@@ -431,7 +431,7 @@ MonoBehaviour:
   timeInTheAir: 4.7
   resetTime: 2
   minNotKillHeigh: 1
-  boxCollider: {fileID: 65050471546576524}
+  trapSurface: {fileID: 65050471546576524}
 --- !u!114 &114938724029065022
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -443,7 +443,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9ff66ba9dbbe2844904e9980af81732, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boxes: []
   baseHigh: 2
   HeighCalculateFromNumber: -1
 --- !u!137 &137237547725859092
