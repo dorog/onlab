@@ -72,6 +72,6 @@ public class BoxController : MonoBehaviour
     public void InitOnIt(Transform onIt, int onItNumber)
     {
         OnIt = onIt;
-        plusHight = SharedData.unit * onItNumber;
+        plusHight = SharedData.heightUnit * onItNumber;
     }
 }

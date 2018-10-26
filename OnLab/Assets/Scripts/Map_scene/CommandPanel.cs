@@ -56,10 +56,6 @@ public class CommandPanel : MonoBehaviour {
         return instance;
     }
 
-    void Start()
-    {
-    }
-
     void CmdLoad()
     {
         for (int i = 0; i < mainCount; i++)

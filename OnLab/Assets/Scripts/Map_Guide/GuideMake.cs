@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class GuideMake : MonoBehaviour {
 
-    private GameDatas gmdatas;
+    private List<MapData> gmdatas = new List<MapData>();
     private string GSB_part = "Map_guide/GSB_part";
     private string numberIcon = "Map_guide/number";
 
@@ -14,13 +15,27 @@ public class GuideMake : MonoBehaviour {
     private GameObject Gate;
     [SerializeField]
     private GameObject Keys;
-    [Header("Item setting")]
+    [Header("Key setting")]
     [SerializeField]
     private GameObject KeyModel;
     [SerializeField]
+    private Vector3 KeyModelRotation = new Vector3(90, 0, 0);
+    [SerializeField]
+    private int KeyAbove = 50;
+    [Header("Gem setting")]
+    [SerializeField]
     private GameObject GemModel;
     [SerializeField]
-    private int itemAboveHolder = 50;
+    private Vector3 GemModelRotation = new Vector3(0, 0, 0);
+    [SerializeField]
+    private int GemAbove = 50;
+    [Header("Relic setting")]
+    [SerializeField]
+    private GameObject RelicModel;
+    [SerializeField]
+    private Vector3 RelicModelRotation = new Vector3(0, -90, -90);
+    [SerializeField]
+    private int RelicAbove = 30;
 
     [Header("Level up button")]
     [SerializeField]
@@ -40,22 +55,25 @@ public class GuideMake : MonoBehaviour {
         }
 
         int mapsNumber = CurrentGameDatas.GetActualLevelMapCount();
-        gmdatas = new GameDatas(mapsNumber);
 
         int firstLevelNumber = CurrentGameDatas.GetActualLevelFirstMapNumber();
         int j = 0;
         for(int i= firstLevelNumber; i < firstLevelNumber + mapsNumber; i++)
         {
-            gmdatas.AddMapData(new MapDatas(CurrentGameDatas.mapDatas[i].mapScore, CurrentGameDatas.mapDatas[i].scarab, CurrentGameDatas.mapDatas[i].item, CurrentGameDatas.mapDatas[i].itemType));
-            if (CurrentGameDatas.mapDatas[i].item)
+            gmdatas.Add(new MapData(CurrentGameDatas.mapDatas[i].Score, CurrentGameDatas.mapDatas[i].Scarab, CurrentGameDatas.mapDatas[i].Item, CurrentGameDatas.mapDatas[i].ItemType));
+            if (CurrentGameDatas.mapDatas[i].Item == SharedData.HaveItemNumber)
             {
-                if (CurrentGameDatas.mapDatas[i].itemType == SharedData.KeyType)
+                if (CurrentGameDatas.mapDatas[i].ItemType == SharedData.KeyType)
                 {
                     KeySpam(j);
                 }
-                else if (CurrentGameDatas.mapDatas[i].itemType == SharedData.GemType)
+                else if (CurrentGameDatas.mapDatas[i].ItemType == SharedData.GemType)
                 {
                     GemSpam(j);
+                }
+                else
+                {
+                    RelicSpam(j);
                 }
                 OpenGate(j);
             }
@@ -71,21 +89,30 @@ public class GuideMake : MonoBehaviour {
     {
         Quaternion root = Keys.transform.GetChild(i).rotation;
 
-        Instantiate(GemModel, Keys.transform.GetChild(i).position+new Vector3(0, itemAboveHolder, 0), root, Keys.transform.GetChild(i));
+        GameObject Gem = Instantiate(GemModel, Keys.transform.GetChild(i).position+new Vector3(0, GemAbove, 0), root, Keys.transform.GetChild(i));
+        Gem.transform.Rotate(GemModelRotation);
     }
 
     void KeySpam(int i)
     {
         Quaternion root = Keys.transform.GetChild(i).rotation;
 
-        GameObject Key = Instantiate(KeyModel, Keys.transform.GetChild(i).position + new Vector3(0, itemAboveHolder, 0), root, Keys.transform.GetChild(i));
-        Key.transform.Rotate(new Vector3(90, 0, 0));
+        GameObject Key = Instantiate(KeyModel, Keys.transform.GetChild(i).position + new Vector3(0, KeyAbove, 0), root, Keys.transform.GetChild(i));
+        Key.transform.Rotate(KeyModelRotation);
+    }
+
+    void RelicSpam(int i)
+    {
+        Quaternion root = Keys.transform.GetChild(i).rotation;
+
+        GameObject Relic = Instantiate(RelicModel, Keys.transform.GetChild(i).position + new Vector3(0, RelicAbove, 0), root, Keys.transform.GetChild(i));
+        Relic.transform.Rotate(RelicModelRotation);
     }
 
     void ScoreMake()
     {
         int ScoreBoardChilds = ScoreBoards.transform.childCount;
-        for (int i = 0; i < gmdatas.maxMap && i < ScoreBoardChilds; i++)
+        for (int i = 0; i < gmdatas.Count && i < ScoreBoardChilds; i++)
         {
             Transform ScoreBoardChild = ScoreBoards.transform.GetChild(i);
             Transform scarabChild = ScoreBoardChild.transform.GetChild(0);
@@ -93,12 +120,12 @@ public class GuideMake : MonoBehaviour {
             MeshRenderer mr = scarabChild.GetComponent<MeshRenderer>();
 
             Material[] mats = mr.materials;
-            mats[mathNumber] = Resources.Load<Material>(GSB_part + gmdatas.mapDatas[i].scarab);
+            mats[mathNumber] = Resources.Load<Material>(GSB_part + gmdatas[i].Scarab);
 
             mr.materials = mats;
 
             int[] numbs = { 100, 10, 1 };
-            int score = gmdatas.mapDatas[i].mapScore;
+            int score = gmdatas[i].Score;
             for (int j = 1; j < ScoreBoardChild.childCount; j++)
             {
                 Transform scoreChild = ScoreBoardChild.GetChild(j);

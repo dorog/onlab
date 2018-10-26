@@ -36,11 +36,11 @@ public class DoorHighData : HighData {
         {
             if ((fromHeight >= BaseHigh + boxesOnRoof.Count))
             {
-                SharedData.fallDistance = (fromHeight - (BaseHigh + boxesOnRoof.Count)) * SharedData.unit;
+                SharedData.fallDistance = (fromHeight - (BaseHigh + boxesOnRoof.Count)) * SharedData.heightUnit;
                 return CanGoForward.Go;
             }
             else if ((fromHeight == openedHeight || fromHeight == openedHeight + 1)) {
-                SharedData.fallDistance = (fromHeight - openedHeight) * SharedData.unit;
+                SharedData.fallDistance = (fromHeight - openedHeight) * SharedData.heightUnit;
                 return CanGoForward.Go;
             }
             else if ((fromHeight >= BaseHigh + boxesOnRoof.Count - 1) && boxesOnRoof.Count > 0)
@@ -53,7 +53,7 @@ public class DoorHighData : HighData {
         }
         else if(fromHeight >= BaseHigh + boxesOnRoof.Count)
         {
-            SharedData.fallDistance = (fromHeight - (BaseHigh + boxesOnRoof.Count)) * SharedData.unit;
+            SharedData.fallDistance = (fromHeight - (BaseHigh + boxesOnRoof.Count)) * SharedData.heightUnit;
             return CanGoForward.Go;
         }
         else if(fromHeight >= (BaseHigh + boxesOnRoof.Count - 1) && boxesOnRoof.Count > 0)
@@ -77,7 +77,7 @@ public class DoorHighData : HighData {
 
     public override void AddBox(GameObject box)
     {
-        if(box.transform.position.y > SharedData.hight_0_Ground + SharedData.unit * BaseHigh)
+        if(box.transform.position.y > SharedData.hight_0_Ground + SharedData.heightUnit * BaseHigh)
         {
             boxesOnRoof.Add(box);
             return;
@@ -87,7 +87,7 @@ public class DoorHighData : HighData {
 
     public override GameObject GetTopBox()
     {
-        if (character.transform.position.y > SharedData.hight_0_Ground + SharedData.unit * BaseHigh)
+        if (character.transform.position.y > SharedData.hight_0_Ground + SharedData.heightUnit * BaseHigh)
         {
             return boxesOnRoof[boxesOnRoof.Count - 1];
         }
@@ -101,7 +101,7 @@ public class DoorHighData : HighData {
 
     public override void RemoveTopBox()
     {
-        if (character.transform.position.y > SharedData.hight_0_Ground + SharedData.unit * BaseHigh)
+        if (character.transform.position.y > SharedData.hight_0_Ground + SharedData.heightUnit * BaseHigh)
         {
             boxesOnRoof.RemoveAt(boxesOnRoof.Count - 1);
         }

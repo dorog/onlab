@@ -20,7 +20,7 @@ public class RiseElement : MonoBehaviour {
 
     void Start()
     {
-        speed = SharedData.unit / SharedData.timeForAnimation;
+        speed = SharedData.heightUnit / SharedData.timeForAnimation;
         originRisingTime = SharedData.timeForAnimation;
         myData = GetComponent<HighData>();
     }
@@ -43,8 +43,8 @@ public class RiseElement : MonoBehaviour {
 
     public void Rise()
     {
-        Instantiate(underThis, transform.position + Vector3.down * SharedData.unit * rised, transform.rotation, transform);
-        aimPosition = transform.position + new Vector3(0, SharedData.unit, 0);
+        Instantiate(underThis, transform.position + Vector3.down * SharedData.heightUnit * rised, transform.rotation, transform);
+        aimPosition = transform.position + new Vector3(0, SharedData.heightUnit, 0);
         rised++;
         rising_time = originRisingTime;
         myData.BaseHigh++;

@@ -6150,6 +6150,7 @@ MonoBehaviour:
   Keys: {fileID: 78324769}
   KeyModel: {fileID: 1440918914420330, guid: f5b8c6964a3a82f4a99e669024be044c, type: 2}
   GemModel: {fileID: 1391075682785562, guid: 2c528170563e4b942ad3535ee73ee803, type: 2}
+  RelicModel: {fileID: 1115798143088108, guid: 6491a1ce0ec17014d924248bb3af184a, type: 2}
   itemAboveHolder: 50
   levelUpButton: {fileID: 1168266113}
   castList: {fileID: 0}

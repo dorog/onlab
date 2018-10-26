@@ -18,8 +18,6 @@ public class LiftRisingStones : MonoBehaviour {
     {
         if (!used)
         {
-            if (mapGen == null)
-                return;
             used = true;
             mapGen.RiseRisingStones();
         }

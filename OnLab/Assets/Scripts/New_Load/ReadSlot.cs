@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Collections.Generic;
 
 public class ReadSlot : MonoBehaviour
 {
@@ -17,7 +18,7 @@ public class ReadSlot : MonoBehaviour
     [SerializeField]
     private GameObject SlotEmptyText;
 
-    private GameDatas gmdata;
+    private List<MapData> gmdata = new List<MapData>();
     private int summScore = 0;
     private int summBuggPart = 0;
     private int savedSpeed = 1;
@@ -30,7 +31,6 @@ public class ReadSlot : MonoBehaviour
 
     private string deviceFileLocation;
 
-    private int hasItem = 0;
     private int emptySlot = 0;
     private int notEmptySlot = 1;
 
@@ -65,22 +65,21 @@ public class ReadSlot : MonoBehaviour
 
         data.slotType = notEmptySlot;
         data.maxMap = GameStructure.maxMap;
-        data.mapResults = new MapResult[GameStructure.maxMap];
+        data.mapResults = new MapData[GameStructure.maxMap];
         data.onLevel = GameStructure.startLevel;
         data.levelMapsNumber = GameStructure.levelMapsCount;
         for (int i = 0; i < data.mapResults.Length; i++)
         {
-            data.mapResults[i] = new MapResult();
+            data.mapResults[i] = new MapData();
         }
         data.speed = SharedData.basicSpeed;
         FileStream fileForSave = File.Create(deviceFileLocation);
         bf.Serialize(fileForSave, data);
         fileForSave.Close();
 
-        gmdata = new GameDatas(GameStructure.maxMap);
         for (int i = 0; i < GameStructure.maxMap; i++)
         {
-            gmdata.AddMapData(new MapDatas());
+            gmdata.Add(new MapData());
         }
         CurrentGameDatas.savedSpeed = SharedData.basicSpeed;
         CurrentGameDatas.speed = SharedData.basicSpeed;
@@ -112,12 +111,12 @@ public class ReadSlot : MonoBehaviour
             PlayerSlotData data = new PlayerSlotData();
             data.slotType = emptySlot;
             data.maxMap = GameStructure.maxMap;
-            data.mapResults = new MapResult[GameStructure.maxMap];
+            data.mapResults = new MapData[GameStructure.maxMap];
             data.onLevel = GameStructure.startLevel;
             data.levelMapsNumber = GameStructure.levelMapsCount;
             for (int i = 0; i < data.mapResults.Length; i++)
             {
-                data.mapResults[i] = new MapResult();
+                data.mapResults[i] = new MapData();
             }
 
             bf.Serialize(file, data);
@@ -130,7 +129,6 @@ public class ReadSlot : MonoBehaviour
         }
 
         savedSpeed = ps.speed;
-        gmdata = new GameDatas(maxMap);
 
         Button myBtn = transform.GetComponent<Button>();
 
@@ -158,13 +156,12 @@ public class ReadSlot : MonoBehaviour
 
             for (int i = 0; i < maxMap; i++)
             {
-                bool item = ps.mapResults[i].Item == hasItem ? false : true;
 
-                gmdata.AddMapData(new MapDatas(ps.mapResults[i].Score, ps.mapResults[i].ScarabNumber, item, ps.mapResults[i].ItemType));
+                gmdata.Add(new MapData(ps.mapResults[i].Score, ps.mapResults[i].Scarab, ps.mapResults[i].Item, ps.mapResults[i].ItemType));
 
                 summScore += ps.mapResults[i].Score;
-                summBuggPart += ps.mapResults[i].ScarabNumber;
-                if (ps.mapResults[i].Item == SharedData.KeyType)
+                summBuggPart += ps.mapResults[i].Scarab;
+                if (ps.mapResults[i].ItemType == SharedData.KeyType)
                 {
                     summKeys += ps.mapResults[i].Item;
                 }
@@ -173,11 +170,11 @@ public class ReadSlot : MonoBehaviour
                     summGems += ps.mapResults[i].Item;
                 }
 
-                if (ps.mapResults[i].ScarabNumber == GameStructure.maxScarab)
+                if (ps.mapResults[i].Scarab == GameStructure.maxScarab)
                 {
                     perfectMap++;
                 }
-                if (ps.mapResults[i].ScarabNumber > GameStructure.scarabNumberForSolved)
+                if (ps.mapResults[i].Scarab > GameStructure.scarabNumberForSolved)
                 {
                     solvedMap++;
                 }

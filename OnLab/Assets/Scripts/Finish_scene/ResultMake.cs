@@ -15,8 +15,8 @@ public class ResultMake : MonoBehaviour {
     void Start () {
         Time.timeScale = SharedData.basicSpeed;
 
-        scarabImagePlace.sprite = Resources.Load<Sprite>(GSB_sprite + ActualMapData.solvedMap.scarab);
-        scoreText.text = "Score: "+ ActualMapData.solvedMap.mapScore;
+        scarabImagePlace.sprite = Resources.Load<Sprite>(GSB_sprite + ActualMapData.solvedMap.Scarab);
+        scoreText.text = "Score: "+ ActualMapData.solvedMap.Score;
     }
 
     public void LoadSameScene()

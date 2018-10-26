@@ -1,24 +1,26 @@
-﻿
-public class MapDatas{
+﻿using System;
 
-    public int mapScore { get; set; }
-    public int scarab { get; set; }
+[Serializable]
+public class MapData{
 
-    public bool item { get; set; }
-    public int itemType { get; set; }
+    public int Score { get; set; }
+    public int Scarab { get; set; }
+
+    public int Item { get; set; }
+    public int ItemType { get; set; }
     
-    public MapDatas()
+    public MapData()
     {
-        mapScore = 0;
-        scarab = 0;
-        item = false;
+        Score = 0;
+        Scarab = 0;
+        Item = SharedData.notHaveItemNumber;
     }
 
-    public MapDatas(int mapScr, int bug, bool _item, int _itemType)
+    public MapData(int mapScr, int bug, int _item, int _itemType)
     {
-        mapScore = mapScr;
-        scarab = bug;
-        item = _item;
-        itemType = _itemType;
+        Score = mapScr;
+        Scarab = bug;
+        Item = _item;
+        ItemType = _itemType;
     }
 }

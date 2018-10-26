@@ -11,6 +11,10 @@ public class EdgeTrigger : MonoBehaviour
     void Start()
     {
         sa = StartActions.GetStartActions();
+        if (sa == null)
+        {
+            Debug.LogError("EdgeTrigger: Startaction is null!");
+        }
         highData = transform.GetComponent<HighData>();
     }
 

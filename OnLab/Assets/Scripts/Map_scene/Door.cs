@@ -5,7 +5,6 @@
 public class Door : MonoBehaviour
 {
     private int count = 1;
-    private bool used = false;
 
     [SerializeField]
     private string doorAnimName = "DoorWidth_last";
@@ -17,13 +16,9 @@ public class Door : MonoBehaviour
     {
         doorHighData = transform.GetComponent<DoorHighData>();
         anim = transform.GetComponent<Animation>();
-    }
 
-    void Update()
-    {
-        if (count == 0 && !used)
+        if (count == 0)
         {
-            used = true;
             anim[doorAnimName].speed = anim[doorAnimName].length / SharedData.timeForAnimation;
             anim.Play();
             doorHighData.Opened = true;
@@ -34,8 +29,7 @@ public class Door : MonoBehaviour
     {
         if (count == 0)
         {
-            used = false;
-            anim[doorAnimName].speed = -anim[doorAnimName].length / SharedData.timeForAnimation; ;
+            anim[doorAnimName].speed = -anim[doorAnimName].length / SharedData.timeForAnimation;
             anim[doorAnimName].time = anim[doorAnimName].length;
             anim.Play(doorAnimName);
             doorHighData.Opened = false;
@@ -46,6 +40,12 @@ public class Door : MonoBehaviour
     public void LessCount()
     {
         count--;
+        if (count == 0)
+        {
+            anim[doorAnimName].speed = anim[doorAnimName].length / SharedData.timeForAnimation;
+            anim.Play();
+            doorHighData.Opened = true;
+        }
     }
 
     public void SetCount(int count)

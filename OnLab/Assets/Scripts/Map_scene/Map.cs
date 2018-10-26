@@ -13,4 +13,7 @@ public class Map {
     public int Scarab3PartNumber;
     public int Scarab2PartNumber;
     public int itemType;
+
+    public int laserSwitchCount = 0;
+    public int buttonCount = 0;
 }

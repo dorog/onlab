@@ -12,11 +12,15 @@ public class FinishMap : MonoBehaviour {
     [SerializeField]
     private DoorHighData doorHighData;
 
-    private CommandPanel slotPanel;
+    private CommandPanel commandPanel;
 
     void Start () {
         ActualMapData.HawNewItem = false;
-        slotPanel = CommandPanel.GetCommandPanel();
+        commandPanel = CommandPanel.GetCommandPanel();
+        if (commandPanel == null)
+        {
+            Debug.Log("FinisMap: CommandPanel is null!");
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -34,7 +38,7 @@ public class FinishMap : MonoBehaviour {
             return;
         }
 
-        int realCommandsNumber = slotPanel.GetRealCommandsNumber();
+        int realCommandsNumber = commandPanel.GetRealCommandsNumber();
 
         int scarabNumber = 0;
         if (realCommandsNumber <= ActualMapData.Scarab3PartCmd)
@@ -58,13 +62,13 @@ public class FinishMap : MonoBehaviour {
         }
 
         int cmdNumber = (ActualMapData.Scarab3PartCmd - realCommandsNumber) >= 0 ? 0 : ActualMapData.Scarab3PartCmd - realCommandsNumber;
-        int thisGameScore = GameStructure.maxPoint - (GameStructure.maxScarabNumber - scarabNumber) * missingScarabWeight - cmdNumber * moreCmdWeight - (ActualMapData.HaveItem ? 0 : missingItemWeight);
+        int thisGameScore = GameStructure.maxPoint - (GameStructure.maxScarabNumber - scarabNumber) * missingScarabWeight + cmdNumber * moreCmdWeight - (ActualMapData.HaveItem ? 0 : missingItemWeight);
 
-        if (CurrentGameDatas.mapDatas[ActualMapData.mapNumber - 1].scarab < scarabNumber)
+        if (CurrentGameDatas.mapDatas[ActualMapData.mapNumber - 1].Scarab < scarabNumber)
         {
-            CurrentGameDatas.mapDatas[ActualMapData.mapNumber - 1].scarab = scarabNumber;
+            CurrentGameDatas.mapDatas[ActualMapData.mapNumber - 1].Scarab = scarabNumber;
         }
-        if ((CurrentGameDatas.mapDatas[ActualMapData.mapNumber - 1].mapScore) < thisGameScore)
+        if ((CurrentGameDatas.mapDatas[ActualMapData.mapNumber - 1].Score) < thisGameScore)
         {
             if (thisGameScore < 0)
             {
@@ -74,14 +78,14 @@ public class FinishMap : MonoBehaviour {
             {
                 thisGameScore = GameStructure.maxPoint;
             }
-            CurrentGameDatas.mapDatas[ActualMapData.mapNumber - 1].mapScore = thisGameScore;
+            CurrentGameDatas.mapDatas[ActualMapData.mapNumber - 1].Score = thisGameScore;
         }
 
         Save();
-        CurrentGameDatas.mapDatas[ActualMapData.mapNumber - 1].item = (CurrentGameDatas.mapDatas[ActualMapData.mapNumber - 1].item) || ActualMapData.HaveItem;
-        CurrentGameDatas.mapDatas[ActualMapData.mapNumber - 1].itemType = ActualMapData.solvedMap.itemType;
+        CurrentGameDatas.mapDatas[ActualMapData.mapNumber - 1].Item = (CurrentGameDatas.mapDatas[ActualMapData.mapNumber - 1].Item == SharedData.HaveItemNumber || ActualMapData.HaveItem) ? 1:0;
+        CurrentGameDatas.mapDatas[ActualMapData.mapNumber - 1].ItemType = ActualMapData.solvedMap.ItemType;
 
-        ActualMapData.solvedMap = new MapDatas(thisGameScore, scarabNumber, ActualMapData.HaveItem, ActualMapData.solvedMap.itemType);
+        ActualMapData.solvedMap = new MapData(thisGameScore, scarabNumber, ActualMapData.HaveItem ? 1 : 0, ActualMapData.solvedMap.ItemType);
         ActualMapData.HaveItem = false;
 
         SceneManager.LoadScene(GameStructure.resultScene);
@@ -94,17 +98,17 @@ public class FinishMap : MonoBehaviour {
         PlayerSlotData data = (PlayerSlotData)bf.Deserialize(file);
         file.Close();
 
-        data.mapResults[ActualMapData.mapNumber - 1].Score = CurrentGameDatas.mapDatas[ActualMapData.mapNumber - 1].mapScore;
-        data.mapResults[ActualMapData.mapNumber - 1].ScarabNumber = CurrentGameDatas.mapDatas[ActualMapData.mapNumber - 1].scarab;
-        data.mapResults[ActualMapData.mapNumber - 1].Item = (CurrentGameDatas.mapDatas[ActualMapData.mapNumber - 1].item) || ActualMapData.HaveItem ? 1 : 0;
-        data.mapResults[ActualMapData.mapNumber - 1].ItemType = ActualMapData.solvedMap.itemType;
+        data.mapResults[ActualMapData.mapNumber - 1].Score = CurrentGameDatas.mapDatas[ActualMapData.mapNumber - 1].Score;
+        data.mapResults[ActualMapData.mapNumber - 1].Scarab = CurrentGameDatas.mapDatas[ActualMapData.mapNumber - 1].Scarab;
+        data.mapResults[ActualMapData.mapNumber - 1].Item = (CurrentGameDatas.mapDatas[ActualMapData.mapNumber - 1].Item == SharedData.HaveItemNumber) || ActualMapData.HaveItem ? 1 : 0;
+        data.mapResults[ActualMapData.mapNumber - 1].ItemType = ActualMapData.solvedMap.ItemType;
         data.speed = CurrentGameDatas.speed;
         CurrentGameDatas.savedSpeed = CurrentGameDatas.speed;
         FileStream fileForSave = File.Create(CurrentGameDatas.slotName);
         bf.Serialize(fileForSave, data);
         fileForSave.Close();
 
-        ActualMapData.HawNewItem = !CurrentGameDatas.mapDatas[ActualMapData.mapNumber - 1].item && ActualMapData.HaveItem;
+        ActualMapData.HawNewItem = (CurrentGameDatas.mapDatas[ActualMapData.mapNumber - 1].Item == SharedData.notHaveItemNumber) && ActualMapData.HaveItem;
         if (ActualMapData.HawNewItem)
         {
             CurrentGameDatas.ItemCount++;

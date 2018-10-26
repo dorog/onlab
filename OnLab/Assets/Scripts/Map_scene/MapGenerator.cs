@@ -7,7 +7,6 @@ public class MapGenerator : MonoBehaviour
 
     private GameObject mapGeneratorGO;
     private int mapNumber = 0;
-    private int summSwitches = 0;
     private int buttonCount = 0;
     private Vector3 startPosition;
 
@@ -30,6 +29,8 @@ public class MapGenerator : MonoBehaviour
     private GameObject doorEdgeModel;
     [SerializeField]
     private GameObject keyModel;
+    [SerializeField]
+    private GameObject relicModel;
     [SerializeField]
     private GameObject doorModel;
     [SerializeField]
@@ -75,6 +76,8 @@ public class MapGenerator : MonoBehaviour
     private readonly float doorGround = -90;
     private readonly float doorEdgeGround = -90;
     private readonly float keyGround = -90;
+    private readonly float gemGround = -90;
+    private readonly float relicGround = -90;
     private readonly float trapGround = -90;
     private readonly float buttonGround = 0;
     private readonly float edgeGround = 0;
@@ -130,13 +133,14 @@ public class MapGenerator : MonoBehaviour
     public void CreateMap(int number)
     {
         Map map = InitMap(number);
+        buttonCount = map.buttonCount;
 
         for (int i = 0; i < map.heigth; i++)
         {
             for (int j = 0; j < map.width; j++)
             {
 
-                Vector3 placePosition = startPosition + new Vector3(SharedData.unit * j, 0, i * -1 * SharedData.unit);
+                Vector3 placePosition = startPosition + new Vector3(SharedData.widhtUnit * j, 0, i * -1 * SharedData.widhtUnit);
                 MapElement id = map.mapMatrix[i, j];
                 actMap[i, j] = id;
                 switch (id)
@@ -158,7 +162,6 @@ public class MapGenerator : MonoBehaviour
                         GameObject Button = Instantiate(buttonModel, placePosition + new Vector3(0, buttonGround, 0), Quaternion.AngleAxis(-90, Vector3.right), mapGeneratorGO.transform.GetChild(ButtonChild)) as GameObject;
                         objectMap[i, j] = Button;
                         AddToNotStaticElements(Button, new Vector3(placePosition.x, placePosition.y + buttonGround, placePosition.z), MapElement.Button);
-                        buttonCount++;
                         break;
                     case MapElement.Hole:
                         GameObject hole = Instantiate(holeModel, placePosition + new Vector3(0, holeGround, 0), Quaternion.AngleAxis(0, Vector3.right), mapGeneratorGO.transform.GetChild(ColumnChild));
@@ -168,6 +171,8 @@ public class MapGenerator : MonoBehaviour
                         GameObject door = Instantiate(doorModel, placePosition + new Vector3(0, doorGround, 0), Quaternion.AngleAxis(-90, Vector3.right), mapGeneratorGO.transform.GetChild(DoorChild)) as GameObject;
                         objectMap[i, j] = door;
                         AddToNotStaticElements(door, new Vector3(placePosition.x, placePosition.y + doorGround, placePosition.z), MapElement.Door);
+                        Door doorScript = door.GetComponent<Door>();
+                        doorScript.SetCount(map.buttonCount);
                         doors.Add(door.GetComponent<Door>());
                         break;
                     case MapElement.Key:
@@ -193,7 +198,9 @@ public class MapGenerator : MonoBehaviour
                     case MapElement.LaserGate:
                         GameObject laserGate = Instantiate(laserGateModel, placePosition + new Vector3(0, laserGateGround, 0), Quaternion.AngleAxis(0, Vector3.right), mapGeneratorGO.transform.GetChild(LaserGateChild)) as GameObject;
                         objectMap[i, j] = laserGate;
-                        laserGates.Add(laserGate.GetComponent<LaserGate>());
+                        LaserGate laserGateScript = laserGate.GetComponent<LaserGate>();
+                        laserGateScript.SetLasers(map.laserSwitchCount, laserGateGround);
+                        laserGates.Add(laserGateScript);
                         break;
                     case MapElement.LaserGateEdge:
                         GameObject laserGateEdge = Instantiate(laserGateEdgeModel, placePosition + new Vector3(0, laserGateEdgeGround, 0), Quaternion.AngleAxis(-90, Vector3.right), mapGeneratorGO.transform.GetChild(LaserGateChild)) as GameObject;
@@ -203,12 +210,16 @@ public class MapGenerator : MonoBehaviour
                         GameObject laserSwitch = Instantiate(laserSwitchModel, placePosition + new Vector3(0, laserSwitchGround, 0), Quaternion.AngleAxis(-90, Vector3.right), mapGeneratorGO.transform.GetChild(LaserSwitchChild)) as GameObject;
                         objectMap[i, j] = laserSwitch;
                         AddToNotStaticElements(laserSwitch, new Vector3(placePosition.x, placePosition.y + laserSwitchGround, placePosition.z), MapElement.LaserSwitch);
-                        summSwitches++;
                         break;
                     case MapElement.Gem:
-                        GameObject Gem = Instantiate(gemModel, placePosition + new Vector3(0, keyGround, 0), Quaternion.AngleAxis(-90, Vector3.right), mapGeneratorGO.transform) as GameObject;
+                        GameObject Gem = Instantiate(gemModel, placePosition + new Vector3(0, gemGround, 0), Quaternion.AngleAxis(-90, Vector3.right), mapGeneratorGO.transform) as GameObject;
                         objectMap[i, j] = Gem;
-                        AddToNotStaticElements(Gem, new Vector3(placePosition.x, placePosition.y + keyGround, placePosition.z), MapElement.Gem);
+                        AddToNotStaticElements(Gem, new Vector3(placePosition.x, placePosition.y + gemGround, placePosition.z), MapElement.Gem);
+                        break;
+                    case MapElement.Relic:
+                        GameObject Relic = Instantiate(relicModel, placePosition + new Vector3(0, relicGround, 0), Quaternion.AngleAxis(-90, Vector3.right), mapGeneratorGO.transform) as GameObject;
+                        objectMap[i, j] = Relic;
+                        AddToNotStaticElements(Relic, new Vector3(placePosition.x, placePosition.y + relicGround, placePosition.z), MapElement.Gem);
                         break;
                     default:
                         break;
@@ -216,28 +227,19 @@ public class MapGenerator : MonoBehaviour
             }
         }
 
-        for (int i = 0; i < doors.Count; i++)
-        {
-            doors[i].SetCount(buttonCount);
-        }
-
         int boxNumber = map.boxNumber;
         for (int i = 0; i < boxNumber; i++)
         {
             Vector3 position = map.boxLocations[i];
             GameObject box = Instantiate(boxModel, position, Quaternion.AngleAxis(0, Vector3.right), mapGeneratorGO.transform.GetChild(BoxChild)) as GameObject;
-            objectMap[(int)(startPosition.z - position.z) / SharedData.unit, (int)(position.x - startPosition.x) / SharedData.unit].GetComponent<HighData>().AddBox(box);
+            objectMap[(int)(startPosition.z - position.z) / SharedData.widhtUnit, (int)(position.x - startPosition.x) / SharedData.widhtUnit].GetComponent<HighData>().AddBox(box);
 
-            Transform onIt =  objectMap[(int)(startPosition.z - position.z) / SharedData.unit, (int)(position.x - startPosition.x) / SharedData.unit].transform;
-            int onItNumber = objectMap[(int)(startPosition.z - position.z) / SharedData.unit, (int)(position.x - startPosition.x) / SharedData.unit].GetComponent<HighData>().GetBoxCount();
+            Transform onIt =  objectMap[(int)(startPosition.z - position.z) / SharedData.widhtUnit, (int)(position.x - startPosition.x) / SharedData.widhtUnit].transform;
+            int onItNumber = objectMap[(int)(startPosition.z - position.z) / SharedData.widhtUnit, (int)(position.x - startPosition.x) / SharedData.widhtUnit].GetComponent<HighData>().GetBoxCount();
             box.GetComponent<BoxController>().InitOnIt(onIt, onItNumber);
 
             boxesCollider.Add(box.GetComponent<BoxCollider>());
             AddToNotStaticElements(box, position, MapElement.Box);
-        }
-        for (int i = 0; i < laserGates.Count; i++)
-        {
-            laserGates[i].SetLasers(summSwitches, laserGateGround);
         }
     }
 
@@ -276,62 +278,65 @@ public class MapGenerator : MonoBehaviour
                 case MapElement.Trap:
                     GameObject trap = Instantiate(trapModel, notStaticElementsPosition[i], Quaternion.AngleAxis(-90, Vector3.right), mapGeneratorGO.transform.GetChild(TrapChild)) as GameObject;
                     notStaticElements.Add(trap);
-                    objectMap[(int)(startPosition.z - notStaticElementsPosition[i].z) / SharedData.unit, (int)(notStaticElementsPosition[i].x - startPosition.x) / SharedData.unit] = trap;
+                    objectMap[(int)(startPosition.z - notStaticElementsPosition[i].z) / SharedData.widhtUnit, (int)(notStaticElementsPosition[i].x - startPosition.x) / SharedData.widhtUnit] = trap;
                     break;
                 case MapElement.Button:
                     GameObject Button = Instantiate(buttonModel, notStaticElementsPosition[i], Quaternion.AngleAxis(-90, Vector3.right), mapGeneratorGO.transform.GetChild(ButtonChild)) as GameObject;
                     notStaticElements.Add(Button);
-                    objectMap[(int)(startPosition.z - notStaticElementsPosition[i].z) / SharedData.unit, (int)(notStaticElementsPosition[i].x - startPosition.x) / SharedData.unit] = Button;
+                    objectMap[(int)(startPosition.z - notStaticElementsPosition[i].z) / SharedData.widhtUnit, (int)(notStaticElementsPosition[i].x - startPosition.x) / SharedData.widhtUnit] = Button;
                     break;
                 case MapElement.Box:
                     GameObject box = Instantiate(boxModel, notStaticElementsPosition[i], Quaternion.AngleAxis(0, Vector3.right), mapGeneratorGO.transform.GetChild(BoxChild)) as GameObject;
-                    objectMap[(int)(startPosition.z - notStaticElementsPosition[i].z) / SharedData.unit, (int)(notStaticElementsPosition[i].x - startPosition.x) / SharedData.unit].GetComponent<HighData>().AddBox(box);
-                    Transform onIt = objectMap[(int)(startPosition.z - notStaticElementsPosition[i].z) / SharedData.unit, (int)(notStaticElementsPosition[i].x - startPosition.x) / SharedData.unit].GetComponent<HighData>().transform;
-                    int onItNumber = objectMap[(int)(startPosition.z - notStaticElementsPosition[i].z) / SharedData.unit, (int)(notStaticElementsPosition[i].x - startPosition.x) / SharedData.unit].GetComponent<HighData>().GetBoxCount();
+                    objectMap[(int)(startPosition.z - notStaticElementsPosition[i].z) / SharedData.widhtUnit, (int)(notStaticElementsPosition[i].x - startPosition.x) / SharedData.widhtUnit].GetComponent<HighData>().AddBox(box);
+                    Transform onIt = objectMap[(int)(startPosition.z - notStaticElementsPosition[i].z) / SharedData.widhtUnit, (int)(notStaticElementsPosition[i].x - startPosition.x) / SharedData.widhtUnit].GetComponent<HighData>().transform;
+                    int onItNumber = objectMap[(int)(startPosition.z - notStaticElementsPosition[i].z) / SharedData.widhtUnit, (int)(notStaticElementsPosition[i].x - startPosition.x) / SharedData.widhtUnit].GetComponent<HighData>().GetBoxCount();
                     box.GetComponent<BoxController>().InitOnIt(onIt, onItNumber);
                     notStaticElements.Add(box);
                     break;
                 case MapElement.Key:
                     GameObject Key = Instantiate(keyModel, notStaticElementsPosition[i], Quaternion.AngleAxis(-90, Vector3.right), mapGeneratorGO.transform) as GameObject;
                     notStaticElements.Add(Key);
-                    objectMap[(int)(startPosition.z - notStaticElementsPosition[i].z) / SharedData.unit, (int)(notStaticElementsPosition[i].x - startPosition.x) / SharedData.unit] = Key;
+                    objectMap[(int)(startPosition.z - notStaticElementsPosition[i].z) / SharedData.widhtUnit, (int)(notStaticElementsPosition[i].x - startPosition.x) / SharedData.widhtUnit] = Key;
                     break;
                 case MapElement.StoneLifter:
                     GameObject StoneLifter = Instantiate(stoneLifterModel, notStaticElementsPosition[i], Quaternion.AngleAxis(0, Vector3.right), mapGeneratorGO.transform.GetChild(RisingStoneChild)) as GameObject;
                     notStaticElements.Add(StoneLifter);
-                    objectMap[(int)(startPosition.z - notStaticElementsPosition[i].z) / SharedData.unit, (int)(notStaticElementsPosition[i].x - startPosition.x) / SharedData.unit] = StoneLifter;
+                    objectMap[(int)(startPosition.z - notStaticElementsPosition[i].z) / SharedData.widhtUnit, (int)(notStaticElementsPosition[i].x - startPosition.x) / SharedData.widhtUnit] = StoneLifter;
                     break;
                 case MapElement.RisingStone:
                     GameObject RisingStone = Instantiate(risingStoneModel, notStaticElementsPosition[i], Quaternion.AngleAxis(0, Vector3.right), mapGeneratorGO.transform.GetChild(RisingStoneChild));
                     notStaticElements.Add(RisingStone);
-                    objectMap[(int)(startPosition.z - notStaticElementsPosition[i].z) / SharedData.unit, (int)(notStaticElementsPosition[i].x - startPosition.x) / SharedData.unit] = RisingStone;
+                    objectMap[(int)(startPosition.z - notStaticElementsPosition[i].z) / SharedData.widhtUnit, (int)(notStaticElementsPosition[i].x - startPosition.x) / SharedData.widhtUnit] = RisingStone;
                     RisingStones.Add(RisingStone.GetComponent<RiseElement>());
                     break;
                 case MapElement.LaserSwitch:
                     GameObject laserSwitch = Instantiate(laserSwitchModel, notStaticElementsPosition[i], Quaternion.AngleAxis(-90, Vector3.right), mapGeneratorGO.transform.GetChild(LaserSwitchChild));
                     notStaticElements.Add(laserSwitch);
-                    objectMap[(int)(startPosition.z - notStaticElementsPosition[i].z) / SharedData.unit, (int)(notStaticElementsPosition[i].x - startPosition.x) / SharedData.unit] = laserSwitch;
+                    objectMap[(int)(startPosition.z - notStaticElementsPosition[i].z) / SharedData.widhtUnit, (int)(notStaticElementsPosition[i].x - startPosition.x) / SharedData.widhtUnit] = laserSwitch;
                     break;
                 case MapElement.Gem:
                     GameObject Gem = Instantiate(gemModel, notStaticElementsPosition[i], Quaternion.AngleAxis(-90, Vector3.right), mapGeneratorGO.transform) as GameObject;
                     notStaticElements.Add(Gem);
-                    objectMap[(int)(startPosition.z - notStaticElementsPosition[i].z) / SharedData.unit, (int)(notStaticElementsPosition[i].x - startPosition.x) / SharedData.unit] = Gem;
+                    objectMap[(int)(startPosition.z - notStaticElementsPosition[i].z) / SharedData.widhtUnit, (int)(notStaticElementsPosition[i].x - startPosition.x) / SharedData.widhtUnit] = Gem;
                     break;
                 case MapElement.Door:
                     GameObject door = Instantiate(doorModel, notStaticElementsPosition[i], Quaternion.AngleAxis(-90, Vector3.right), mapGeneratorGO.transform.GetChild(DoorChild)) as GameObject;
-                    objectMap[(int)(startPosition.z - notStaticElementsPosition[i].z) / SharedData.unit, (int)(notStaticElementsPosition[i].x - startPosition.x) / SharedData.unit] = door;
+                    objectMap[(int)(startPosition.z - notStaticElementsPosition[i].z) / SharedData.widhtUnit, (int)(notStaticElementsPosition[i].x - startPosition.x) / SharedData.widhtUnit] = door;
                     notStaticElements.Add(door);
-                    doors.Add(door.GetComponent<Door>());
+                    Door doorScript = door.GetComponent<Door>();
+                    doorScript.SetCount(buttonCount);
+                    doors.Add(doorScript);
+                    break;
+                case MapElement.Relic:
+                    GameObject Relic = Instantiate(relicModel, notStaticElementsPosition[i], Quaternion.AngleAxis(-90, Vector3.right), mapGeneratorGO.transform) as GameObject;
+                    notStaticElements.Add(Relic);
+                    objectMap[(int)(startPosition.z - notStaticElementsPosition[i].z) / SharedData.widhtUnit, (int)(notStaticElementsPosition[i].x - startPosition.x) / SharedData.widhtUnit] = Relic;
                     break;
                 default:
                     break;
             }
         }
 
-        for (int i = 0; i < doors.Count; i++)
-        {
-            doors[i].SetCount(buttonCount);
-        }
         ActualMapData.HaveItem = false;
     }
 
@@ -460,15 +465,15 @@ public class MapGenerator : MonoBehaviour
 
         startPosition = map.startPosition;
 
-        charMatrixPositionZ = (int)(startPosition.z - map.charPosition.z) / SharedData.unit;
-        charMatrixPositionX = (int)(map.charPosition.x - startPosition.x) / SharedData.unit;
+        charMatrixPositionZ = (int)(startPosition.z - map.charPosition.z) / SharedData.widhtUnit;
+        charMatrixPositionX = (int)(map.charPosition.x - startPosition.x) / SharedData.widhtUnit;
 
         originMatrixPositionZ = charMatrixPositionZ;
         originMatrixPositionX = charMatrixPositionX;
 
         ActualMapData.Scarab3PartCmd = map.Scarab3PartNumber;
         ActualMapData.Scarab2PartCmd = map.Scarab2PartNumber;
-        ActualMapData.solvedMap.itemType = map.itemType;
+        ActualMapData.solvedMap.ItemType = map.itemType;
 
         return map;
     }

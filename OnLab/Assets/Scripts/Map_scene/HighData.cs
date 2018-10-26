@@ -25,7 +25,7 @@ public class HighData : MonoBehaviour {
     {
         if((BaseHigh + boxes.Count) <= fromHeight)
         {
-            SharedData.fallDistance = (fromHeight - (BaseHigh + boxes.Count)) * SharedData.unit;
+            SharedData.fallDistance = (fromHeight - (BaseHigh + boxes.Count)) * SharedData.heightUnit;
             return CanGoForward.Go;
         }
         else if((BaseHigh + boxes.Count)-1 == fromHeight && boxes.Count > 0)

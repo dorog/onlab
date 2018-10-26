@@ -23,9 +23,9 @@ public class CommandFactory : MonoBehaviour {
             cmdFactoryElements.Add(elem.GetComponent<CmdFactoryElement>());
         }
 	}
-	
-	void Update () {
-        #if UNITY_STANDALONE_WIN
+
+    #if UNITY_STANDALONE_WIN
+    void Update () {
             for (int i=0; i<commands.Length; i++)
             {
                 if (Input.GetKeyDown(keysForElements[i]))
@@ -33,6 +33,6 @@ public class CommandFactory : MonoBehaviour {
                     cmdFactoryElements[i].Clicked();
                 }
             }
-        #endif
     }
+    #endif
 }

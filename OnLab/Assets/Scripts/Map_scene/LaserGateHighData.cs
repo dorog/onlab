@@ -34,11 +34,11 @@ public class LaserGateHighData : HighData {
         {
             if(fromHeight == offedHigh || fromHeight == offedHigh+1)
             {
-                SharedData.fallDistance = (fromHeight - offedHigh) * SharedData.unit;
+                SharedData.fallDistance = (fromHeight - offedHigh) * SharedData.heightUnit;
                 return CanGoForward.Go;
             }
             else if (fromHeight >= BaseHigh + boxesOnRoof.Count){
-                SharedData.fallDistance = (fromHeight - (BaseHigh + boxesOnRoof.Count)) * SharedData.unit;
+                SharedData.fallDistance = (fromHeight - (BaseHigh + boxesOnRoof.Count)) * SharedData.heightUnit;
                 return CanGoForward.Go;
             }
             else if (fromHeight >= BaseHigh + boxesOnRoof.Count-1 && boxesOnRoof.Count > 0)
@@ -56,7 +56,7 @@ public class LaserGateHighData : HighData {
         {
             if(boxesOnRoof.Count + BaseHigh <= fromHeight)
             {
-                SharedData.fallDistance = (fromHeight - (boxesOnRoof.Count + BaseHigh)) * SharedData.unit;
+                SharedData.fallDistance = (fromHeight - (boxesOnRoof.Count + BaseHigh)) * SharedData.heightUnit;
                 return CanGoForward.Go;
             }
             else if(boxesOnRoof.Count-1 + BaseHigh <= fromHeight && boxesOnRoof.Count > 0)
@@ -84,7 +84,7 @@ public class LaserGateHighData : HighData {
         int activeSwitches = transform.GetComponent<LaserGate>().ActiveSwitches;
         if (activeSwitches == 0)
         {
-            if (character.transform.position.y > SharedData.hight_0_Ground + SharedData.unit * BaseHigh)
+            if (character.transform.position.y > SharedData.hight_0_Ground + SharedData.heightUnit * BaseHigh)
             {
                 return BaseHigh + boxesOnRoof.Count;
             }
@@ -98,7 +98,7 @@ public class LaserGateHighData : HighData {
 
     public override void AddBox(GameObject box)
     {
-        if (box.transform.position.y > SharedData.hight_0_Ground + SharedData.unit * BaseHigh)
+        if (box.transform.position.y > SharedData.hight_0_Ground + SharedData.heightUnit * BaseHigh)
         {
             boxesOnRoof.Add(box);
             return;
@@ -108,7 +108,7 @@ public class LaserGateHighData : HighData {
 
     public override GameObject GetTopBox()
     {
-        if (character.transform.position.y > SharedData.hight_0_Ground + SharedData.unit * BaseHigh)
+        if (character.transform.position.y > SharedData.hight_0_Ground + SharedData.heightUnit * BaseHigh)
         {
             return boxesOnRoof[boxesOnRoof.Count-1];
         }
@@ -117,7 +117,7 @@ public class LaserGateHighData : HighData {
 
     public override void RemoveTopBox()
     {
-        if (character.transform.position.y > SharedData.hight_0_Ground + SharedData.unit * BaseHigh)
+        if (character.transform.position.y > SharedData.hight_0_Ground + SharedData.heightUnit * BaseHigh)
         {
            boxesOnRoof.RemoveAt(boxesOnRoof.Count - 1);
         }

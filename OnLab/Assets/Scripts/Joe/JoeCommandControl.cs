@@ -38,7 +38,7 @@ public class JoeCommandControl : MonoBehaviour {
             {
                 if (time - Time.deltaTime > 0)
                 {
-                    transform.position += transform.forward * SharedData.unit * Time.deltaTime;
+                    transform.position += transform.forward * SharedData.widhtUnit * Time.deltaTime;
                     time -= Time.deltaTime;
                 }
                 else
@@ -93,7 +93,7 @@ public class JoeCommandControl : MonoBehaviour {
 
     public void GoForward()
     {
-        aimPosition = transform.position + transform.forward * SharedData.unit;
+        aimPosition = transform.position + transform.forward * SharedData.widhtUnit;
         forward = true;
         joeAnim.SetBool(idleAnimation, false);
         joeAnim.SetBool(forwardAnimation, forward);

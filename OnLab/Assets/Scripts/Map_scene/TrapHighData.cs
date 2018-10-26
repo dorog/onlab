@@ -11,7 +11,7 @@ public class TrapHighData : HighData
         {
             if(BaseHigh <= fromHeight)
             {
-                SharedData.fallDistance = (fromHeight - boxes.Count) * SharedData.unit;
+                SharedData.fallDistance = (fromHeight - boxes.Count) * SharedData.heightUnit;
                 return CanGoForward.Go;
             }
             else
@@ -24,7 +24,7 @@ public class TrapHighData : HighData
         {
             if(boxes.Count <= fromHeight)
             {
-                SharedData.fallDistance = (fromHeight - boxes.Count) * SharedData.unit;
+                SharedData.fallDistance = (fromHeight - boxes.Count) * SharedData.heightUnit;
                 return CanGoForward.Go;
             }
             else if(boxes.Count-1 <= fromHeight && boxes.Count > 0)

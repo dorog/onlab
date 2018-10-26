@@ -1294,6 +1294,7 @@ MonoBehaviour:
   doorEdgeModel: {fileID: 1063074864960466, guid: 97525b5fc9d31f543b75f4568e263b07,
     type: 2}
   keyModel: {fileID: 1987280437086754, guid: 46a5afb507d0edd4db3f77ce0884117e, type: 2}
+  relicModel: {fileID: 1439963535360356, guid: b36218748f5839143814e8e94b18efd8, type: 2}
   doorModel: {fileID: 1495431617959260, guid: f5eec0a733cf24544a10aba5d6e9e943, type: 2}
   columnModel: {fileID: 1037995838854874, guid: cf12d6f617f95c548aa461ec42f44a26,
     type: 2}
@@ -7862,6 +7863,11 @@ Prefab:
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 137321301912061846, guid: f95a7ee3a679ebc4c95eeba108e753d7,
+        type: 2}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: 12f44bf5603648e48b788a31918ceee6, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f95a7ee3a679ebc4c95eeba108e753d7, type: 2}
   m_IsPrefabParent: 0

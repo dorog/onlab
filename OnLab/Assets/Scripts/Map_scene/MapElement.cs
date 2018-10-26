@@ -4,6 +4,7 @@ public enum MapElement {
     Gem,
     DoorEdge,
     Key,
+    Relic,
     Door,
     Column,
     Edge,

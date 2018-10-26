@@ -2,6 +2,9 @@
 public class GameStructure {
 
     static public int[] levelMapsCount = new int[] { 9, 5, 3, 1 };
+    // levelMapsCount summ
+    public static int maxMap = 18;
+
     public static int maxScarab = 3;
     public static int scarabNumberForSolved = 0;
     static public int maxPoint = 999;
@@ -16,8 +19,6 @@ public class GameStructure {
     public static string levelThreeName = "Level3";
     public static string levelLast = "LevelLast";
     public static string mapName = "Map_scene";
-
-    public static int maxMap = 18;
 
     public static string GetLevelName()
     {

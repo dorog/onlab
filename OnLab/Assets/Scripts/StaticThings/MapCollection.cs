@@ -16,43 +16,67 @@ public class MapCollection
     private static MapElement LGate = MapElement.LaserGate;
     private static MapElement LGateE = MapElement.LaserGateEdge;
     private static MapElement LSwitch = MapElement.LaserSwitch;
+    private static MapElement Relic = MapElement.Relic;
 
     public static Map ReadMap(int number)
     {
+        Map chosedMap;
+
         /*switch (number)
         {
             case 1:
-                return InitMap1();
+                chosedMap = InitMap1();
+                break;
             case 2:
-                return InitMap2();
+                chosedMap = InitMap2();
+                break;
             case 3:
-                return InitMap3();
+                chosedMap = InitMap3();
+                break;
             case 4:
-                return InitMap4();
+                chosedMap = InitMap4();
+                break;
             case 5:
-                return InitMap5();
+                chosedMap = InitMap5();
+                break;
             case 6:
-                return InitMap6();
+                chosedMap = InitMap6();
+                break;
             case 7:
-                return InitMap7();
+                chosedMap = InitMap7();
+                break;
             case 8:
-                return InitMap8();
+                chosedMap = InitMap8();
+                break;
             case 9:
-                return InitMap9();
+                chosedMap = InitMap9();
+                break;
             default:
-                return IziMapWithGem();
-                //break;
-        }*/
+                chosedMap = IziMapWithGem();
+                break;
+        }
 
+        CalculateItems(chosedMap);
+
+        return chosedMap;*/
         //For test
+
         switch (number)
         {
-            case 9:
-                return IziMapWithGem();
+            case 1:
+                chosedMap =  IziMapWithGem();
+                break;
+            case 2:
+                chosedMap = IziMapWithKey();
+                break;
             default:
-                return IziMapWithKey();
-                //break;
+                chosedMap = IziMapWithRelic();
+                break;
         }
+
+        CalculateItems(chosedMap);
+
+        return chosedMap;
     }
 
     private static Map InitMap1()
@@ -303,6 +327,19 @@ public class MapCollection
         return map;
     }
 
+    private static Map IziMapWithRelic()
+    {
+        Map map = new Map();
+        map.charPosition = new Vector3(275, 26, 375);
+        map.startPosition = new Vector3(275, 0, 375);
+        map.mapMatrix = new MapElement[,] { { Column, Relic, Door } };
+        map.heigth = map.mapMatrix.GetLength(0);
+        map.width = map.mapMatrix.GetLength(1);
+        map.boxNumber = 0;
+        map.itemType = SharedData.RelicType;
+        return map;
+    }
+
     private static Map TestMap()
     {
         Map map = new Map();
@@ -316,5 +353,23 @@ public class MapCollection
         map.boxNumber = 2;
         map.boxLocations = new Vector3[5] { new Vector3(325, 30, 325), new Vector3(225, 30, 325), new Vector3(475, 700, 325), new Vector3(375, 100, 325), new Vector3(375, 170, 325), };
         return map;
+    }
+
+    public static void CalculateItems(Map map)
+    {
+        for (int i = 0; i < map.heigth; i++)
+        {
+            for (int j = 0; j < map.width; j++)
+            {
+                if(map.mapMatrix[i, j] == Button)
+                {
+                    map.buttonCount++;
+                }
+                else if(map.mapMatrix[i, j] == LSwitch)
+                {
+                    map.laserSwitchCount++;
+                }
+            }
+        }
     }
 }
