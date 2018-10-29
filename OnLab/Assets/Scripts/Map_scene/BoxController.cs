@@ -17,6 +17,16 @@ public class BoxController : MonoBehaviour
 
     private float timeForBoxMove = 0.55f;
 
+    [SerializeField]
+    private float QuatFloat = 0;
+    [SerializeField]
+    private Vector3 QuatVector = Vector3.right;
+
+    public Quaternion GetQuat()
+    {
+        return Quaternion.AngleAxis(QuatFloat, QuatVector);
+    }
+
     void Start()
     {
         body = GetComponent<Rigidbody>();

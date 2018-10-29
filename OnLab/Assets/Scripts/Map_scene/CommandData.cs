@@ -11,7 +11,9 @@ public class CommandData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     public int CmdPanelSlot { get; set; }
 
     private readonly string cmdPanelAndroidStr = "CommandPanelAndroid";
+#if UNITY_STANDALONE_WIN
     private readonly string cmdPanelWindowsStr = "CommandPanelWindows";
+#endif
 
     private CommandPanel cmdPanel;
 
@@ -19,19 +21,19 @@ public class CommandData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     {
         cmdPanel = CommandPanel.GetCommandPanel();
 
-        #if UNITY_ANDROID
+#if UNITY_ANDROID
             GameObject[] cmdpanels = GameObject.FindGameObjectsWithTag(cmdPanelAndroidStr);
-        #else
+#else
             GameObject[] cmdpanels = GameObject.FindGameObjectsWithTag(cmdPanelWindowsStr);
-        #endif
+#endif
 
         if (cmdpanels.Length > 1)
         {
-        #if UNITY_ANDROID
+#if UNITY_ANDROID
             Debug.LogWarning("CommandData: There are more than one CommandPanel with " + cmdPanelAndroidStr + " tag, functions may won't work fine!");
-        #else
+#else
              Debug.LogWarning("CommandData: There are more than one CommandPanel with " + cmdPanelWindowsStr + " tag, functions may won't work fine!");
-        #endif
+#endif
         }
         else if (cmdpanels.Length == 0)
         {

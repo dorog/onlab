@@ -99,6 +99,7 @@ public class LaserGate : MonoBehaviour {
     private void OddNumber()
     {
         GameObject middleLaser = Instantiate(laserModel, new Vector3(0, 0, 0), Quaternion.AngleAxis(0, Vector3.zero), parent);
+        Instantiate(particalLaser, new Vector3(transform.position.x, middleColumn + laserGateGround, transform.position.z - columnDistanceFromMiddle), Quaternion.AngleAxis(0, Vector3.zero), middleLaser.transform);
         Laser middleLaserScript = middleLaser.GetComponent<Laser>();
         middleLaserScript.aim = new Vector3(transform.position.x, middleColumn + laserGateGround, transform.position.z - columnDistanceFromMiddle);
         middleLaserScript.start = new Vector3(transform.position.x, middleColumn + laserGateGround, transform.position.z + columnDistanceFromMiddle);
@@ -113,11 +114,13 @@ public class LaserGate : MonoBehaviour {
         for (int i = 0; i < summSwitches / 2; i++)
         {
             GameObject laser = Instantiate(laserModel, new Vector3(0, 0, 0), Quaternion.AngleAxis(0, Vector3.zero), parent);
+            Instantiate(particalLaser, new Vector3(transform.position.x, middleColumn + laserGateGround + (i + 0.5f) * placeBetweenLasers, transform.position.z - columnDistanceFromMiddle), Quaternion.AngleAxis(0, Vector3.zero), laser.transform);
             Laser laserScript = laser.GetComponent<Laser>();
             laserScript.aim = new Vector3(transform.position.x, middleColumn + laserGateGround + (i + 1) * placeBetweenLasers, transform.position.z - columnDistanceFromMiddle);
             laserScript.start = new Vector3(transform.position.x, middleColumn + laserGateGround + (i + 1) * placeBetweenLasers, transform.position.z + columnDistanceFromMiddle);
 
             GameObject laser2 = Instantiate(laserModel, new Vector3(0, 0, 0), Quaternion.AngleAxis(0, Vector3.zero), parent);
+            Instantiate(particalLaser, new Vector3(transform.position.x, middleColumn + laserGateGround - (i + 0.5f) * placeBetweenLasers, transform.position.z - columnDistanceFromMiddle), Quaternion.AngleAxis(0, Vector3.zero), laser2.transform);
             Laser laserScript2 = laser2.GetComponent<Laser>();
             laserScript2.aim = new Vector3(transform.position.x, middleColumn + laserGateGround - (i + 1) * placeBetweenLasers, transform.position.z - columnDistanceFromMiddle);
             laserScript2.start = new Vector3(transform.position.x, middleColumn + laserGateGround - (i + 1) * placeBetweenLasers, transform.position.z + columnDistanceFromMiddle);

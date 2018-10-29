@@ -10,8 +10,8 @@ public class CmdFactoryElement : MonoBehaviour, IPointerClickHandler
 
     public void SetCmdType(CommandType id)
     {
-        img = GetComponent<Image>();
         element = id;
+        img = GetComponent<Image>();
 
         switch (id)
         {
@@ -39,11 +39,6 @@ public class CmdFactoryElement : MonoBehaviour, IPointerClickHandler
     }
 
     public void OnPointerClick(PointerEventData eventData)
-    {
-        Clicked();
-    }
-
-    public void Clicked()
     {
         if (StartActions.inStart)
         {

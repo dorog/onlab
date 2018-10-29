@@ -8,6 +8,7 @@ public class GoForwardCmd : CharacterMovingCommand
 
     public override void Effect()
     {
+        base.Effect();
         mapGen.RightToMove();
     }
 }

@@ -10,24 +10,24 @@ public class AutoGridLayout : MonoBehaviour {
     private int column = 7;
     [SerializeField]
     private int row = 7;
+    [SerializeField]
+    private int gridTop = 0;
+    [SerializeField]
+    private int gridRight = 0;
+    [SerializeField]
+    private int spacingX = 0;
+    [SerializeField]
+    private int spacingY = 0;
 
     private void Awake()
     {
         glg = GetComponent<GridLayoutGroup>();
         rt = GetComponent<RectTransform>();
-
-        glg.cellSize = new Vector2(rt.rect.width / column, rt.rect.height / row);
+        float cellSizeX = (rt.rect.width - (column-1) * spacingX - gridRight) / column;
+        float cellSizeY = (rt.rect.height - (row-1) * spacingY - gridTop) / row;
+        glg.cellSize = new Vector2(cellSizeX, cellSizeY);
+        glg.spacing = new Vector2(spacingX, spacingY);
+        glg.padding.top = gridTop;
+        glg.padding.right = gridRight;
     }
-
-    /*void Start () {
-        glg = GetComponent<GridLayoutGroup>();
-        rt = GetComponent<RectTransform>();
-
-        glg.cellSize = new Vector2(rt.rect.width / column, rt.rect.height / row);
-	}*/
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }

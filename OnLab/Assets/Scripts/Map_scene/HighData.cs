@@ -7,6 +7,17 @@ public class HighData : MonoBehaviour {
 
     [SerializeField]
     private int baseHigh;
+    [SerializeField]
+    private int modelGround;
+    [SerializeField]
+    private Vector3 quatVector = Vector3.right;
+    [SerializeField]
+    private float quatFloat = -90;
+
+    public Quaternion GetQuat()
+    {
+        return Quaternion.AngleAxis(quatFloat, quatVector);
+    }
 
     public int BaseHigh
     {
@@ -18,6 +29,19 @@ public class HighData : MonoBehaviour {
         set
         {
             baseHigh = value;
+        }
+    }
+
+    public int ModelGround
+    {
+        get
+        {
+            return modelGround;
+        }
+
+        set
+        {
+            modelGround = value;
         }
     }
 

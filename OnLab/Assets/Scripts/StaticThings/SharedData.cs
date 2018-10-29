@@ -16,6 +16,21 @@ public class SharedData
     public static string rightIcon = "Icons/rightarrow";
     public static string activateIcon = "Icons/lightbulb";
 
+    public static string columnIcon = "Icons/MapElements/columnIcon";
+    public static string boxIcon = "Icons/MapElements/boxIcon";
+    public static string buttonIcon = "Icons/MapElements/buttonIcon";
+    public static string doorIcon = "Icons/MapElements/doorIcon";
+    public static string gemIcon = "Icons/MapElements/gemIcon";
+    public static string holeIcon = "Icons/MapElements/holeIcon";
+    public static string keyIcon = "Icons/MapElements/keyIcon";
+    public static string laserGateIcon = "Icons/MapElements/laserGateIcon";
+    public static string laserSwitchIcon = "Icons/MapElements/laserSwitchIcon";
+    public static string lowRisingStoneIcon = "Icons/MapElements/lowRisingStoneIcon";
+    public static string relicIcon = "Icons/MapElements/relicIcon";
+    public static string risingStoneIcon = "Icons/MapElements/risingStoneIcon";
+    public static string stoneLifterIcon = "Icons/MapElements/stoneLifterIcon";
+    public static string trapIcon = "Icons/MapElements/trapIcon";
+
     //Speed data
     public static int minSpeed = 1;
     public static int maxSpeed = 4;

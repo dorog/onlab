@@ -2643,8 +2643,8 @@ MonoBehaviour:
   risingTime: 10
   tunnelOpenStartTime: 5
   fallingStartTime: 2
-  insideRisingTime: 150
-  fallingTime: 5
+  insideRisingTime: 5
+  fallingTime: 10
   fallInsideTheGroundAmount: 150
   fallInsideTheGroundTime: 2
 --- !u!4 &477413419 stripped
@@ -8015,8 +8015,14 @@ MonoBehaviour:
   Gate: {fileID: 2134443581}
   Keys: {fileID: 1360234134}
   KeyModel: {fileID: 1440918914420330, guid: f5b8c6964a3a82f4a99e669024be044c, type: 2}
+  KeyModelRotation: {x: 90, y: 0, z: 0}
+  KeyAbove: 50
   GemModel: {fileID: 1391075682785562, guid: 2c528170563e4b942ad3535ee73ee803, type: 2}
-  itemAboveHolder: 50
+  GemModelRotation: {x: 0, y: 0, z: 0}
+  GemAbove: 50
+  RelicModel: {fileID: 0}
+  RelicModelRotation: {x: 90, y: -90, z: -90}
+  RelicAbove: 30
   levelUpButton: {fileID: 0}
   castList: {fileID: 105996934}
 --- !u!1 &1879887802

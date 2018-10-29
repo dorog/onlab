@@ -9,6 +9,7 @@ public class ActivateCmd : CharacterMovingCommand
 
     public override void Effect()
     {
+        base.Effect();
         mapGen.Activate();
     }
 }

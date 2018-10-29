@@ -26,6 +26,7 @@ public class ReadSlot : MonoBehaviour
     private int solvedMap = 0;
     private int summKeys = 0;
     private int summGems = 0;
+    private int summRelic = 0;
 
     private int onLevel;
 
@@ -50,7 +51,7 @@ public class ReadSlot : MonoBehaviour
     {
         CurrentGameDatas.savedSpeed = savedSpeed;
         CurrentGameDatas.speed = savedSpeed;
-        CurrentGameDatas.ItemCount = summKeys;
+        CurrentGameDatas.ItemCount = summKeys + summGems + summRelic;
         CurrentGameDatas.CopyTheDatas(gmdata, deviceFileLocation);
         CurrentGameDatas.onLevel = onLevel;
         SceneManager.LoadScene(GameStructure.GetLevelName());
@@ -165,9 +166,13 @@ public class ReadSlot : MonoBehaviour
                 {
                     summKeys += ps.mapResults[i].Item;
                 }
-                else
+                else if(ps.mapResults[i].ItemType == SharedData.GemType)
                 {
                     summGems += ps.mapResults[i].Item;
+                }
+                else
+                {
+                    summRelic += ps.mapResults[i].Item;
                 }
 
                 if (ps.mapResults[i].Scarab == GameStructure.maxScarab)
@@ -185,7 +190,7 @@ public class ReadSlot : MonoBehaviour
 
             SlotEmptyText.SetActive(false);
             Text textDatas = SlotText.GetComponent<Text>();
-            textDatas.text = "Cleared maps: " + (solvedMap) + "\nScore: " + summScore + "\nScarab parts: " + summBuggPart + "\nPerfect Maps: " + perfectMap + "\nKeys: " + summKeys + "\nGems: " + summGems;
+            textDatas.text = "Cleared maps: " + (solvedMap) + "\nScore: " + summScore + "\nScarab parts: " + summBuggPart + "\nPerfect Maps: " + perfectMap + "\nKeys: " + summKeys + "\nRelics: " + summRelic + "\nGems: " + summGems;
         }
 
 

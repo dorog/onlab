@@ -56,6 +56,9 @@ public class StartActions : MonoBehaviour
     [SerializeField]
     private Text speedText;
 
+    private int fvCallInARow = 0;
+    private int maxFvCallinARow = 5; 
+
     void Awake()
     {
         if (instance == null)
@@ -85,7 +88,9 @@ public class StartActions : MonoBehaviour
         fv1.Clear();
         fv2.Clear();
 
-        commandsForExecute = cmdPanel.GetRealCommands(fv1, fv2);
+        commandsForExecute = cmdPanel.GetRealMainCommands();
+        fv1 = cmdPanel.GetRealFV1Commands();
+        fv2 = cmdPanel.GetRealFV2Commands();
 
         aimnumber = 0;
         executedCommands = 0;
@@ -101,7 +106,7 @@ public class StartActions : MonoBehaviour
         stopBtn.interactable = true;
 
         die = false;
-
+        fvCallInARow = 0;
         Invoke("ExecuteCmd", 0);
     }
 
@@ -119,6 +124,11 @@ public class StartActions : MonoBehaviour
 
     public void FvStart(int fvNumber)
     {
+        fvCallInARow++;
+        if(fvCallInARow >= maxFvCallinARow)
+        {
+            return;
+        }
         int fv_Count = 0;
         List<Command> fvElements; 
         if(fvNumber == 1)
@@ -167,6 +177,16 @@ public class StartActions : MonoBehaviour
 
     private void ExecuteCmd()
     {
+        if (fvCallInARow >= maxFvCallinARow && stopBtn.interactable)
+        {
+            Invoke("ExecuteCmd", TimeBetweenCmds + effectTime);
+            return;
+        }
+        if (fvCallInARow >= maxFvCallinARow && !stopBtn.interactable)
+        {
+            Invoke("WaitBeforeEnd", EndWait);
+            return;
+        }
         if (die)
         {
             SwitchOffLastLightedUp(null);
@@ -199,7 +219,6 @@ public class StartActions : MonoBehaviour
 
         character.GetComponent<JoeCommandControl>().stopped = true;
 
-        aimnumber = 0;
         NotStaticBack();
         actionBtn.interactable = true;
         stopBtn.interactable = false;
@@ -279,5 +298,10 @@ public class StartActions : MonoBehaviour
         Time.timeScale = CurrentGameDatas.speed + 1;
         CurrentGameDatas.speed++;
         speedText.text = speedTextText + CurrentGameDatas.speed;
+    }
+
+    public void ResetFvInARow()
+    {
+        fvCallInARow = 0;
     }
 }

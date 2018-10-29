@@ -39,6 +39,8 @@ public class CommandPanel : MonoBehaviour {
     [SerializeField]
     private GameObject fv2GO;
 
+    private GameObject deleteSlotInstance;
+
     void Awake()
     {
         if (instance == null)
@@ -93,14 +95,15 @@ public class CommandPanel : MonoBehaviour {
             slots[i].transform.localScale = new Vector3(1, 1, 1);
         }
 
-        //delete slot
-        if(deleteGO.transform.childCount > 0)
-        {
-            return;
-        }
         commands.Add(new Command());
 
-        slots.Add(Instantiate(deleteSlot, deleteGO.transform));
+        //delete slot
+        if (deleteGO.transform.childCount == 0)
+        {
+            deleteSlotInstance = Instantiate(deleteSlot, deleteGO.transform);
+        }
+
+        slots.Add(deleteSlotInstance);
         
         slots[summSlots].GetComponent<Slot>().Id = summSlots;
     }
@@ -146,7 +149,7 @@ public class CommandPanel : MonoBehaviour {
         commands.Add(new Command());
     }
 
-    public List<Command> GetRealCommands(List<Command> fv1, List<Command> fv2)
+    public List<Command> GetRealMainCommands()
     {
         List<Command> RealCmds = new List<Command>();
         for(int i=0; i<mainCount; i++)
@@ -157,23 +160,32 @@ public class CommandPanel : MonoBehaviour {
                 
             }
         }
+        return RealCmds;
+    }
 
-        for(int i=mainCount; i<mainCount+fv1Count; i++)
+    public List<Command> GetRealFV1Commands()
+    {
+        List<Command> RealCmds = new List<Command>();
+        for (int i = mainCount; i < mainCount + fv1Count; i++)
         {
             if (commands[i].ID != -1)
             {
-                fv1.Add(commands[i]);
+                RealCmds.Add(commands[i]);
             }
         }
+        return RealCmds;
+    }
 
-        for (int i = mainCount+fv1Count; i < mainCount + fv1Count+fv2Count; i++)
+    public List<Command> GetRealFV2Commands()
+    {
+        List<Command> RealCmds = new List<Command>();
+        for (int i = mainCount + fv1Count; i < mainCount + fv1Count + fv2Count; i++)
         {
             if (commands[i].ID != -1)
             {
-                fv2.Add(commands[i]);
+                RealCmds.Add(commands[i]);
             }
         }
-
         return RealCmds;
     }
 

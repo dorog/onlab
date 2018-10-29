@@ -2162,7 +2162,7 @@ MonoBehaviour:
   GemModelRotation: {x: 0, y: 0, z: 0}
   GemAbove: 50
   RelicModel: {fileID: 1115798143088108, guid: 6491a1ce0ec17014d924248bb3af184a, type: 2}
-  RelicModelRotation: {x: 0, y: -90, z: -90}
+  RelicModelRotation: {x: 90, y: -90, z: -90}
   RelicAbove: 30
   levelUpButton: {fileID: 483773713}
   castList: {fileID: 0}

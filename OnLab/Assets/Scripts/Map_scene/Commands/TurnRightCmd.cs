@@ -8,6 +8,7 @@ public class TurnRightCmd : CharacterMovingCommand
 
     public override void Effect()
     {
+        base.Effect();
         mapGen.CharacterTurnRight();
     }
 }

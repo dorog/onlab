@@ -12,10 +12,12 @@ public class CommandFactory : MonoBehaviour {
 
     private List<CmdFactoryElement> cmdFactoryElements = new List<CmdFactoryElement>();
 
+#if UNITY_STANDALONE_WIN
     [SerializeField]
     private string[] keysForElements = { "a", "w", "d", "s", "q", "e" };
+#endif
 
-	void Start () {
+    void Start () {
 		for(int i=0; i<commands.Length; i++)
         {
             GameObject elem = Instantiate(element, transform);
@@ -24,7 +26,7 @@ public class CommandFactory : MonoBehaviour {
         }
 	}
 
-    #if UNITY_STANDALONE_WIN
+#if UNITY_STANDALONE_WIN
     void Update () {
             for (int i=0; i<commands.Length; i++)
             {
@@ -34,5 +36,5 @@ public class CommandFactory : MonoBehaviour {
                 }
             }
     }
-    #endif
+#endif
 }

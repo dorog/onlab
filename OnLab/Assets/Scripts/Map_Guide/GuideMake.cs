@@ -33,7 +33,7 @@ public class GuideMake : MonoBehaviour {
     [SerializeField]
     private GameObject RelicModel;
     [SerializeField]
-    private Vector3 RelicModelRotation = new Vector3(0, -90, -90);
+    private Vector3 RelicModelRotation = new Vector3(90, -90, -90);
     [SerializeField]
     private int RelicAbove = 30;
 

@@ -20,6 +20,10 @@ public class EdgeTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (highData == null)
+        {
+            return;
+        }
         if (highData.GetBoxCount() > 0)
         {
             return;

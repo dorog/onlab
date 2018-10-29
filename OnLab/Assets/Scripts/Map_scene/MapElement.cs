@@ -13,8 +13,10 @@ public enum MapElement {
     Hole,
     StoneLifter,
     RisingStone,
+    LowRisingStone,
     LaserGate,
     LaserGateEdge,
     LaserSwitch,
-    Box
+    Box,
+    Null
 }
