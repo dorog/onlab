@@ -40,24 +40,29 @@ public class CmdFactoryElement : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        Click();
+    }
+
+    public void Click()
+    {
         if (StartActions.inStart)
         {
             return;
         }
 
-        if (ActualMapData.chosenImage != null)
+        if (CommandFactory.chosenImage != null)
         {
-            ActualMapData.chosenImage.color = Color.white;
+            CommandFactory.chosenImage.color = Color.white;
         }
-        if (ActualMapData.chosenImage == img)
+        if (CommandFactory.chosenImage == img)
         {
-            ActualMapData.chosenImage = null;
-            ActualMapData.chosenCommand = CommandType.Null;
+            CommandFactory.chosenImage = null;
+            CommandFactory.chosenCommand = CommandType.Null;
             return;
         }
 
         img.color = Color.yellow;
-        ActualMapData.chosenCommand = element;
-        ActualMapData.chosenImage = img;
+        CommandFactory.chosenCommand = element;
+        CommandFactory.chosenImage = img;
     }
 }

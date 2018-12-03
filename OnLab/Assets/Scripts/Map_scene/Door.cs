@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(Animation))]
-[RequireComponent(typeof(DoorHighData))]
+[RequireComponent(typeof(GateHeightData))]
 public class Door : MonoBehaviour
 {
     private int count = 1;
@@ -9,12 +9,12 @@ public class Door : MonoBehaviour
     [SerializeField]
     private string doorAnimName = "DoorWidth_last";
 
-    private DoorHighData doorHighData;
+    private GateHeightData doorHighData;
     private Animation anim;
 
     private void Start()
     {
-        doorHighData = transform.GetComponent<DoorHighData>();
+        doorHighData = transform.GetComponent<GateHeightData>();
         anim = transform.GetComponent<Animation>();
 
         if (count == 0)

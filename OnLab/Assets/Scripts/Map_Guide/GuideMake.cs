@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class GuideMake : MonoBehaviour {
 
-    private List<MapData> gmdatas = new List<MapData>();
+    private List<MapResultData> gmdatas = new List<MapResultData>();
     private string GSB_part = "Map_guide/GSB_part";
     private string numberIcon = "Map_guide/number";
 
@@ -60,7 +60,7 @@ public class GuideMake : MonoBehaviour {
         int j = 0;
         for(int i= firstLevelNumber; i < firstLevelNumber + mapsNumber; i++)
         {
-            gmdatas.Add(new MapData(CurrentGameDatas.mapDatas[i].Score, CurrentGameDatas.mapDatas[i].Scarab, CurrentGameDatas.mapDatas[i].Item, CurrentGameDatas.mapDatas[i].ItemType));
+            gmdatas.Add(new MapResultData(CurrentGameDatas.mapDatas[i].Score, CurrentGameDatas.mapDatas[i].Scarab, CurrentGameDatas.mapDatas[i].Item, CurrentGameDatas.mapDatas[i].ItemType));
             if (CurrentGameDatas.mapDatas[i].Item == SharedData.HaveItemNumber)
             {
                 if (CurrentGameDatas.mapDatas[i].ItemType == SharedData.KeyType)

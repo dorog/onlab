@@ -2,9 +2,9 @@
 
 public class ActivateCmd : CharacterMovingCommand
 {
-    public ActivateCmd(int id) : base(id)
+    public ActivateCmd(int _PanelSlot) : base(_PanelSlot)
     {
-        Sprite = Resources.Load<Sprite>(SharedData.activateIcon);
+        Img = Resources.Load<Sprite>(SharedData.activateIcon);
     }
 
     public override void Effect()

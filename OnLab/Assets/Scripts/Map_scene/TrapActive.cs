@@ -1,14 +1,14 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(Animation))]
-[RequireComponent(typeof(TrapHighData))]
+[RequireComponent(typeof(TrapHeightData))]
 public class TrapActive : MonoBehaviour
 {
 
     private Animation trapAnim;
     private StartActions sa;
     private bool used = false;
-    private TrapHighData trapHighData;
+    private TrapHeightData trapHighData;
 
     [SerializeField]
     private float timeInTheAir = 4.7f;
@@ -30,7 +30,7 @@ public class TrapActive : MonoBehaviour
         {
             Debug.LogError("SwitchLaser: StartActions is null!");
         }
-        trapHighData = transform.GetComponent<TrapHighData>();
+        trapHighData = transform.GetComponent<TrapHeightData>();
     }
 
     private void OnTriggerEnter(Collider other)

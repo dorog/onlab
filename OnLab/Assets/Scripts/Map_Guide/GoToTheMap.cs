@@ -17,4 +17,8 @@ public class GoToTheMap : MonoBehaviour {
         }  
     }
 
+    private void OnMouseDown()
+    {
+        GoMyMap();
+    }
 }

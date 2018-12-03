@@ -48,4 +48,40 @@ public class SceneLoader : MonoBehaviour {
     {
         LoadSceneStatic(GameStructure.GetLevelName());
     }
+
+    public void LoadExtraSceneAndSetMode()
+    {
+        FinishMap.normalGame = false;
+        LoadScene(GameStructure.extraSceneName);
+    }
+
+    public static void LoadGuideAndSetMode()
+    {
+        FinishMap.normalGame = true;
+        LoadSceneStatic(GameStructure.GetLevelName());
+    }
+
+    public void LoadMenuBasedOnGameMode()
+    {
+        if (FinishMap.normalGame)
+        {
+            LoadSceneAndSaveSpeed();
+        }
+        else
+        {
+            LoadScene(GameStructure.extraSceneName);
+        }
+    }
+
+    public void LoadFinishOK()
+    {
+        if (FinishMap.normalGame)
+        {
+            LoadActualMap();
+        }
+        else
+        {
+            LoadScene(GameStructure.extraSceneName);
+        }
+    }
 }

@@ -1,4 +1,5 @@
-﻿
+﻿using UnityEngine;
+
 public class SharedData
 {
 
@@ -25,17 +26,18 @@ public class SharedData
     public static string keyIcon = "Icons/MapElements/keyIcon";
     public static string laserGateIcon = "Icons/MapElements/laserGateIcon";
     public static string laserSwitchIcon = "Icons/MapElements/laserSwitchIcon";
-    public static string lowRisingStoneIcon = "Icons/MapElements/lowRisingStoneIcon";
     public static string relicIcon = "Icons/MapElements/relicIcon";
     public static string risingStoneIcon = "Icons/MapElements/risingStoneIcon";
     public static string stoneLifterIcon = "Icons/MapElements/stoneLifterIcon";
     public static string trapIcon = "Icons/MapElements/trapIcon";
+    public static string joeIcon = "Icons/MapElements/joeIcon";
 
     //Speed data
     public static int minSpeed = 1;
     public static int maxSpeed = 4;
     public static int basicSpeed = 1;
 
+    public static int DefaultType = 0;
     public static int KeyType = 1;
     public static int GemType = 2;
     public static int RelicType = 3;
@@ -49,4 +51,6 @@ public class SharedData
 
     public static int notHaveItemNumber = 0;
     public static int HaveItemNumber = 1;
+
+    public static string deviceCreatedMapFileLocation = "/createdMaps.bat";
 }

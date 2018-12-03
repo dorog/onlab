@@ -4,20 +4,20 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 public static class CurrentGameDatas
 {
-    static public List<MapData> mapDatas = new List<MapData>();
+    static public List<MapResultData> mapDatas = new List<MapResultData>();
     static public int ItemCount = 0;
     static public string slotName;
     static public int savedSpeed = 1;
     static public int speed = 1;
     static public int onLevel = 1;
 
-    static public void CopyTheDatas(List<MapData> data, string filename)
+    static public void CopyTheDatas(List<MapResultData> data, string filename)
     {
         slotName = filename;
         mapDatas.Clear();
         for (int i = 0; i < data.Count; i++)
         {
-            mapDatas.Add(new MapData(data[i].Score, data[i].Scarab, data[i].Item, data[i].ItemType));
+            mapDatas.Add(new MapResultData(data[i].Score, data[i].Scarab, data[i].Item, data[i].ItemType));
         }
     }
 

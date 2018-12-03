@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(HighData))]
+[RequireComponent(typeof(HeightData))]
 public class EdgeTrigger : MonoBehaviour
 {
     private StartActions sa;
-    private HighData highData;
+    private HeightData highData;
     [SerializeField]
     private float resetTime = 1.5f;
 
@@ -15,7 +15,7 @@ public class EdgeTrigger : MonoBehaviour
         {
             Debug.LogError("EdgeTrigger: Startaction is null!");
         }
-        highData = transform.GetComponent<HighData>();
+        highData = transform.GetComponent<HeightData>();
     }
 
     private void OnTriggerEnter(Collider other)

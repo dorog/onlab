@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+[RequireComponent(typeof(GateHeightData))]
 public class LaserGate : MonoBehaviour {
 
     private int summSwitches;
@@ -23,12 +24,15 @@ public class LaserGate : MonoBehaviour {
 
     private float laserGateGround;
 
+    private GateHeightData laserGateHeightData;
+
     private void Start()
     {
         if (laserModel.GetComponent<Laser>()==null)
         {
             Debug.LogError("LaserGate: laserModel has to have Laser script!");
         }
+        laserGateHeightData = GetComponent<GateHeightData>();
     }
 
     public void SetLasers(int _summSwitches, float _laserGround)
@@ -53,12 +57,20 @@ public class LaserGate : MonoBehaviour {
 
     public void SwitchedOffOne()
     {
+        if(ActiveSwitches == 1)
+        {
+            laserGateHeightData.Opened = true;
+        }
         ActiveSwitches--;
         parent.GetChild(ActiveSwitches).gameObject.SetActive(false);
     }
 
     public void SwitchedOnOne()
     {
+        if (ActiveSwitches == 0)
+        {
+            laserGateHeightData.Opened = false;
+        }
         parent.GetChild(ActiveSwitches).gameObject.SetActive(true);
         ActiveSwitches++;
     }

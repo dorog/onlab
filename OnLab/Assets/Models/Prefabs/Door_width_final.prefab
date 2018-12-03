@@ -91,9 +91,9 @@ GameObject:
   - component: {fileID: 33860618019045086}
   - component: {fileID: 23995628346073660}
   - component: {fileID: 65919552531394454}
-  - component: {fileID: 114116264434506152}
-  - component: {fileID: 114548986444500734}
   - component: {fileID: 111539270115361788}
+  - component: {fileID: 114099322886239920}
+  - component: {fileID: 114484757575903830}
   m_Layer: 0
   m_Name: Door_width_final
   m_TagString: Untagged
@@ -386,6 +386,22 @@ Animation:
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!114 &114099322886239920
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1806423621131414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8f05e0c4de7adc479d217d5845e978b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseHeight: 0
+  modelGround: 0
+  quatVector: {x: 1, y: 0, z: 0}
+  quatFloat: -90
+  openedHeight: 2
 --- !u!114 &114115417253713914
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -397,13 +413,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f53f61af0d7f45d469a17a68589ecce4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxPoint: 999
-  maxScarabNumber: 3
-  missingItemWeight: 500
-  missingScarabWeight: 100
-  moreCmdWeight: 10
-  doorHighData: {fileID: 114548986444500734}
---- !u!114 &114116264434506152
+  doorHighData: {fileID: 0}
+--- !u!114 &114484757575903830
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -414,20 +425,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc406773393b12c499d0ff1767cf2914, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  doorOpenSpeed: 2
-  doorAnimName: DoorDownOpening_width
---- !u!114 &114548986444500734
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1806423621131414}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8f05e0c4de7adc479d217d5845e978b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  baseHigh: 0
-  openedHeight: 2
-  opened: 0
-  boxesOnRoof: []
+  doorAnimName: DoorWidth_last

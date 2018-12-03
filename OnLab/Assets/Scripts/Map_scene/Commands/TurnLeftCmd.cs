@@ -3,7 +3,7 @@
 public class TurnLeftCmd : CharacterMovingCommand
 {
     public TurnLeftCmd(int id) : base(id) {
-        Sprite = Resources.Load<Sprite>(SharedData.leftIcon);
+        Img = Resources.Load<Sprite>(SharedData.leftIcon);
     }
 
     public override void Effect()

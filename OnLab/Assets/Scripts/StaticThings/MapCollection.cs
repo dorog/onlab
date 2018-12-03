@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using UnityEngine;
 
 public class MapCollection
 {
@@ -17,7 +19,6 @@ public class MapCollection
     private static MapElement LGateE = MapElement.LaserGateEdge;
     private static MapElement LSwitch = MapElement.LaserSwitch;
     private static MapElement Relic = MapElement.Relic;
-    private static MapElement LRStone = MapElement.LowRisingStone;
 
     public static Map ReadMap(int number)
     {
@@ -80,11 +81,11 @@ public class MapCollection
                 chosedMap = InitMap18();
                 break;
             default:
-                chosedMap = MaxSizeMap();
+                chosedMap = ConvertToMap(CreatedMap());
                 break;
         }
 
-        CalculateItems(chosedMap);
+        CalculateItemsMap(chosedMap);
 
         return chosedMap;
 
@@ -403,9 +404,9 @@ public class MapCollection
         map.startPosition = new Vector3(275, 0, 475);
         map.mapMatrix = new MapElement[,] { { Edge, Edge, Edge,    Edge,    Edge,    Edge,      Edge },
                                             { Edge, Edge, Button,  Edge,    Edge,    StoneL,    Edge },
-                                            { Edge, Edge, LRStone, Button,  Edge,    DoorE,     Edge },
-                                            { Edge, Relic,  LRStone, Edge,    LRStone, Door,      Edge },
-                                            { Edge, Edge, LRStone, LRStone, LRStone, DoorE,     Edge },
+                                            { Edge, Edge, RStone, Button,  Edge,    DoorE,     Edge },
+                                            { Edge, Relic,  RStone, Edge,    RStone, Door,      Edge },
+                                            { Edge, Edge, RStone, RStone, RStone, DoorE,     Edge },
                                             { Edge, Edge, Edge,    Button,  Edge,    StoneL,    Edge },
                                             { Edge, Edge, Edge,    Edge,    Edge,    Edge,      Edge }};
         map.heigth = map.mapMatrix.GetLength(0);
@@ -519,6 +520,22 @@ public class MapCollection
         return map;
     }
 
+    private static MapSer CreatedMap()
+    {
+        string deviceFileLocation = Application.persistentDataPath + "/" + "createdMaps.bat";
+        BinaryFormatter bf = new BinaryFormatter();
+        FileStream file = File.Open(deviceFileLocation, FileMode.Open);
+        CreatedMaps maps = (CreatedMaps)bf.Deserialize(file);
+        file.Close();
+
+        MapSer[] datas = new MapSer[maps.maps.Length + 1];
+        for (int i = 0; i < maps.maps.Length; i++)
+        {
+            datas[i] = maps.maps[i];
+        }
+        return datas[ActualMapData.createdMapIndex];
+    }
+
     private static Map IziMapWithGem()
     {
         Map map = new Map();
@@ -592,7 +609,7 @@ public class MapCollection
         return map;
     }
 
-    public static void CalculateItems(Map map)
+    public static void CalculateItemsMap(Map map)
     {
         for (int i = 0; i < map.heigth; i++)
         {
@@ -608,5 +625,43 @@ public class MapCollection
                 }
             }
         }
+    }
+
+    public static void CalculateItemsMapSer(MapSer map)
+    {
+        for (int i = 0; i < map.heigth; i++)
+        {
+            for (int j = 0; j < map.width; j++)
+            {
+                if (map.mapMatrix[i, j] == Button)
+                {
+                    map.buttonCount++;
+                }
+                else if (map.mapMatrix[i, j] == LSwitch)
+                {
+                    map.laserSwitchCount++;
+                }
+            }
+        }
+    }
+
+    private static Map ConvertToMap(MapSer mapSer)
+    {
+        Map map = new Map();
+        map.startPosition = new Vector3(mapSer.startPosition.x, mapSer.startPosition.y, mapSer.startPosition.z);
+        map.charPosition = new Vector3(mapSer.charPosition.x, mapSer.charPosition.y, mapSer.charPosition.z);
+        map.mapMatrix = mapSer.mapMatrix;
+        map.heigth = map.mapMatrix.GetLength(0);
+        map.width = map.mapMatrix.GetLength(1);
+        map.boxNumber = mapSer.boxNumber;
+        map.boxLocations = new Vector3[map.boxNumber];
+        for(int i=0; i < map.boxNumber; i++)
+        {
+            map.boxLocations[i] = new Vector3(mapSer.boxLocations[i].x, mapSer.boxLocations[i].y, mapSer.boxLocations[i].z);
+        }
+        map.Scarab3PartNumber = mapSer.Scarab3PartNumber;
+        map.Scarab2PartNumber = mapSer.Scarab2PartNumber;
+        map.itemType = mapSer.itemType;
+        return map;
     }
 }

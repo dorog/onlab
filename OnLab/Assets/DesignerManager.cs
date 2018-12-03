@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -42,21 +45,80 @@ public class DesignerManager : MonoBehaviour
     private MapElementData lowRisingStoneModel;
     [SerializeField]
     private MapElementBox boxModel;
+    [SerializeField]
+    private MapElementBox joeModel;
 
     [SerializeField]
     private WebCreator webCreator;
     [SerializeField]
-    private float boxAboveElemValue = 20;
+    private float boxAboveElemValue = 26;
+    [SerializeField]
+    private float joeAboveValue = 26;
+    [Header("Camera change settings")]
+    [SerializeField]
+    private ChangeCamera changeCamera;
+    [Header("Android Camera change settings")]
+    [SerializeField]
+    private GameObject androidPanel;
+    [SerializeField]
+    private Button androidClear;
+    [SerializeField]
+    private Button androidDelete;
+    [Header("Windows Camera change settings")]
+    [SerializeField]
+    private GameObject windowsPanel;
+    [SerializeField]
+    private Button windowsClear;
+    [SerializeField]
+    private Button windowsDelete;
+    [Header("Android Save settings")]
+    [SerializeField]
+    private Button androidSaveBtn;
+    [SerializeField]
+    private GameObject androidSavePanel;
+    [SerializeField]
+    private Text androidSaveName;
+    [SerializeField]
+    private Text androidScarab3part;
+    [SerializeField]
+    private Text androidScarab2part;
+    [Header("Windows Save settings")]
+    [SerializeField]
+    private Button windowsSaveBtn;
+    [SerializeField]
+    private GameObject windowsSavePanel;
+    [SerializeField]
+    private Text windowsSaveName;
+    [SerializeField]
+    private Text windowsScarab3part;
+    [SerializeField]
+    private Text windowsScarab2part;
+
+
+    private Button saveBtn;
+    private GameObject savePanel;
+    private Text saveName;
+    private Text scarab3part;
+    private Text scarab2part;
 
     private MapElement[,] actMap;
     private GameObject[,] objectMap;
     private List<GameObject> boxes = new List<GameObject>();
+    private MapElementBox joeMEB = null;
+    private MapElement itemType = MapElement.Null;
 
     private Vector3 startPosition;
 
     private MapElementFactory mapElementFactory;
 
     private static DesignerManager instance;
+
+    string deviceCreatedMapFileLocation;
+
+
+    private GameObject panel;
+    private Button clear;
+    private Button delete;
 
     void Awake()
     {
@@ -72,9 +134,33 @@ public class DesignerManager : MonoBehaviour
         return instance;
     }
 
-    // Use this for initialization
     void Start()
     {
+
+#if UNITY_ANDROID
+        saveBtn = androidSaveBtn;
+        savePanel = androidSavePanel;
+        saveName = androidSaveName;
+        scarab3part = androidScarab3part;
+        scarab2part = androidScarab2part;
+
+        panel = androidPanel;
+        clear = androidClear;
+        delete = androidDelete;
+#else
+        saveBtn = windowsSaveBtn;
+        savePanel = windowsSavePanel;
+        saveName = windowsSaveName;
+        scarab3part = windowsScarab3part;
+        scarab2part = windowsScarab2part;
+
+        panel = windowsPanel;
+        clear = windowsClear;
+        delete = windowsDelete;
+#endif
+
+        deviceCreatedMapFileLocation = Application.persistentDataPath + SharedData.deviceCreatedMapFileLocation;
+
         mapElementFactory = MapElementFactory.GetInstance();
         if (mapElementFactory == null)
         {
@@ -96,9 +182,13 @@ public class DesignerManager : MonoBehaviour
         }
     }
 
-    public void BuildMapElement(int row, int column)
+    public bool BuildMapElement(int row, int column)
     {
-        if (mapElementFactory.chosedMapElement != MapElement.Box)
+        if(actMap[row, column] == MapElement.Edge && mapElementFactory.chosedMapElement == MapElement.Joe)
+        {
+            return false;
+        }
+        if (mapElementFactory.chosedMapElement != MapElement.Box && mapElementFactory.chosedMapElement != MapElement.Joe)
         {
             actMap[row, column] = mapElementFactory.chosedMapElement;
         }
@@ -138,15 +228,14 @@ public class DesignerManager : MonoBehaviour
                 break;
             case MapElement.Key:
                 elem = Instantiate(keyModel.gameObject, placePosition + new Vector3(0, keyModel.ModelGround, 0), keyModel.GetQuat(), transform);
+                mapElementFactory.ItemPlaced();
+                itemType = MapElement.Key;
                 break;
             case MapElement.StoneLifter:
                 elem = Instantiate(stoneLifterModel.gameObject, placePosition + new Vector3(0, stoneLifterModel.ModelGround, 0), stoneLifterModel.GetQuat(), transform);
                 break;
             case MapElement.RisingStone:
                 elem = Instantiate(risingStoneModel.gameObject, placePosition + new Vector3(0, risingStoneModel.ModelGround, 0), risingStoneModel.GetQuat(), transform);
-                break;
-            case MapElement.LowRisingStone:
-                elem = Instantiate(lowRisingStoneModel.gameObject, placePosition + new Vector3(0, lowRisingStoneModel.ModelGround, 0), lowRisingStoneModel.GetQuat(), transform);
                 break;
             case MapElement.LaserGate:
                 elem = Instantiate(laserGateModel.gameObject, placePosition + new Vector3(0, laserGateModel.ModelGround, 0), laserGateModel.GetQuat(), transform);
@@ -170,12 +259,20 @@ public class DesignerManager : MonoBehaviour
                 break;
             case MapElement.Gem:
                 elem = Instantiate(gemModel.gameObject, placePosition + new Vector3(0, gemModel.ModelGround, 0), gemModel.GetQuat(), transform);
+                mapElementFactory.ItemPlaced();
+                itemType = MapElement.Gem;
                 break;
             case MapElement.Relic:
                 elem = Instantiate(relicModel.gameObject, placePosition + new Vector3(0, relicModel.ModelGround, 0), relicModel.GetQuat(), transform);
+                mapElementFactory.ItemPlaced();
+                itemType = MapElement.Relic;
                 break;
             case MapElement.Box:
                 MapElementData boxOnIt = objectMap[row, column].GetComponent<MapElementData>();
+                if (boxOnIt.joeOnIt)
+                {
+                    return true;
+                }
                 GameObject box = Instantiate(boxModel.gameObject, placePosition + new Vector3(0, SharedData.hight_0_Ground + (boxOnIt.Height + boxOnIt.BoxOnItCount) * SharedData.heightUnit + boxAboveElemValue, 0), boxModel.GetQuat(), transform);
                 boxOnIt.BoxOnItCount++;
                 boxes.Add(box);
@@ -183,7 +280,20 @@ public class DesignerManager : MonoBehaviour
                 MapElementBox mapElementBox = box.GetComponent<MapElementBox>();
                 mapElementBox.Column = column;
                 mapElementBox.Row = row;
-                return;
+                mapElementBox.PlaceHeight = SharedData.hight_0_Ground + (boxOnIt.Height + boxOnIt.BoxOnItCount) * SharedData.heightUnit + boxAboveElemValue;
+                return true;
+            case MapElement.Joe:
+                MapElementData joePlace = objectMap[row, column].GetComponent<MapElementData>();
+                GameObject joe = Instantiate(joeModel.gameObject, placePosition + new Vector3(0, SharedData.hight_0_Ground + (joePlace.Height + joePlace.BoxOnItCount) * SharedData.heightUnit + joeAboveValue, 0), joeModel.GetQuat(), transform);
+                mapElementFactory.JoePlaced();
+                joePlace.joeOnIt = joe;
+                MapElementBox joeMEB = joe.GetComponent<MapElementBox>();
+                joeMEB.Column = column;
+                joeMEB.Row = row;
+                joeMEB.PlaceHeight = SharedData.hight_0_Ground + (joePlace.Height + joePlace.BoxOnItCount) * SharedData.heightUnit + joeAboveValue;
+                this.joeMEB = joeMEB;
+                saveBtn.interactable = true;
+                return true;
             default:
                 break;
         }
@@ -191,13 +301,23 @@ public class DesignerManager : MonoBehaviour
         MapElementData mapElementData = elem.GetComponent<MapElementData>();
         mapElementData.Row = row;
         mapElementData.Column = column;
+        Destroy(objectMap[row, column]);
         objectMap[row, column] = elem;
+        return true;
     }
 
     public void DeleteMapElement(int row, int column)
     {
         MapElementData mapElementData = objectMap[row, column].GetComponent<MapElementData>();
-        if (mapElementData.BoxOnItCount > 0)
+        if (mapElementData.joeOnIt != null)
+        {
+            Destroy(mapElementData.joeOnIt);
+            mapElementData.joeOnIt = null;
+            mapElementFactory.JoeRemoved();
+            joeMEB = null;
+            saveBtn.interactable = false;
+        }
+        else if (mapElementData.BoxOnItCount > 0)
         {
             GameObject topBox = mapElementData.GetTopBox();
             boxes.Remove(topBox);
@@ -229,6 +349,11 @@ public class DesignerManager : MonoBehaviour
             }
             else
             {
+                if (actMap[row, column] == MapElement.Key || actMap[row, column] == MapElement.Relic || actMap[row, column] == MapElement.Gem)
+                {
+                    mapElementFactory.ItemRemoved();
+                    itemType = MapElement.Null;
+                }
                 actMap[row, column] = MapElement.Edge;
                 webCreator.EnableMapPlace(row, column);
                 Destroy(objectMap[row, column]);
@@ -283,5 +408,184 @@ public class DesignerManager : MonoBehaviour
         Vector3 placePosition = new Vector3(startPosition.x + column * SharedData.widhtUnit + SharedData.widhtUnit / 2, 0, startPosition.z - row * SharedData.widhtUnit - SharedData.widhtUnit / 2);
         GameObject edge = Instantiate(edgeModel.gameObject, placePosition + new Vector3(0, edgeModel.ModelGround, 0), edgeModel.GetQuat(), transform);
         objectMap[row, column] = edge;
+    }
+
+    public void Clear()
+    {
+        mapElementFactory.JoeRemoved();
+        mapElementFactory.ItemRemoved();
+
+        for(int i=0; i<transform.childCount; i++)
+        {
+            Destroy(transform.GetChild(i).gameObject);
+        }
+        for (int i = 0; i < actMap.GetLength(0); i++)
+        {
+            for (int j = 0; j < actMap.GetLength(1); j++)
+            {
+                actMap[i, j] = MapElement.Edge;
+                Vector3 placePosition = new Vector3(startPosition.x + j * SharedData.widhtUnit + SharedData.widhtUnit / 2, 0, startPosition.z - i * SharedData.widhtUnit - SharedData.widhtUnit / 2);
+                GameObject edge = Instantiate(edgeModel.gameObject, placePosition + new Vector3(0, edgeModel.ModelGround, 0), edgeModel.GetQuat(), transform);
+                objectMap[i, j] = edge;
+            }
+        }
+        webCreator.Clear();
+        boxes.Clear();
+    }
+
+    public void ChangeCamera()
+    {
+        bool state = !panel.activeSelf;
+        panel.SetActive(state);
+        clear.interactable = state;
+        delete.interactable = state;
+        changeCamera.SwitchCamera();
+    }
+
+    public void SaveClick()
+    {
+        mapElementFactory.DiselectMapElement();
+        savePanel.SetActive(true);
+    }
+
+    public void CancelClick()
+    {
+        savePanel.SetActive(false);
+    }
+
+    public void SaveMap()
+    {
+        MapSer map = new MapSer();
+
+        map.name = saveName.text;
+        map.Scarab2PartNumber = Convert.ToInt32(scarab2part.text);
+        map.Scarab3PartNumber = Convert.ToInt32(scarab3part.text);
+
+        int plusEdges = boxes.Count+1;
+
+        MapElement[,] mapElements = new MapElement[webCreator.RowCount+2*plusEdges, webCreator.ColumnCount+2*plusEdges];
+        for(int i = plusEdges; i < webCreator.RowCount + plusEdges; i++)
+        {
+            for(int j = plusEdges; j < webCreator.ColumnCount + plusEdges; j++)
+            {
+                mapElements[i, j] = actMap[i - plusEdges, j - plusEdges];
+            }
+        }
+
+        map.startPosition = new Vector3Ser(startPosition.x - plusEdges * SharedData.widhtUnit, startPosition.y, startPosition.z + plusEdges * SharedData.widhtUnit);
+
+        Vector3 extraDistance = new Vector3(-1, 0, 1) * plusEdges * SharedData.widhtUnit;
+
+        float charPositionX = startPosition.x + (joeMEB.Column + plusEdges) * SharedData.widhtUnit + extraDistance.x;
+        float charPositionY = startPosition.y + joeMEB.PlaceHeight;
+        float charPositionZ = startPosition.z - (joeMEB.Row + plusEdges) * SharedData.widhtUnit + extraDistance.z;
+
+        map.charPosition = new Vector3Ser(charPositionX, charPositionY, charPositionZ);
+        map.mapMatrix = mapElements;
+        map.heigth = map.mapMatrix.GetLength(0);
+        map.width = map.mapMatrix.GetLength(1);
+        map.boxNumber = boxes.Count;
+        map.boxLocations = new Vector3Ser[boxes.Count];
+        for(int i=0; i<boxes.Count; i++)
+        {
+            MapElementBox boxME = boxes[i].GetComponent<MapElementBox>();
+            float boxLocationX = startPosition.x + (boxME.Column + plusEdges) * SharedData.widhtUnit + extraDistance.x;
+            float boxLocationY = startPosition.y + boxME.PlaceHeight;
+            float boxLocationZ = startPosition.z - (boxME.Row + plusEdges) * SharedData.widhtUnit + extraDistance.z;
+            map.boxLocations[i] = new Vector3Ser(boxLocationX, boxLocationY, boxLocationZ);
+        }
+
+        if (itemType == MapElement.Key)
+        {
+            map.itemType = SharedData.KeyType;
+        }
+        else if (itemType == MapElement.Gem)
+        {
+            map.itemType = SharedData.GemType;
+        }
+        else if (itemType == MapElement.Relic)
+        {
+            map.itemType = SharedData.RelicType;
+        }
+        else
+        {
+            map.itemType = SharedData.DefaultType;
+        }
+
+        MapCollection.CalculateItemsMapSer(map);
+
+        Save(map);
+
+        SceneLoader.LoadSceneStatic(GameStructure.extraSceneName);
+    }
+
+    private void Save(MapSer map)
+    {
+        MapSer[] datas = Read();
+        datas[datas.Length - 1] = map;
+
+        BinaryFormatter bf = new BinaryFormatter();
+        FileStream file = File.Open(deviceCreatedMapFileLocation, FileMode.Open);
+        CreatedMaps data = (CreatedMaps)bf.Deserialize(file);
+        file.Close();
+
+        data.maps = datas;
+
+        FileStream fileForSave = File.Create(deviceCreatedMapFileLocation);
+        bf.Serialize(fileForSave, data);
+        fileForSave.Close();
+    }
+
+    private MapSer[] Read()
+    {
+        if (File.Exists(deviceCreatedMapFileLocation))
+        {
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream file = File.Open(deviceCreatedMapFileLocation, FileMode.Open);
+            CreatedMaps maps = (CreatedMaps)bf.Deserialize(file);
+            file.Close();
+
+            MapSer[] datas;
+            if (maps.maps == null)
+            {
+                datas = new MapSer[1];
+                return datas;
+            }
+            else{
+                datas = new MapSer[maps.maps.Length + 1];
+            }
+            for (int i = 0; i < maps.maps.Length; i++)
+            {
+                datas[i] = maps.maps[i];
+            }
+            return datas;
+        }
+        else
+        {
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream file = File.Open(deviceCreatedMapFileLocation, FileMode.Create);
+            CreatedMaps data = new CreatedMaps();
+            data.maps = new MapSer[1];
+            bf.Serialize(file, data);
+            file.Close();
+
+            return new MapSer[1];
+        }
+    }
+
+    public void GoToExtraScene()
+    {
+        SceneLoader.LoadSceneStatic(GameStructure.extraSceneName);
+    }
+
+    public bool joeOnIt(int row, int column)
+    {
+        MapElementData mapElementData = objectMap[row, column].GetComponent<MapElementData>();
+        return mapElementData.joeOnIt;
+    }
+
+    public MapElement GetMapElement(int row, int column)
+    {
+        return actMap[row, column];
     }
 }

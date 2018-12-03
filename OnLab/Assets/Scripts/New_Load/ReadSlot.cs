@@ -1,7 +1,6 @@
 ﻿using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Collections.Generic;
 
@@ -18,7 +17,7 @@ public class ReadSlot : MonoBehaviour
     [SerializeField]
     private GameObject SlotEmptyText;
 
-    private List<MapData> gmdata = new List<MapData>();
+    private List<MapResultData> gmdata = new List<MapResultData>();
     private int summScore = 0;
     private int summBuggPart = 0;
     private int savedSpeed = 1;
@@ -44,20 +43,20 @@ public class ReadSlot : MonoBehaviour
             Debug.LogError("ReadSlot: Filename is required!");
         }
         deviceFileLocation = Application.persistentDataPath + "/" + fileName;
-        ReadBasedOnPlatform();
+        Read();
     }
 
-    void ChangeSceneLoadBasedOnPlatform()
+    void ChangeSceneLoad()
     {
         CurrentGameDatas.savedSpeed = savedSpeed;
         CurrentGameDatas.speed = savedSpeed;
         CurrentGameDatas.ItemCount = summKeys + summGems + summRelic;
         CurrentGameDatas.CopyTheDatas(gmdata, deviceFileLocation);
         CurrentGameDatas.onLevel = onLevel;
-        SceneManager.LoadScene(GameStructure.GetLevelName());
+        SceneLoader.LoadGuideAndSetMode();
     }
 
-    void ChangeSceneForNewBasedOnPlatform()
+    void ChangeSceneForNew()
     { 
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Open(deviceFileLocation, FileMode.Open);
@@ -66,12 +65,11 @@ public class ReadSlot : MonoBehaviour
 
         data.slotType = notEmptySlot;
         data.maxMap = GameStructure.maxMap;
-        data.mapResults = new MapData[GameStructure.maxMap];
+        data.mapResults = new MapResultData[GameStructure.maxMap];
         data.onLevel = GameStructure.startLevel;
-        data.levelMapsNumber = GameStructure.levelMapsCount;
         for (int i = 0; i < data.mapResults.Length; i++)
         {
-            data.mapResults[i] = new MapData();
+            data.mapResults[i] = new MapResultData();
         }
         data.speed = SharedData.basicSpeed;
         FileStream fileForSave = File.Create(deviceFileLocation);
@@ -80,15 +78,15 @@ public class ReadSlot : MonoBehaviour
 
         for (int i = 0; i < GameStructure.maxMap; i++)
         {
-            gmdata.Add(new MapData());
+            gmdata.Add(new MapResultData());
         }
         CurrentGameDatas.savedSpeed = SharedData.basicSpeed;
         CurrentGameDatas.speed = SharedData.basicSpeed;
         CurrentGameDatas.CopyTheDatas(gmdata, deviceFileLocation);
-        SceneManager.LoadScene(GameStructure.levelOneName);
+        SceneLoader.LoadGuideAndSetMode();
     }
 
-    private void ReadBasedOnPlatform()
+    private void Read()
     {
         int slotState;
         int maxMap;
@@ -112,12 +110,11 @@ public class ReadSlot : MonoBehaviour
             PlayerSlotData data = new PlayerSlotData();
             data.slotType = emptySlot;
             data.maxMap = GameStructure.maxMap;
-            data.mapResults = new MapData[GameStructure.maxMap];
+            data.mapResults = new MapResultData[GameStructure.maxMap];
             data.onLevel = GameStructure.startLevel;
-            data.levelMapsNumber = GameStructure.levelMapsCount;
             for (int i = 0; i < data.mapResults.Length; i++)
             {
-                data.mapResults[i] = new MapData();
+                data.mapResults[i] = new MapResultData();
             }
 
             bf.Serialize(file, data);
@@ -158,7 +155,7 @@ public class ReadSlot : MonoBehaviour
             for (int i = 0; i < maxMap; i++)
             {
 
-                gmdata.Add(new MapData(ps.mapResults[i].Score, ps.mapResults[i].Scarab, ps.mapResults[i].Item, ps.mapResults[i].ItemType));
+                gmdata.Add(new MapResultData(ps.mapResults[i].Score, ps.mapResults[i].Scarab, ps.mapResults[i].Item, ps.mapResults[i].ItemType));
 
                 summScore += ps.mapResults[i].Score;
                 summBuggPart += ps.mapResults[i].Scarab;
@@ -198,11 +195,11 @@ public class ReadSlot : MonoBehaviour
 
         if (isLoad)
         {
-            thisBtn.onClick.AddListener(ChangeSceneLoadBasedOnPlatform);
+            thisBtn.onClick.AddListener(ChangeSceneLoad);
         }
         else
         {
-            thisBtn.onClick.AddListener(ChangeSceneForNewBasedOnPlatform);
+            thisBtn.onClick.AddListener(ChangeSceneForNew);
         }
     }
 }

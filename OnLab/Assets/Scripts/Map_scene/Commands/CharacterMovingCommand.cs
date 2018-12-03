@@ -1,12 +1,11 @@
 ﻿
 public class CharacterMovingCommand : Command
 {
-    public MapGenerator mapGen;
-    public StartActions sa;
+    protected MapGenerator mapGen;
 
     public CharacterMovingCommand(int _PanelSlot)
     {
-        ID = SharedData.realCommandID;
+        Type = SharedData.realCommandID;
         PanelSlot = _PanelSlot;
         mapGen = MapGenerator.GetMapGenerator();
         sa = StartActions.GetStartActions();

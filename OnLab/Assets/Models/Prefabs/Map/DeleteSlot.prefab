@@ -21,8 +21,7 @@ GameObject:
   - component: {fileID: 224552339586054682}
   - component: {fileID: 222139589998274716}
   - component: {fileID: 114593710221716722}
-  - component: {fileID: 114666764946045562}
-  - component: {fileID: 114936425746060632}
+  - component: {fileID: 114810462419973596}
   m_Layer: 5
   m_Name: DeleteSlot
   m_TagString: Untagged
@@ -57,7 +56,7 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114666764946045562
+--- !u!114 &114810462419973596
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -65,18 +64,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1878841394956340}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2313b5e13f319ff468e712f031e29ef4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &114936425746060632
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1878841394956340}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a7a7afeabed4ed249948e01512aef601, type: 3}
+  m_Script: {fileID: 11500000, guid: 81165eedc51a9f24ca5b736113135fdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!222 &222139589998274716

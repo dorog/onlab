@@ -1,22 +1,22 @@
 ﻿
 public enum MapElement {
 
+    Edge,
     Gem,
     DoorEdge,
     Key,
     Relic,
     Door,
     Column,
-    Edge,
     Trap,
     Button,
     Hole,
     StoneLifter,
     RisingStone,
-    LowRisingStone,
     LaserGate,
     LaserGateEdge,
     LaserSwitch,
     Box,
+    Joe,
     Null
 }

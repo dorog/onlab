@@ -52,9 +52,6 @@ public class MapElementIcon : MonoBehaviour, IPointerClickHandler
             case MapElement.LaserSwitch:
                 img.sprite = Resources.Load<Sprite>(SharedData.laserSwitchIcon);
                 break;
-            case MapElement.LowRisingStone:
-                img.sprite = Resources.Load<Sprite>(SharedData.lowRisingStoneIcon);
-                break;
             case MapElement.Relic:
                 img.sprite = Resources.Load<Sprite>(SharedData.relicIcon);
                 break;
@@ -67,12 +64,20 @@ public class MapElementIcon : MonoBehaviour, IPointerClickHandler
             case MapElement.Trap:
                 img.sprite = Resources.Load<Sprite>(SharedData.trapIcon);
                 break;
+            case MapElement.Joe:
+                img.sprite = Resources.Load<Sprite>(SharedData.joeIcon);
+                break;
             default:
                 break;
         }
     }
 
     public void OnPointerClick(PointerEventData eventData)
+    {
+        OnPointerClick();
+    }
+
+    protected virtual void OnPointerClick()
     {
         if (mapElementFactory.DeleteMode)
         {

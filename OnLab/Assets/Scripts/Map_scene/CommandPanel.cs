@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class CommandPanel : MonoBehaviour {
 
@@ -13,10 +12,6 @@ public class CommandPanel : MonoBehaviour {
     private GameObject cmdSlot;
     [SerializeField]
     private GameObject deleteSlot;
-    [SerializeField]
-    private GameObject cmdpanelcmd;
-    [SerializeField]
-    private GameObject factoryElement;
 
     [Header("Slots' count")]
     [SerializeField]
@@ -31,7 +26,7 @@ public class CommandPanel : MonoBehaviour {
 
     private int summSlots = 0;
 
-    [Header("GameObject for Instantiate")]
+    [Header("GameObjects's place")]
     [SerializeField]
     private GameObject deleteGO;
     [SerializeField]
@@ -154,7 +149,7 @@ public class CommandPanel : MonoBehaviour {
         List<Command> RealCmds = new List<Command>();
         for(int i=0; i<mainCount; i++)
         {
-            if (commands[i].ID != -1)
+            if (commands[i].Type != -1)
             {
                 RealCmds.Add(commands[i]);
                 
@@ -168,7 +163,7 @@ public class CommandPanel : MonoBehaviour {
         List<Command> RealCmds = new List<Command>();
         for (int i = mainCount; i < mainCount + fv1Count; i++)
         {
-            if (commands[i].ID != -1)
+            if (commands[i].Type != -1)
             {
                 RealCmds.Add(commands[i]);
             }
@@ -181,7 +176,7 @@ public class CommandPanel : MonoBehaviour {
         List<Command> RealCmds = new List<Command>();
         for (int i = mainCount + fv1Count; i < mainCount + fv1Count + fv2Count; i++)
         {
-            if (commands[i].ID != -1)
+            if (commands[i].Type != -1)
             {
                 RealCmds.Add(commands[i]);
             }
@@ -194,17 +189,12 @@ public class CommandPanel : MonoBehaviour {
         int db = 0;
         for (int i = 0; i < commands.Count; i++)
         {
-            if (commands[i].ID != -1)
+            if (commands[i].Type != -1)
             {
                 db++;
             }
         }
         return db;
-    }
-
-    public int GetCommandID(int id)
-    {
-        return commands[id].ID;
     }
 
     public void ReplaceCommand(int id, Transform droppedCommandTransform)

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(HighData))]
+[RequireComponent(typeof(HeightData))]
 public class RiseElement : MonoBehaviour {
 
     private bool rising = false;
@@ -16,13 +16,13 @@ public class RiseElement : MonoBehaviour {
 
     private Vector3 aimPosition;
 
-    private HighData myData;
+    private HeightData myData;
 
     void Start()
     {
         speed = SharedData.heightUnit / SharedData.timeForAnimation;
         originRisingTime = SharedData.timeForAnimation;
-        myData = GetComponent<HighData>();
+        myData = GetComponent<HeightData>();
     }
 	
 	void Update () {
@@ -47,7 +47,7 @@ public class RiseElement : MonoBehaviour {
         aimPosition = transform.position + new Vector3(0, SharedData.heightUnit, 0);
         rised++;
         rising_time = originRisingTime;
-        myData.BaseHigh++;
+        myData.BaseHeight++;
         for(int i=0; i<myData.GetBoxCount(); i++)
         {
             myData.GetBox(myData.GetBoxCount()-i-1).GetComponent<BoxController>().RiseBox();

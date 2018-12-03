@@ -293,8 +293,9 @@ GameObject:
   - component: {fileID: 4985490526452862}
   - component: {fileID: 95587615519994568}
   - component: {fileID: 54041869354298074}
-  - component: {fileID: 114301915341866408}
-  - component: {fileID: 136856983008619272}
+  - component: {fileID: 65383448787858224}
+  - component: {fileID: 114260599396403894}
+  - component: {fileID: 23885585637108630}
   m_Layer: 0
   m_Name: joe_Designer
   m_TagString: Untagged
@@ -1153,6 +1154,40 @@ Transform:
   m_Father: {fileID: 4273413461559646}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &23885585637108630
+MeshRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1403186422298906}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_Materials:
+  - {fileID: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
 --- !u!54 &54041869354298074
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -1168,6 +1203,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!65 &65383448787858224
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1403186422298906}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 50, y: 10, z: 50}
+  m_Center: {x: 0, y: -35, z: 0}
 --- !u!95 &95587615519994568
 Animator:
   serializedVersion: 3
@@ -1185,7 +1232,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114301915341866408
+--- !u!114 &114260599396403894
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -1193,11 +1240,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1403186422298906}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1b36db62c87e044092b5215b5793d4c, type: 3}
+  m_Script: {fileID: 11500000, guid: 5e9406bf01891184bbf39be9cedf2d81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originTime: 1
-  stopped: 1
+  QuatVector: {x: 0, y: 1, z: 0}
+  QuatFloat: 90
 --- !u!114 &114481961131226836
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1262,19 +1309,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!136 &136856983008619272
-CapsuleCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1403186422298906}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 40
-  m_Height: 160
-  m_Direction: 1
-  m_Center: {x: 0, y: 40, z: 0}
 --- !u!137 &137657062479045992
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

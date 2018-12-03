@@ -1,5 +1,4 @@
 ﻿using System;
-using UnityEngine;
 
 [Serializable]
 public class PlayerSlotData {
@@ -8,6 +7,5 @@ public class PlayerSlotData {
     public int maxMap;
     public int speed;
     public int onLevel;
-    public MapData[] mapResults;
-    public int[] levelMapsNumber;
+    public MapResultData[] mapResults;
 }

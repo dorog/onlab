@@ -25,37 +25,35 @@ public class MapGenerator : MonoBehaviour
 
     [Header("Models for Instantiate")]
     [SerializeField]
-    private HighData gemModel;
+    private HeightData gemModel;
     [SerializeField]
-    private HighData doorEdgeModel;
+    private HeightData doorEdgeModel;
     [SerializeField]
-    private HighData keyModel;
+    private HeightData keyModel;
     [SerializeField]
-    private HighData relicModel;
+    private HeightData relicModel;
     [SerializeField]
-    private HighData doorModel;
+    private HeightData doorModel;
     [SerializeField]
-    private HighData columnModel;
+    private HeightData columnModel;
     [SerializeField]
-    private HighData edgeModel;
+    private HeightData edgeModel;
     [SerializeField]
-    private HighData trapModel;
+    private HeightData trapModel;
     [SerializeField]
-    private HighData buttonModel;
+    private HeightData buttonModel;
     [SerializeField]
-    private HighData holeModel;
+    private HeightData holeModel;
     [SerializeField]
-    private HighData stoneLifterModel;
+    private HeightData stoneLifterModel;
     [SerializeField]
-    private HighData risingStoneModel;
+    private HeightData risingStoneModel;
     [SerializeField]
-    private HighData laserGateModel;
+    private HeightData laserGateModel;
     [SerializeField]
-    private HighData laserGateEdgeModel;
+    private HeightData laserGateEdgeModel;
     [SerializeField]
-    private HighData laserSwitchModel;
-    [SerializeField]
-    private HighData lowRisingStoneModel;
+    private HeightData laserSwitchModel;
     [SerializeField]
     private BoxController boxModel;
 
@@ -192,12 +190,6 @@ public class MapGenerator : MonoBehaviour
                         AddToNotStaticElements(RisingStone, placePosition + new Vector3(0, risingStoneModel.ModelGround, 0), MapElement.RisingStone);
                         RisingStones.Add(RisingStone.GetComponent<RiseElement>());
                         break;
-                    case MapElement.LowRisingStone:
-                        GameObject LowRisingStone = Instantiate(lowRisingStoneModel.gameObject, placePosition + new Vector3(0, lowRisingStoneModel.ModelGround, 0), lowRisingStoneModel.GetQuat(), RisingStonesParent);
-                        objectMap[i, j] = LowRisingStone;
-                        AddToNotStaticElements(LowRisingStone, placePosition + new Vector3(0, lowRisingStoneModel.ModelGround, 0), MapElement.LowRisingStone);
-                        RisingStones.Add(LowRisingStone.GetComponent<RiseElement>());
-                        break;
                     case MapElement.LaserGate:
                         GameObject laserGate = Instantiate(laserGateModel.gameObject, placePosition + new Vector3(0, laserGateModel.ModelGround, 0), laserGateModel.GetQuat(), LaserGatesParent) as GameObject;
                         objectMap[i, j] = laserGate;
@@ -235,10 +227,10 @@ public class MapGenerator : MonoBehaviour
         {
             Vector3 position = map.boxLocations[i];
             GameObject box = Instantiate(boxModel.gameObject, position, boxModel.GetQuat(), BoxesParent) as GameObject;
-            objectMap[(int)(startPosition.z - position.z) / SharedData.widhtUnit, (int)(position.x - startPosition.x) / SharedData.widhtUnit].GetComponent<HighData>().AddBox(box);
+            objectMap[(int)(startPosition.z - position.z) / SharedData.widhtUnit, (int)(position.x - startPosition.x) / SharedData.widhtUnit].GetComponent<HeightData>().AddBox(box);
 
             Transform onIt =  objectMap[(int)(startPosition.z - position.z) / SharedData.widhtUnit, (int)(position.x - startPosition.x) / SharedData.widhtUnit].transform;
-            int onItNumber = objectMap[(int)(startPosition.z - position.z) / SharedData.widhtUnit, (int)(position.x - startPosition.x) / SharedData.widhtUnit].GetComponent<HighData>().GetBoxCount();
+            int onItNumber = objectMap[(int)(startPosition.z - position.z) / SharedData.widhtUnit, (int)(position.x - startPosition.x) / SharedData.widhtUnit].GetComponent<HeightData>().GetBoxCount();
             box.GetComponent<BoxController>().InitOnIt(onIt, onItNumber);
 
             boxesCollider.Add(box.GetComponent<BoxCollider>());
@@ -271,7 +263,7 @@ public class MapGenerator : MonoBehaviour
         {
             for (int j = 0; j < objectMap.GetLength(1); j++)
             {
-                objectMap[i, j].GetComponent<HighData>().RemoveAllBox();
+                objectMap[i, j].GetComponent<HeightData>().RemoveAllBox();
             }
         }
 
@@ -296,9 +288,9 @@ public class MapGenerator : MonoBehaviour
                     break;
                 case MapElement.Box:
                     GameObject box = Instantiate(boxModel.gameObject, notStaticElementsPosition[i], boxModel.GetQuat(), BoxesParent) as GameObject;
-                    objectMap[(int)(startPosition.z - notStaticElementsPosition[i].z) / SharedData.widhtUnit, (int)(notStaticElementsPosition[i].x - startPosition.x) / SharedData.widhtUnit].GetComponent<HighData>().AddBox(box);
-                    Transform onIt = objectMap[(int)(startPosition.z - notStaticElementsPosition[i].z) / SharedData.widhtUnit, (int)(notStaticElementsPosition[i].x - startPosition.x) / SharedData.widhtUnit].GetComponent<HighData>().transform;
-                    int onItNumber = objectMap[(int)(startPosition.z - notStaticElementsPosition[i].z) / SharedData.widhtUnit, (int)(notStaticElementsPosition[i].x - startPosition.x) / SharedData.widhtUnit].GetComponent<HighData>().GetBoxCount();
+                    objectMap[(int)(startPosition.z - notStaticElementsPosition[i].z) / SharedData.widhtUnit, (int)(notStaticElementsPosition[i].x - startPosition.x) / SharedData.widhtUnit].GetComponent<HeightData>().AddBox(box);
+                    Transform onIt = objectMap[(int)(startPosition.z - notStaticElementsPosition[i].z) / SharedData.widhtUnit, (int)(notStaticElementsPosition[i].x - startPosition.x) / SharedData.widhtUnit].GetComponent<HeightData>().transform;
+                    int onItNumber = objectMap[(int)(startPosition.z - notStaticElementsPosition[i].z) / SharedData.widhtUnit, (int)(notStaticElementsPosition[i].x - startPosition.x) / SharedData.widhtUnit].GetComponent<HeightData>().GetBoxCount();
                     box.GetComponent<BoxController>().InitOnIt(onIt, onItNumber);
                     boxesCollider.Add(box.GetComponent<BoxCollider>());
                     notStaticElements.Add(box);
@@ -318,12 +310,6 @@ public class MapGenerator : MonoBehaviour
                     notStaticElements.Add(RisingStone);
                     objectMap[(int)(startPosition.z - notStaticElementsPosition[i].z) / SharedData.widhtUnit, (int)(notStaticElementsPosition[i].x - startPosition.x) / SharedData.widhtUnit] = RisingStone;
                     RisingStones.Add(RisingStone.GetComponent<RiseElement>());
-                    break;
-                case MapElement.LowRisingStone:
-                    GameObject LowRisingStone = Instantiate(lowRisingStoneModel.gameObject, notStaticElementsPosition[i], lowRisingStoneModel.GetQuat(), RisingStonesParent);
-                    notStaticElements.Add(LowRisingStone);
-                    objectMap[(int)(startPosition.z - notStaticElementsPosition[i].z) / SharedData.widhtUnit, (int)(notStaticElementsPosition[i].x - startPosition.x) / SharedData.widhtUnit] = LowRisingStone;
-                    RisingStones.Add(LowRisingStone.GetComponent<RiseElement>());
                     break;
                 case MapElement.LaserSwitch:
                     GameObject laserSwitch = Instantiate(laserSwitchModel.gameObject, notStaticElementsPosition[i], laserSwitchModel.GetQuat(), LaserSwitchesParent);
@@ -376,8 +362,8 @@ public class MapGenerator : MonoBehaviour
         x += reCalc[0];
         z += reCalc[1];
 
-        int fromHeight = objectMap[charMatrixPositionZ, charMatrixPositionX].GetComponent<HighData>().HeighCalculateFrom();
-        CanGoForward result = objectMap[z, x].GetComponent<HighData>().HeightCalculateTo(fromHeight);
+        int fromHeight = objectMap[charMatrixPositionZ, charMatrixPositionX].GetComponent<HeightData>().HeightCalculateFrom();
+        CanGoForward result = objectMap[z, x].GetComponent<HeightData>().HeightCalculateTo(fromHeight);
         if (result == CanGoForward.Go)
         {
             JoeControl.GoForward();
@@ -387,18 +373,18 @@ public class MapGenerator : MonoBehaviour
         else if (result == CanGoForward.OneDiff)
         {
             //there is a box, and he can push it
-            int fromHeightBox = objectMap[z, x].GetComponent<HighData>().HeighCalculateFrom();
-            bool boxPushResult = objectMap[z + reCalc[1], x + reCalc[0]].GetComponent<HighData>().HeightCalculateToBox(fromHeightBox-1);
+            int fromHeightBox = objectMap[z, x].GetComponent<HeightData>().HeightCalculateFrom();
+            bool boxPushResult = objectMap[z + reCalc[1], x + reCalc[0]].GetComponent<HeightData>().HeightCalculateToBox(fromHeightBox-1);
             if (boxPushResult)
             {
-                objectMap[z, x].GetComponent<HighData>().GetTopBox().GetComponent<BoxController>().MoveToThere(Joe.transform.forward);
-                objectMap[z + reCalc[1], x + reCalc[0]].GetComponent<HighData>().AddBox(objectMap[z, x].GetComponent<HighData>().GetTopBox());
+                objectMap[z, x].GetComponent<HeightData>().GetTopBox().GetComponent<BoxController>().MoveToThere(Joe.transform.forward);
+                objectMap[z + reCalc[1], x + reCalc[0]].GetComponent<HeightData>().AddBox(objectMap[z, x].GetComponent<HeightData>().GetTopBox());
 
-                Transform onIt = objectMap[z + reCalc[1], x + reCalc[0]].GetComponent<HighData>().transform;
-                int onItNumber = objectMap[z + reCalc[1], x + reCalc[0]].GetComponent<HighData>().GetBoxCount();
-                objectMap[z, x].GetComponent<HighData>().GetTopBox().GetComponent<BoxController>().InitOnIt(onIt, onItNumber);
+                Transform onIt = objectMap[z + reCalc[1], x + reCalc[0]].GetComponent<HeightData>().transform;
+                int onItNumber = objectMap[z + reCalc[1], x + reCalc[0]].GetComponent<HeightData>().GetBoxCount();
+                objectMap[z, x].GetComponent<HeightData>().GetTopBox().GetComponent<BoxController>().InitOnIt(onIt, onItNumber);
 
-                objectMap[z, x].GetComponent<HighData>().RemoveTopBox();
+                objectMap[z, x].GetComponent<HeightData>().RemoveTopBox();
                 JoeControl.GoForward();
                 charMatrixPositionX = x;
                 charMatrixPositionZ = z;
@@ -565,10 +551,6 @@ public class MapGenerator : MonoBehaviour
         if (relicModel == null)
         {
             Debug.LogError("MapGenerator: relicModel is null!");
-        }
-        if (lowRisingStoneModel == null)
-        {
-            Debug.LogError("MapGenerator: lowRisingStoneModel is null!");
         }
 
         //Spec scripts

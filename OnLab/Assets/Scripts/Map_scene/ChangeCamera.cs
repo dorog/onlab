@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ChangeCamera : MonoBehaviour {
 
@@ -32,7 +33,8 @@ public class ChangeCamera : MonoBehaviour {
     }
 
     void Update () {
-        if (Input.GetKeyDown(KeyCode.V))
+        string sceneName = SceneManager.GetActiveScene().name;
+        if (Input.GetKeyDown(KeyCode.V) &&  (GameStructure.mapDesignerName != sceneName))
         {
             SwitchCamera();
         }

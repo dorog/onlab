@@ -276,10 +276,10 @@ public class StartActions : MonoBehaviour
         inStart = !lockBool;
         if (!lockBool)
         {
-            ActualMapData.chosenCommand = CommandType.Null;
-            if (ActualMapData.chosenImage != null)
+            CommandFactory.chosenCommand = CommandType.Null;
+            if (CommandFactory.chosenImage != null)
             {
-                ActualMapData.chosenImage.color = Color.white;
+                CommandFactory.chosenImage.color = Color.white;
             }
         }
 

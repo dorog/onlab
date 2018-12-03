@@ -56,11 +56,19 @@ public class CreateMapElementOnIt : MonoBehaviour
     private void OnMouseEnter()
     {
         Color matColor;
-        if (ElementOnIt || mapElementFactory.chosedMapElement == MapElement.Null)
+        if(mapElementFactory.chosedMapElement == MapElement.Null)
         {
             return;
         }
-        if ((mapElementFactory.chosedMapElement == MapElement.LaserGate || mapElementFactory.chosedMapElement == MapElement.Door) && (edgeMapElementPlace || !designerManager.ThreePlace(Row, Column)))
+        if (designerManager.joeOnIt(Row, Column) && mapElementFactory.chosedMapElement == MapElement.Box)
+        {
+            matColor = disableColor;
+        }
+        else if (mapElementFactory.chosedMapElement == MapElement.Joe && designerManager.GetMapElement(Row, Column) == MapElement.Edge)
+        {
+            matColor = disableColor;
+        }
+        else if ((mapElementFactory.chosedMapElement == MapElement.LaserGate || mapElementFactory.chosedMapElement == MapElement.Door) && (edgeMapElementPlace || !designerManager.ThreePlace(Row, Column)))
         {
             matColor = disableColor;
         }
@@ -68,6 +76,7 @@ public class CreateMapElementOnIt : MonoBehaviour
         {
             matColor = enableColor;
         }
+
         Color color = meshRenderer.material.color;
         color = matColor;
         color.a = 255f;
@@ -76,13 +85,9 @@ public class CreateMapElementOnIt : MonoBehaviour
 
     private void OnMouseExit()
     {
-        if (ElementOnIt)
-        {
-            return;
-        }
         Color color = meshRenderer.material.color;
         color = originalColor;
-        color.a = 0f;
+        color.a = 0;
         meshRenderer.material.color = color;
     }
 
@@ -90,20 +95,26 @@ public class CreateMapElementOnIt : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+            if (mapElementFactory.DeleteMode)
+            {
+                designerManager.DeleteMapElement(Row, Column);
+            }
+            if (mapElementFactory.chosedMapElement == MapElement.Null)
+            {
+                return;
+            }
             if ((mapElementFactory.chosedMapElement == MapElement.LaserGate || mapElementFactory.chosedMapElement == MapElement.Door) && (edgeMapElementPlace || !designerManager.ThreePlace(Row, Column)))
             {
                 return;
             }
-            if (ElementOnIt && mapElementFactory.chosedMapElement != MapElement.Box)
+            if (ElementOnIt && (mapElementFactory.chosedMapElement != MapElement.Box && mapElementFactory.chosedMapElement != MapElement.Joe))
             {
                 return;
             }
-            ElementOnIt = true;
+            ElementOnIt = designerManager.BuildMapElement(Row, Column);
             Color color = meshRenderer.material.color;
             color.a = 0f;
             meshRenderer.material.color = color;
-
-            designerManager.BuildMapElement(Row, Column);
         }
         else if(Input.GetMouseButtonDown(1))
         {
@@ -119,19 +130,21 @@ public class CreateMapElementOnIt : MonoBehaviour
         {
             designerManager.DeleteMapElement(Row, Column);
         }
+        if(mapElementFactory.chosedMapElement == MapElement.Null)
+        {
+            return;
+        }
         else
         {
             if ((mapElementFactory.chosedMapElement == MapElement.LaserGate || mapElementFactory.chosedMapElement == MapElement.Door) && (edgeMapElementPlace || !designerManager.ThreePlace(Row, Column)))
             {
                 return;
             }
-            if (ElementOnIt && mapElementFactory.chosedMapElement != MapElement.Box)
+            if (ElementOnIt && (mapElementFactory.chosedMapElement != MapElement.Box && mapElementFactory.chosedMapElement != MapElement.Joe))
             {
                 return;
             }
-            ElementOnIt = true;
-
-            designerManager.BuildMapElement(Row, Column);
+            ElementOnIt = designerManager.BuildMapElement(Row, Column);
         }
     }
 #endif

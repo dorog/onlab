@@ -635,7 +635,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: O.K.
+  m_Text: OK
 --- !u!222 &734374452
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -896,7 +896,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1672866554}
-        m_MethodName: LoadActualMap
+        m_MethodName: LoadFinishOK
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1438,7 +1438,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: O.K.
+  m_Text: OK
 --- !u!222 &1475315355
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1596,7 +1596,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1672866554}
-        m_MethodName: LoadActualMap
+        m_MethodName: LoadFinishOK
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

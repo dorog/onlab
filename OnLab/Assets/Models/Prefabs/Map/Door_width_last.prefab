@@ -58,8 +58,8 @@ GameObject:
   - component: {fileID: 23612513273716470}
   - component: {fileID: 111850502023495056}
   - component: {fileID: 65703126055603982}
-  - component: {fileID: 114361963210008278}
-  - component: {fileID: 114315587661575090}
+  - component: {fileID: 114695462499819364}
+  - component: {fileID: 114257566259545470}
   m_Layer: 0
   m_Name: Door_width_last
   m_TagString: Untagged
@@ -386,23 +386,7 @@ Animation:
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 0
---- !u!114 &114315587661575090
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1495431617959260}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8f05e0c4de7adc479d217d5845e978b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  baseHigh: 5
-  modelGround: -90
-  quatVector: {x: 1, y: 0, z: 0}
-  quatFloat: -90
-  openedHeight: 2
---- !u!114 &114361963210008278
+--- !u!114 &114257566259545470
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -425,4 +409,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f53f61af0d7f45d469a17a68589ecce4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  doorHighData: {fileID: 0}
+  doorHighData: {fileID: 114695462499819364}
+--- !u!114 &114695462499819364
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1495431617959260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90a487f9e3b2c4e4bbf7ecd2b69ecae8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseHeight: 5
+  modelGround: -90
+  quatVector: {x: 1, y: 0, z: 0}
+  quatFloat: -90
+  openedHeight: 2

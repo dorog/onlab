@@ -10,6 +10,8 @@ public class MapElementData : MapElementBox
     [SerializeField]
     private List<GameObject> boxes = new List<GameObject>();
 
+    public GameObject joeOnIt = null;
+
     private int boxOnItCount = 0;
 
     public int ModelGround

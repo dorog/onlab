@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CommandFactory : MonoBehaviour {
     [Header("Commands")]
@@ -11,6 +12,9 @@ public class CommandFactory : MonoBehaviour {
     private GameObject element;
 
     private List<CmdFactoryElement> cmdFactoryElements = new List<CmdFactoryElement>();
+
+    public static CommandType chosenCommand = CommandType.Null;
+    public static Image chosenImage = null;
 
 #if UNITY_STANDALONE_WIN
     [SerializeField]
@@ -32,7 +36,7 @@ public class CommandFactory : MonoBehaviour {
             {
                 if (Input.GetKeyDown(keysForElements[i]))
                 {
-                    cmdFactoryElements[i].Clicked();
+                    cmdFactoryElements[i].Click();
                 }
             }
     }

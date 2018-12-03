@@ -13,6 +13,11 @@ public class WebCreator : MonoBehaviour {
     [SerializeField]
     private CreateMapElementOnIt MapElementPlace;
 
+    [SerializeField]
+    private Transform linesParent;
+    [SerializeField]
+    private Transform mapElementPlacesParent;
+
     public static string columnSprite = "";
 
     public int ColumnCount
@@ -62,7 +67,7 @@ public class WebCreator : MonoBehaviour {
 
         for (int i=0; i<RowCount+1; i++)
         {
-            GameObject webLine = Instantiate(line.gameObject, transform);
+            GameObject webLine = Instantiate(line.gameObject, linesParent);
             LineRenderer webLineRenderer = webLine.GetComponent<LineRenderer>();
             webLineRenderer.positionCount = 2;
             Vector3 start = StartPosition + new Vector3(0, 0, -i * SharedData.widhtUnit);
@@ -72,7 +77,7 @@ public class WebCreator : MonoBehaviour {
         }
         for(int i=0; i<ColumnCount+1; i++)
         {
-            GameObject webLine = Instantiate(line.gameObject, transform);
+            GameObject webLine = Instantiate(line.gameObject, linesParent);
             LineRenderer webLineRenderer = webLine.GetComponent<LineRenderer>();
             webLineRenderer.positionCount = 2;
             Vector3 start = StartPosition + new Vector3(i * SharedData.widhtUnit, 0, 0);
@@ -85,7 +90,7 @@ public class WebCreator : MonoBehaviour {
             for(int j = 0; j<ColumnCount; j++)
             {
                 Vector3 location = StartPosition + new Vector3(j * SharedData.widhtUnit + SharedData.widhtUnit / 2, 0, -i * SharedData.widhtUnit - SharedData.widhtUnit / 2);
-                GameObject mapElement = Instantiate(MapElementPlace.gameObject, location, Quaternion.identity, transform);
+                GameObject mapElement = Instantiate(MapElementPlace.gameObject, location, Quaternion.identity, mapElementPlacesParent);
                 CreateMapElementOnIt mapElementScript = mapElement.GetComponent<CreateMapElementOnIt>();
                 map[i, j] = mapElementScript;
                 mapElementScript.Row = i;
@@ -105,5 +110,14 @@ public class WebCreator : MonoBehaviour {
     public void EnableMapPlace(int row, int column)
     {
         map[row, column].ElementOnIt = false;
+    }
+
+    public void Clear()
+    {
+        for(int i=0; i< mapElementPlacesParent.childCount; i++)
+        {
+            CreateMapElementOnIt cme = mapElementPlacesParent.GetChild(i).GetComponent<CreateMapElementOnIt>();
+            cme.ElementOnIt = false;
+        }
     }
 }

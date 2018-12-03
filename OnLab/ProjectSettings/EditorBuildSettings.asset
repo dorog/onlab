@@ -29,3 +29,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/LevelLast.unity
     guid: 6fef6e81263b18f4083f72cfc5785e93
+  - enabled: 1
+    path: Assets/Scenes/MapDesigner.unity
+    guid: a42f7f52229f7d544879a1417da11871
+  - enabled: 1
+    path: Assets/Scenes/ExtraScene.unity
+    guid: 458419636890c1049a1312ead8d94502

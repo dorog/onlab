@@ -4,9 +4,9 @@ using UnityEngine.UI;
 
 [RequireComponent(typeof(Slot))]
 [RequireComponent(typeof(RectTransform))]
-public class CreateNewCmdOnSlot : MonoBehaviour, IPointerClickHandler
+public class CreateNewCmdOnSlot : MonoBehaviour
 {
-    [SerializeField]
+    /*[SerializeField]
     private GameObject cmdpanelcmd;
 
     [SerializeField]
@@ -79,5 +79,5 @@ public class CreateNewCmdOnSlot : MonoBehaviour, IPointerClickHandler
         RectTransform slotRt = GetComponent<RectTransform>();
         rt.sizeDelta = slotRt.sizeDelta*commandScaleValue;
         rt.localScale = new Vector3(1, 1, 1);
-    }
+    }*/
 }

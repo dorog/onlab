@@ -105,8 +105,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4404325183253436}
   - component: {fileID: 95820656942016660}
-  - component: {fileID: 114705294710854550}
-  - component: {fileID: 114349623200865932}
+  - component: {fileID: 114545332509647588}
+  - component: {fileID: 114181245214660440}
   m_Layer: 0
   m_Name: laserGate
   m_TagString: Untagged
@@ -402,23 +402,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114349623200865932
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1863361770462010}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77f8b70d4da422d4b870040c9d87bec1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  baseHigh: 5
-  modelGround: -90
-  quatVector: {x: 1, y: 0, z: 0}
-  quatFloat: 0
-  offedHigh: 2
---- !u!114 &114705294710854550
+--- !u!114 &114181245214660440
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -432,7 +416,23 @@ MonoBehaviour:
   laserModel: {fileID: 1530159437466892, guid: 38798223af756474cb7185278fbb2424, type: 2}
   particalLaser: {fileID: 1525732765272352, guid: c03617789a6bf3b42a4dc41154d0eb44,
     type: 2}
-  middleColumn: 175
-  laserPlaceInterval: 130
+  middleColumn: 170
+  laserPlaceInterval: 140
   columnDistanceFromMiddle: 50
   parent: {fileID: 4892802314215616}
+--- !u!114 &114545332509647588
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1863361770462010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90a487f9e3b2c4e4bbf7ecd2b69ecae8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseHeight: 5
+  modelGround: -90
+  quatVector: {x: 1, y: 0, z: 0}
+  quatFloat: 0
+  openedHeight: 2

@@ -444,7 +444,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9ff66ba9dbbe2844904e9980af81732, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseHigh: 2
+  baseHeight: 2
   modelGround: -90
   quatVector: {x: 1, y: 0, z: 0}
   quatFloat: -90
